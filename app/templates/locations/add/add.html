@@ -1,0 +1,79 @@
+<div class="location-add container"
+     layout="column"
+     layout-align="center stretch">
+  <div layout="row"
+       layout-align="center center"
+       class="header">
+    {{header}}
+  </div>
+  <div class="location-add-box"
+       layout="row"
+       layout-align="center center">
+    <form name="addLocationForm"
+          autocomplete="off"
+          ng-submit="saveLocation(location)"
+          flex="50"
+          layout="column"
+          layout-align="start stretch">
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Location</label>
+          <input name="locationName"
+                 ng-model="location.locationName"
+                 maxlength="45"
+                 md-maxlength="45"
+                 required>
+          <div class="example">Please enter location in format: Country, City, Place</div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Location link</label>
+          <input name="link"
+                 ng-model="location.link"
+                 maxlength="45"
+                 md-maxlength="45">
+        </md-input-container>
+      </div>
+
+      <div class="label">Location on map</div>
+      <div layout="row">
+        <ui-gmap-google-map flex-auto
+                            center='map.center'
+                            zoom='map.zoom'
+                            events="map.events">
+          <ui-gmap-map-control
+              position="top-right">
+            <md-button ng-if="coords"
+                       class="md-raised delete-marker"
+                       ng-click="deleteCoords()">
+              Delete marker
+            </md-button>
+          </ui-gmap-map-control>
+          <ui-gmap-marker ng-if="coords"
+                          click="mapClick()"
+                          coords="coords"
+                          idKey="0">
+          </ui-gmap-marker>
+        </ui-gmap-google-map>
+      </div>
+
+      <div layout="row"
+           layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   previous-page-get>
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="addLocationForm.$invalid"
+                   type="submit">
+          {{labelButton}}
+        </md-button>
+      </div>
+    </form>
+
+
+  </div>
+</div>

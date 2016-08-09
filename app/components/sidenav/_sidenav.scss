@@ -1,0 +1,50 @@
+.event-sidenav {
+  overflow-x: hidden;
+  transition: all .3s;
+  background-color: $background-sidenav;
+  width: $width-sidenav;
+  color: $color-sidenav;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  md-list{
+    padding: 0;
+    .md-button{
+      margin: 0;
+    }
+  }
+  .nav-divider {
+    background: #ccc;
+    .md-subheader-inner {
+      padding: 3px 0 3px 16px;
+    }
+  }
+  .active {
+    background: rgba(49, 48, 48, 0.87);
+  }
+  .menu-icon {
+    margin: 0 5px 0 5px!important;
+    fill: #fff;
+  }
+  .menu-icon-black {
+    margin: 0 5px 0 5px!important;
+    fill: #000;
+  }
+  .burger {
+    cursor: pointer;
+  }
+}
+.colapsed {
+  width: 70px!important;
+  .menu-text {
+    opacity: 0;
+    font-size: 0;
+    transition: all .3s;
+  }
+}
+.nonColapsed {
+  .menu-text {
+    opacity: 1;
+    transition: all .3s;
+  }
+}

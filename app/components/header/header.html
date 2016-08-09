@@ -1,0 +1,64 @@
+<div class="event-header md-whiteframe-5dp"
+     layout="row"
+     ng-if="isHeader"
+     layout-align="space-between center">
+  <md-button aria-label="home"
+             ui-sref="home"
+             class="home">
+    Event Manager
+  </md-button>
+
+
+  <div class="button-container"
+       layout="row"
+       layout-align="center center">
+    <span class="badge" ng-if="user.role === 'MANAGER' || user.role === 'ADMIN'">{{events.length}}</span>
+    <md-menu class="event-menu" ng-if="user.role === 'MANAGER' || user.role === 'ADMIN'">
+      <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+        <md-icon md-menu-origin md-svg-icon="event"></md-icon>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item ng-repeat="item in events">
+          <md-button ng-click="ctrl.announceClick($index)">
+            <md-icon md-menu-align-target md-svg-icon="event-available"></md-icon>
+            {{item.Name}}
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+    <md-menu md-offset="0 60"
+             md-position-mode="target-right target">
+      <md-button class="user-btn"
+                 aria-label="user"
+                 ng-click="$mdOpenMenu($event)">
+        <div class="user"
+             layout="row"
+             layout-align="center center">
+          <div class="img-box">
+            <img ng-src="{{$root.user.image}}">
+          </div>
+          <div class="name">
+            {{$root.user.username}}
+          </div>
+          <md-icon md-svg-src="arrowDown"></md-icon>
+        </div>
+      </md-button>
+
+      <md-menu-content>
+        <md-menu-item>
+          <md-button ui-sref="profile">
+            <md-icon md-svg-src="user"></md-icon>
+            Profile
+          </md-button>
+        </md-menu-item>
+
+        <md-menu-item>
+          <md-button ng-click="logout()">
+            <md-icon md-svg-src="logout"></md-icon>
+            Log Out
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+  </div>
+</div>

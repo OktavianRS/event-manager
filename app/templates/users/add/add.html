@@ -1,0 +1,175 @@
+<div class="add-user container"
+     layout="column"
+     layout-align="center stretch">
+  <div class="signup-box"
+       layout="row">
+    <div flex="33" layout="column" class="avatar-column">
+      <div class="old-image"
+           layout="row"
+           layout-align="center center">
+        <img ng-src="{{myCroppedImage || (newUser.oldImage || 'images/default_user.png')}}">
+      </div>
+
+      <div layout="column" flex="33" class="upload-avatar-container">
+        <div flow-init="{singleFile : 'false'}"
+             flow-attrs="{accept:'image/*'}"
+             flow-file-success="$file.msg = $message"
+             flow-file-added="addedNewFile($file, $event, $flow )"
+             layout="row"
+             layout-align="center center">
+          <md-button class="md-raised md-primary"
+                     flow-btn
+                     flow-attrs="{accept:'image/*'}">
+            <md-icon md-svg-src="addPhoto"></md-icon>
+            Upload Avatar
+          </md-button>
+          <md-button class="md-raised md-warn"
+                     ng-if="myCroppedImage"
+                     ng-click="deleteImage()">
+            Delete
+          </md-button>
+        </div>
+
+        <div class="cropArea" ng-if="myImage && !loading">
+          <img-crop image="myImage" area-type="square" result-image="$parent.myCroppedImage"></img-crop>
+        </div>
+
+        <div class="loader" ng-if="loading">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+      </div>
+    </div>
+
+    <form name="addUserForm"
+          autocomplete="off"
+          ng-submit="saveUser(newUser)"
+          flex="50"
+          layout="column"
+          layout-align="start stretch"
+          class="add-user-form">
+        <div layout="row"
+             layout-align="center center"
+             class="header">
+          {{header}}
+        </div>
+      <input type="text" class="fake-input">
+      <input type="password" class="fake-input">
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>First name</label>
+          <input name="firstName"
+                 ng-model="newUser.firstName"
+                 maxlength="45"
+                 md-maxlength="45"
+                 required>
+          <div ng-messages="addUserForm.firstName.$error">
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex-auto>
+          <label>Last name</label>
+          <input name="lastName"
+                 ng-model="newUser.lastName"
+                 maxlength="45"
+                 md-maxlength="45"
+                 required>
+          <div ng-messages="addUserForm.lastName.$error">
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Position</label>
+          <input name="position"
+                 ng-model="newUser.position"
+                 maxlength="45"
+                 md-maxlength="45">
+        </md-input-container>
+
+        <md-input-container flex-auto>
+          <label>Email</label>
+          <input name="email"
+                 ng-model="newUser.email"
+                 lower-case-input
+                 ng-pattern="/^([a-zA-Z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/"
+                 required
+                 maxlength="45"
+                 md-maxlength="45">
+          <div ng-messages="addUserForm.email.$error">
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">Invalid email</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+      <!-- TODO: if role root organisation not required -->
+        <md-input-container flex-auto>
+          <label>Company</label>
+          <md-select name="company"
+                     ng-model="newUser.organizationId">
+            <md-option ng-repeat="item in companies" value="{{item.id}}">
+              {{item.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container flex-auto>
+          <label>Role</label>
+          <md-select name="role"
+                     ng-model="newUser.role"
+                     required>
+            <md-option ng-repeat="item in userRoles" value="{{item.id}}">
+              {{item.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+
+      <div ng-if="labelButton == 'create'"
+           class="password-input"
+           layout="row"
+           layout-align="start center">
+        <md-input-container flex-auto>
+          <label>Password</label>
+          <input name="userPassword"
+                 ng-model="newUser.userPassword"
+                 type="{{show? 'text': 'password'}}"
+                 maxlength="32"
+                 minlength="6"
+                 required>
+          <div ng-messages="addUserForm.userPassword.$error" multiple md-auto-hide="false">
+            <div ng-message="required" ng-show="addUserForm.userPassword.$touched">This is required</div>
+            <div ng-message="minlength" ng-show="addUserForm.userPassword.$touched">Password min length 6</div>
+          </div>
+        </md-input-container>
+        <div class="checkbox-area-show"
+             layout="row"
+             layout-align="center center">
+          <md-checkbox ng-init="show=false"
+                       class="md-primary"
+                       ng-model="show">
+            Show
+          </md-checkbox>
+        </div>
+      </div>
+
+      <div layout="row"
+           layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   previous-page-get>
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="addUserForm.$invalid"
+                   type="submit">
+          {{labelButton}}
+        </md-button>
+      </div>
+    </form>
+  </div>
+</div>

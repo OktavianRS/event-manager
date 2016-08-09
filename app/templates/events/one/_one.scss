@@ -1,0 +1,189 @@
+.event-one {
+  .head-title{
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .image-box {
+    text-align: center;
+    img {
+      width: 60%;
+
+    }
+  }
+  .details {
+    .info {
+      padding-left: 32px;
+      .row-info {
+        padding: 8px 0;
+        span {
+          font-weight: bold;
+        }
+      }
+
+      .list-box {
+        margin-top: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        padding: 8px;
+        position: relative;
+        &:first-child {
+          margin-right: 16px;
+        }
+
+        .title {
+          position: absolute;
+          background-color: $box;
+          top: -12px;
+          padding: 0 8px;
+          color: rgba(0, 0, 0, 0.5);
+        }
+        .one-item {
+          padding: 4px 0;
+          color: rgba(0, 0, 0, 0.7);
+        }
+      }
+    }
+
+    .attachment-title{
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 16px;
+    }
+    .attachment {
+      margin-bottom: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      position: relative;
+      background-color: rgba(0, 0, 0, 0.2);
+      min-height: 268px;
+
+      .attachment-aria {
+        text-align: center;
+        outline: none;
+
+        .one-attach {
+          outline: none;
+          padding: 8px;
+          md-icon {
+            height: 75px;
+            width: 75px;
+          }
+          .name{
+            display: -webkit-box;
+            height: 15*1.1*2px;
+            font-size: $font-size;
+            line-height: $line-height;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+      }
+    }
+
+    .comments {
+      .no-comment {
+        height: 80px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        background-color: #dedede;
+        border-radius: 6px;
+      }
+
+      .new-comment {
+        .user-name {
+          font-weight: bold;
+        }
+        .user-avatar {
+          width: 50px;
+          margin-right: 32px;
+          img {
+            width: 100%;
+          }
+        }
+      }
+
+      .one-comment {
+        md-divider {
+          margin: 16px 0;
+        }
+        .user-avatar {
+          width: 65px;
+          margin-right: 16px;
+          img {
+            width: 100%;
+          }
+        }
+        .user-name {
+          font-weight: bold;
+          font-size: 18px;
+          margin-top: 16px;
+          margin-bottom: 4px;
+          span {
+            font-weight: normal;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.6);
+          }
+        }
+        .comment {
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          padding: 16px;
+          background-color: #eeeeee;
+          border-radius: 6px;
+          margin-left: 81px;
+        }
+
+        .comment-attachment {
+          margin-left: 80px;
+          margin-top: 8px;
+          text-align: center;
+          outline: none;
+          &-one {
+            padding: 4px;
+            outline: none;
+          }
+          md-icon {
+            height: 35px;
+            width: 35px;
+          }
+          .name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+
+      .attachments {
+        .one-attach {
+          margin-top: 8px;
+          padding-bottom: 8px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+          md-icon {
+            min-height: 35px;
+            min-width: 35px;
+          }
+          &-text{
+            overflow: hidden;
+            text-overflow: ellipsis;
+          };
+          .md-button {
+            width: $table-action-icon-size;
+            min-width: $table-action-icon-size;
+            height: $table-action-icon-size;
+            line-height: $table-action-icon-size;
+            min-height: $table-action-icon-size;
+
+            margin: 0 4px;
+            padding: 0;
+            md-icon {
+              min-height: 60%;
+              min-width: 60%;
+              height: 60%;
+              width: 60%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

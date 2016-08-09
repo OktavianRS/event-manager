@@ -1,0 +1,157 @@
+<div class="list-company container">
+  <div class="md-whiteframe-3dp table-area">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools"
+           layout="row"
+           layout-align="space-between center">
+        <span>Companies</span>
+        <md-button class="md-raised md-icon-button md-primary"
+                   previous-page-set
+                   ui-sref="addCompany"
+                   aria-label="ok">
+          <md-tooltip md-direction="bottom">
+            add new company
+          </md-tooltip>
+          <md-icon md-svg-src="add"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-on-reorder="onReorderCompany">
+        <tr md-row
+            ng-init="searchContainerName = false"
+            ng-init="searchContainerPhone = false"
+            ng-init="searchContainerLink = false">
+          <th class="table-logo"
+              md-column><span>Logo</span></th>
+
+          <!--name-->
+          <th class="table-name"
+              md-column
+              md-order-by="name"
+              ng-if="!searchContainerName">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerName = true"
+                     class="search"></md-icon>
+            <span>Name</span>
+          </th>
+          <th class="table-name"
+              md-column
+              ng-if="searchContainerName">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Name</label>
+              <input ng-model="searchCompanyName"
+                     ng-change="searchCompany('name', searchCompanyName)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerName = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <!--phone-->
+          <th class="table-phone"
+              md-order-by="phone"
+              ng-if="!searchContainerPhone"
+              md-column>
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerPhone = true"
+                     class="search"></md-icon>
+            <span>Phone</span>
+          </th>
+          <th class="table-phone"
+              md-column
+              ng-if="searchContainerPhone">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Phone</label>
+              <input ng-model="searchCompanyPhone"
+                     ng-change="searchCompany('phone', searchCompanyPhone)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerPhone = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <!--site-->
+          <th class="table-site"
+              md-column
+              md-order-by="link"
+              ng-if="!searchContainerLink">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerLink = true"
+                     class="search"></md-icon>
+            <span>Site</span>
+          </th>
+          <th class="table-site"
+              md-column
+              ng-if="searchContainerLink">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Site</label>
+              <input ng-model="searchCompanySite"
+                     ng-change="searchCompany('link', searchCompanySite)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerLink = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-action"
+              md-column><span></span></th>
+        </tr>
+        </thead>
+
+        <tbody md-body>
+        <tr md-row ng-repeat="item in companies">
+          <td md-cell ui-sref="company.oneCompany({companyId: item.id})">
+            <div class="image-box"><img ng-src="{{item.image}}"></div>
+          </td>
+          <td md-cell ui-sref="company.oneCompany({companyId: item.id})">{{item.name}}</td>
+          <td md-cell>{{item.phone}}</td>
+          <td md-cell>{{item.link}}</td>
+          <td class="table-action"
+              md-cell>
+            <div layout="row" layout-align="end center">
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="showCompanyInfo($event, item.id)"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  view company
+                </md-tooltip>
+                <md-icon md-svg-src="view"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         previous-page-set
+                         ui-sref="company.updateCompany({companyId: item.id})"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  edit company
+                </md-tooltip>
+                <md-icon md-svg-src="edit"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="deleteCompany(item.id)"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  delete company
+                </md-tooltip>
+                <md-icon md-svg-src="delete"></md-icon>
+              </md-button>
+            </div>
+          </td>
+        </tr>
+
+        <tr md-row ng-if="!companies.length">
+          <td md-cell colspan="4">Company not found</td>
+        </tr>
+        </tbody>
+      </table>
+      <md-table-pagination md-limit="companySetting.show"
+                           md-page="companySetting.current"
+                           md-limit-options="[10,25,50]"
+                           md-total="{{companySetting.total}}"
+                           md-on-paginate="onPaginateCompany"
+                           md-page-select>
+      </md-table-pagination>
+    </md-table-container>
+  </div>
+</div>

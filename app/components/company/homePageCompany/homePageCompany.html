@@ -1,0 +1,37 @@
+<h1 class="page-title">Dashboard</h1>
+<div class="home-container home" ng-cloak layout-gt-sm="row" layout="column" ng-controller="homeCompanyCtrl">
+	<div flex class="left-column">
+		<md-toolbar layout="row">
+			<div class="md-toolbar-tools">
+				<span>Events</span>
+			</div>
+		</md-toolbar>
+		<md-content class="event-items-container">
+			<home-event-card ng-repeat="event in companyEvent track by $index"
+							title="event.name"
+							icon="event.icon"
+							description="event.description"
+			></home-event-card>
+		</md-content>
+	</div> <!-- left column -->
+
+	<div flex class="right-column">
+		<md-toolbar layout="row">
+			<div class="md-toolbar-tools">
+				<span>Notifications</span>
+			</div>
+		</md-toolbar>
+		<md-content class="event-items-container">
+			<md-list flex>
+				<md-list-item class="md-3-line" ng-repeat="item in events" ng-click="null">
+					<md-icon md-svg-icon="notifications" class="md-avatar"></md-icon>
+					<div class="md-list-item-text" layout="column">
+						<h3>{{item.eventName}}</h3>
+						<h4>{{item.eventSubName}}</h4>
+						<p>{{item.eventDescription}}</p>
+					</div>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</div><!-- right column -->
+</div>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="no-js" lang="" ng-app="eventManager">
+<head>
+  <meta charset="utf-8">
+  <title>event Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+  <!-- build:css css/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css" />
+  <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css" />
+  <link rel="stylesheet" href="bower_components/angular-datepicker/dist/angular-datepicker.css" />
+  <link rel="stylesheet" href="bower_components/md-steppers/dist/md-steppers.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+  <!-- build:css css/main.css -->
+  <link rel="stylesheet" href="style.css"/>
+  <!-- endbuild -->
+
+</head>
+<body ng-cloak>
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<md-content layout="column" layout-fill>
+  <event-header></event-header>
+  <md-content layout="row" class="general-md-content">
+    <event-sidenav></event-sidenav>
+    <md-content layout-fill class="ui-view-md-content">
+      <ui-view></ui-view>
+    </md-content>
+  </md-content>
+</md-content>
+
+<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+<!-- build:js js/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/ngstorage/ngStorage.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/angular-moment/angular-moment.js"></script>
+<script src="bower_components/flow.js/dist/flow.js"></script>
+<script src="bower_components/ng-flow/dist/ng-flow.js"></script>
+<script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
+<script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
+<script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+<script src="bower_components/angular-datepicker/dist/angular-datepicker.js"></script>
+<script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/markerclustererplus/src/markerclusterer.js"></script>
+<script src="bower_components/google-maps-utility-library-v3-markerwithlabel/dist/markerwithlabel.js"></script>
+<script src="bower_components/google-maps-utility-library-v3-infobox/dist/infobox.js"></script>
+<script src="bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js"></script>
+<script src="bower_components/js-rich-marker/src/richmarker.js"></script>
+<script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/material-calendar/dist/angular-material-calendar.js"></script>
+<script src="bower_components/md-steppers/dist/md-steppers.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js js/components.js -->
+<script src="components/header/header.js"></script>
+<script src="components/sidenav/sidenav.js"></script>
+<script src="components/footer/footer.js"></script>
+<script src="components/confirmPassword/confirmPassword.js"></script>
+<script src="components/lowerCaseInput/lowerCaseInput.js"></script>
+<script src="components/validDate/validDate.js"></script>
+<script src="components/previousPage/previousPage.js"></script>
+<script src="components/locationModal/locationModal.js"></script>
+<script src="components/languageModal/languageModal.js"></script>
+<script src="components/homeEventCard/homeEventCard.js"></script>
+<script src="components/admin/homePageAdmin/homePageAdmin.js"></script>
+<script src="components/company/homePageCompany/homePageCompany.js"></script>
+<!-- endbuild -->
+
+<!-- build:js js/models.js -->
+<script src="factory/urlFactory.js"></script>
+<script src="factory/requestFactory.js"></script>
+<script src="factory/toastFactory.js"></script>
+
+<script src="models/userModel.js"></script>
+<script src="models/eventModel.js"></script>
+<script src="models/companyModel.js"></script>
+<script src="models/languageModel.js"></script>
+<script src="models/locationModel.js"></script>
+<!-- endbuild -->
+
+<!-- build:js js/app.js -->
+<script src="app.js"></script>
+<script src="templates/login/login.js"></script>
+<script src="templates/home/home.js"></script>
+<script src="templates/profile/profile.js"></script>
+
+<script src="templates/events/add/add.js"></script>
+<script src="templates/events/list/list.js"></script>
+<script src="templates/events/update/update.js"></script>
+<script src="templates/events/one/one.js"></script>
+<script src="templates/events/stepsCreator/stepsCreator.js"></script>
+
+<script src="templates/users/add/add.js"></script>
+<script src="templates/users/list/list.js"></script>
+<script src="templates/users/update/update.js"></script>
+
+<script src="templates/organizations/company.js"></script>
+<script src="templates/organizations/add/add.js"></script>
+<script src="templates/organizations/list/list.js"></script>
+<script src="templates/organizations/update/update.js"></script>
+
+<script src="templates/languages/add/add.js"></script>
+<script src="templates/languages/list/list.js"></script>
+<script src="templates/languages/update/update.js"></script>
+
+<script src="templates/locations/add/add.js"></script>
+<script src="templates/locations/list/list.js"></script>
+<script src="templates/locations/update/update.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<md-dialog aria-label="location"
+           flex="60"
+           class="location-modal">
+  <md-toolbar layout
+              layout-align="space-between center">
+    <div class="header">
+      Create location
+    </div>
+    <md-button class="md-icon-button"
+               aria-label="icon"
+               ng-click="close()">
+      <md-icon md-svg-src="close"></md-icon>
+    </md-button>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <form name="addLocationForm"
+          autocomplete="off"
+          ng-submit="saveLocation(location)"
+          layout="column"
+          layout-align="start stretch">
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Location</label>
+          <input name="locationName"
+                 ng-model="location.name"
+                 md-autofocus
+                 required>
+          <div class="example">Please enter location in format: Country, City, Place</div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Link</label>
+          <input name="Link"
+                 ng-model="location.link">
+        </md-input-container>
+      </div>
+
+      <div class="label">Location on map</div>
+      <div layout="row">
+        <ui-gmap-google-map flex-auto
+                            center='map.center'
+                            zoom='map.zoom'
+                            events="map.events">
+          <ui-gmap-map-control
+              position="top-right">
+            <md-button ng-if="coords"
+                       class="md-raised delete-marker"
+                       ng-click="deleteCoords()">
+              Delete marker
+            </md-button>
+          </ui-gmap-map-control>
+          <ui-gmap-marker ng-if="coords"
+                          click="mapClick()"
+                          coords="coords"
+                          idKey="0">
+          </ui-gmap-marker>
+        </ui-gmap-google-map>
+      </div>
+
+      <md-dialog-actions layout="row" layout-align="end center">
+        <md-button class="md-raised" ng-click="close()">
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="addLocationForm.$invalid"
+                   type="submit">
+          Save
+        </md-button>
+      </md-dialog-actions>
+    </form>
+  </md-dialog-content>
+</md-dialog>

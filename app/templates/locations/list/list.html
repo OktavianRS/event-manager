@@ -1,0 +1,122 @@
+<div class="list-location container">
+  <div class="md-whiteframe-3dp table-area">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools"
+           layout="row"
+           layout-align="space-between center">
+        <span>Locations</span>
+        <md-button class="md-raised md-icon-button md-primary"
+                   previous-page-set
+                   ui-sref="addLocation"
+                   aria-label="ok">
+          <md-tooltip md-direction="bottom">
+            add new location
+          </md-tooltip>
+          <md-icon md-svg-src="add"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-on-reorder="onReorderLocation">
+        <tr md-row
+            ng-init="searchContainerName = false">
+          <!--name-->
+          <th class="table-name"
+              md-column
+              md-order-by="name"
+              ng-if="!searchContainerName">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerName = true"
+                     class="search"></md-icon>
+            <span>Name</span>
+          </th>
+          <th class="table-name"
+              md-column
+              ng-if="searchContainerName">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Name</label>
+              <input ng-model="searchLocationName"
+                     ng-change="searchLocation('name', searchLocationName)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerName = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-latitude"
+              md-order-by="latitude"
+              md-column>
+            <span>Latitude</span>
+          </th>
+
+          <th class="table-longitude"
+              md-order-by="longitude"
+              md-column>
+            <span>Longitude</span>
+          </th>
+
+          <th class="table-Link"
+              md-order-by="link"
+              md-column>
+            <span>link</span>
+          </th>
+
+          <th class="table-action"
+              md-column><span></span></th>
+        </tr>
+        </thead>
+
+        <tbody md-body>
+        <tr md-row ng-repeat="item in locations">
+          <td md-cell>{{item.name}}</td>
+          <td md-cell>{{item.latitude}}</td>
+          <td md-cell>{{item.longitude}}</td>
+          <td md-cell>{{item.link}}</td>
+          <td class="table-action"
+              md-cell>
+            <div layout="row" layout-align="end center">
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="showLocationInfo($event, item.id)"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  view location
+                </md-tooltip>
+                <md-icon md-svg-src="view"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         previous-page-set
+                         ui-sref="updateLocation({locationId: item.id})"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  edit location
+                </md-tooltip>
+                <md-icon md-svg-src="edit"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="deleteLocation(item.id)"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  delete location
+                </md-tooltip>
+                <md-icon md-svg-src="delete"></md-icon>
+              </md-button>
+            </div>
+          </td>
+        </tr>
+
+        <tr md-row ng-if="!locations.length">
+          <td md-cell colspan="5">Location not found</td>
+        </tr>
+        </tbody>
+      </table>
+      <md-table-pagination md-limit="locationSetting.show"
+                           md-page="locationSetting.current"
+                           md-limit-options="[10,25,50]"
+                           md-total="{{locationSetting.total}}"
+                           md-on-paginate="onPaginateLocation"
+                           md-page-select>
+      </md-table-pagination>
+    </md-table-container>
+  </div>
+</div>

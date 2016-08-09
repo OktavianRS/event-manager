@@ -1,0 +1,199 @@
+<div class="event-add container"
+     layout="column"
+     layout-align="center stretch">
+  <div layout="row"
+       layout-align="center center"
+       class="header">
+    {{header}}
+  </div>
+  <div class="event-add-box"
+       layout="row">
+    <div flex="50"
+         layout="column">
+      <div class="old-image"
+           layout="row"
+           layout-align="center center">
+        <img ng-src="{{myCroppedImage || (event.oldImage || 'images/default_event.png')}}">
+      </div>
+
+      <div layout="column">
+        <div flow-init="{singleFile : 'false'}"
+             flow-attrs="{accept:'image/*'}"
+             flow-file-success="$file.msg = $message"
+             flow-file-added="addedNewFile($file, $event, $flow )"
+             layout="row"
+             layout-align="center center">
+          <md-button class="md-raised md-primary"
+                     flow-btn
+                     flow-attrs="{accept:'image/*'}">
+            <md-icon md-svg-src="addPhoto"></md-icon>
+            Change event logo
+          </md-button>
+          <md-button class="md-raised md-warn"
+                     ng-if="myCroppedImage"
+                     ng-click="deleteImage()">
+            Delete
+          </md-button>
+        </div>
+
+        <div class="cropArea" ng-if="myImage && !loading">
+          <img-crop image="myImage" area-type="square" result-image="$parent.myCroppedImage"></img-crop>
+        </div>
+
+        <div class="loader" ng-if="loading">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+      </div>
+    </div>
+
+    <form name="addEventForm"
+          autocomplete="off"
+          ng-submit="saveEvent(event)"
+          flex="50"
+          layout="column"
+          layout-align="start stretch">
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Event name</label>
+          <input name="eventName"
+                 ng-model="event.eventName"
+                 maxlength="45"
+                 md-maxlength="45"
+                 required>
+          <div ng-messages="addEventForm.eventName.$error">
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Company</label>
+          <md-select name="company"
+                     ng-model="event.company"
+                     required>
+            <md-option ng-repeat="item in companies" value="{{item.id}}">
+              {{item.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+
+      <div layout="row" layout-align="space-between center">
+          <md-datepicker ng-model="event.date" required md-placeholder="Enter date"
+      md-open-on-focus></md-datepicker>
+
+        <md-input-container flex="45">
+          <label>Time</label>
+          <input name="time"
+                 ng-model="event.time"
+                 valid-date="'time'"
+                 maxlength="45"
+                 required>
+          <div ng-messages="addEventForm.time.$error">
+            <div ng-message="required">This is required</div>
+            <div ng-message="date">Invalid time. Must be HH:mm ex.:00:00</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row"
+           layout-align="start center">
+        <md-autocomplete
+            flex-auto
+            md-input-name="eventLanguage"
+            md-no-cache="true"
+            md-selected-item="event.languageId"
+            md-search-text="searchTextLanguage"
+            md-items="item in querySearchLanguage(searchTextLanguage)"
+            md-item-text="item.name"
+            md-min-length="1"
+            md-floating-label="Language">
+          <md-item-template>
+            <span md-highlight-text="searchTextLanguage" md-highlight-flags="^i">{{item.name}}</span>
+          </md-item-template>
+          <md-not-found>
+            No language matching "{{searchTextLanguage}}" were found.
+            <md-button class="md-raised" ng-click="createLanguage(searchTextLanguage)">Create</md-button>
+          </md-not-found>
+        </md-autocomplete>
+        <div>
+          <md-button class="md-raised md-primary add-btn"
+                     ng-disabled="!event.languageId"
+                     ng-click="addLanguage(event.languageId)">
+            add
+          </md-button>
+        </div>
+      </div>
+      <div class="list-box" ng-if="languages.length">
+        <div class="title">Languages</div>
+        <div class="one-item"
+             layout="row"
+             layout-align="space-between center"
+             ng-repeat="item in languages">
+          <div class="text">{{item.name}}</div>
+          <md-button class="md-raised md-warn md-icon-button"
+                     ng-click="deleteLanguage($index)">
+            <md-icon md-svg-src="close"></md-icon>
+          </md-button>
+        </div>
+      </div>
+
+      <div layout="row"
+           layout-align="start center">
+        <md-autocomplete
+            flex-auto
+            md-input-name="eventPlace"
+            md-no-cache="true"
+            md-selected-item="event.locationId"
+            md-search-text="searchTextLocation"
+            md-items="item in querySearchLocation(searchTextLocation)"
+            md-item-text="item.name"
+            md-min-length="2"
+            md-floating-label="Location">
+          <md-item-template>
+            <span md-highlight-text="searchTextLocation" md-highlight-flags="^i">{{item.name}}</span>
+          </md-item-template>
+          <md-not-found>
+            No location matching "{{searchTextLocation}}" were found.
+            <md-button class="md-raised" ng-click="createLocation(searchTextLocation, $event, $element)">Create</md-button>
+          </md-not-found>
+        </md-autocomplete>
+        <div>
+          <md-button class="md-raised md-primary add-btn"
+                     ng-disabled="!event.locationId"
+                     ng-click="addLocation(event.locationId)">
+            add
+          </md-button>
+        </div>
+      </div>
+      <div class="list-box" ng-if="locations.length">
+        <div class="title">Locations</div>
+        <div class="one-item"
+             layout="row"
+             layout-align="space-between center"
+             ng-repeat="item in locations">
+          <div class="text">{{item.name}}</div>
+          <md-button class="md-raised md-warn md-icon-button"
+                     ng-click="deleteLocation($index)">
+            <md-icon md-svg-src="close"></md-icon>
+          </md-button>
+        </div>
+      </div>
+
+      <div layout="row"
+           layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   previous-page-get>
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="addEventForm.$invalid || !locations.length || !languages.length"
+                   type="submit">
+          {{labelButton}}
+        </md-button>
+      </div>
+    </form>
+  </div>
+</div>

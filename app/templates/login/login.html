@@ -1,0 +1,78 @@
+<div class="login"
+     layout="row"
+     layout-align="center center">
+  <div class="login-box md-whiteframe-5dp">
+    <form name="loginForm"
+          ng-submit="login(user.email, user.userPassword, remember)"
+          autocomplete="off">
+      <div layout="row" layout-align="center center" class="header">
+        Log In
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Email</label>
+          <input name="email"
+                 ng-model="user.email"
+                 maxlength="50"
+                 ng-pattern="/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/"
+                 required>
+          <div ng-messages="loginForm.email.$error">
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">Invalid email</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row" layout-align="start center" class="password-input">
+        <md-input-container flex-auto>
+          <label>Password</label>
+          <input name="userPassword"
+                 ng-model="user.userPassword"
+                 type="{{show? 'text': 'password'}}"
+                 maxlength="32"
+                 minlength="6"
+                 required>
+          <div ng-messages="loginForm.userPassword.$error">
+            <div ng-message="required">This is required</div>
+            <div ng-message="minlength">Password min length 6</div>
+          </div>
+        </md-input-container>
+
+        <div class="checkbox-area-show"
+             layout="row"
+             layout-align="center center">
+          <md-checkbox ng-init="show=false"
+                       class="md-primary"
+                       aria-label="show"
+                       ng-model="show">
+            Show
+          </md-checkbox>
+        </div>
+      </div>
+
+      <div layout="row"
+           class="buttons-area"
+           layout-align="start center">
+        <div layout="column" flex="50">
+          <md-button class="md-raised md-primary"
+                     type="submit"
+                     ng-disabled="loginForm.$invalid">
+            Log In
+          </md-button>
+        </div>
+        <div class="checkbox-area"
+             layout="row"
+             layout-align="center center"
+             flex="50">
+          <md-checkbox ng-init="remember=false"
+                       class="md-primary"
+                       aria-label="remember"
+                       ng-model="remember">
+            Stay logged in
+          </md-checkbox>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

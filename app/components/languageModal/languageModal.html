@@ -1,0 +1,56 @@
+<md-dialog aria-label="language"
+           flex="60"
+           class="language-modal">
+  <md-toolbar layout
+              layout-align="space-between center">
+    <div class="header">
+      Create language
+    </div>
+    <md-button class="md-icon-button"
+               aria-label="icon"
+               ng-click="close()">
+      <md-icon md-svg-src="close"></md-icon>
+    </md-button>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <form name="addLanguageForm"
+          autocomplete="off"
+          ng-submit="saveLanguage(language)"
+          layout="column"
+          layout-align="start stretch">
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Language</label>
+          <input name="languageName"
+                 ng-model="language.name"
+                 md-autofocus
+                 required>
+          <div ng-messages="addLanguageForm.languageName.$error">
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Code</label>
+          <input name="code"
+                 ng-model="language.code">
+        </md-input-container>
+      </div>
+
+      <md-dialog-actions layout="row" layout-align="end center">
+        <md-button class="md-raised" ng-click="close()">
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="addLanguageForm.$invalid"
+                   type="submit">
+          Save
+        </md-button>
+      </md-dialog-actions>
+    </form>
+  </md-dialog-content>
+</md-dialog>

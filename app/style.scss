@@ -1,0 +1,27 @@
+@import 'settings';
+
+@import 'components/header/header';
+@import 'components/sidenav/sidenav';
+@import 'components/footer/footer';
+@import 'components/locationModal/locationModal';
+
+@import 'templates/login/login';
+@import 'templates/profile/profile';
+@import 'templates/home/home';
+
+@import 'templates/organizations/add/add';
+@import 'templates/organizations/list/list';
+
+@import 'templates/users/add/add';
+@import 'templates/users/list/list';
+
+@import 'templates/events/add/add';
+@import 'templates/events/list/list';
+@import 'templates/events/one/one';
+@import 'templates/events/stepsCreator/stepsCreator';
+
+@import 'templates/languages/add/add';
+@import 'templates/languages/list/list';
+
+@import 'templates/locations/add/add';
+@import 'templates/locations/list/list';

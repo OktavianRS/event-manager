@@ -1,0 +1,139 @@
+<div class="organization-add container"
+     layout="column"
+     layout-align="center stretch">
+  <div layout="row"
+       layout-align="center center"
+       class="header">
+    {{header}}
+  </div>
+  <div class="organization-add-box"
+       layout="row">
+    <div flex="50" layout="column">
+      <div class="old-image"
+           layout="row"
+           layout-align="center center">
+        <img ng-src="{{myCroppedImage || (company.oldImage || 'images/default_company.png')}}">
+      </div>
+
+      <div layout="column">
+        <div flow-init="{singleFile : 'false'}"
+             flow-attrs="{accept:'image/*'}"
+             flow-file-success="$file.msg = $message"
+             flow-file-added="addedNewFile($file, $event, $flow )"
+             layout="row"
+             layout-align="center center">
+          <md-button class="md-raised md-primary"
+                     flow-btn
+                     flow-attrs="{accept:'image/*'}">
+            <md-icon md-svg-src="addPhoto"></md-icon>
+            Change company logo
+          </md-button>
+          <md-button class="md-raised md-warn"
+                     ng-if="myCroppedImage"
+                     ng-click="deleteImage()">
+            Delete
+          </md-button>
+        </div>
+
+        <div class="cropArea" ng-if="myImage && !loading">
+          <img-crop image="myImage" area-type="square" result-image="$parent.myCroppedImage"></img-crop>
+        </div>
+
+        <div class="loader" ng-if="loading">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+      </div>
+    </div>
+
+    <form name="addCompanyForm"
+          autocomplete="off"
+          ng-submit="createCompany(newCompany)"
+          flex="50"
+          layout="column"
+          layout-align="start stretch">
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Company name</label>
+          <input name="companyName"
+                 ng-model="newCompany.companyName"
+                 maxlength="45"
+                 md-maxlength="45"
+                 required>
+          <div ng-messages="addCompanyForm.companyName.$error">
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Company description</label>
+          <textarea name="description"
+                    ng-model="newCompany.description"
+                    maxlength="500"
+                    md-maxlength="500"></textarea>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Company address</label>
+          <input name="address"
+                 ng-model="newCompany.address"
+                 maxlength="45"
+                 md-maxlength="45">
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Company phone</label>
+          <input name="phone"
+                 ng-model="newCompany.phone"
+                 ng-pattern="/^([0-9])*$/"
+                 maxlength="45"
+                 md-maxlength="45">
+          <div ng-messages="addCompanyForm.phone.$error">
+            <div ng-message="pattern">Phone must be consist of numbers</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Company email</label>
+          <input name="email"
+                 ng-model="newCompany.email"
+                 ng-pattern="/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/">
+          <div ng-messages="addCompanyForm.email.$error">
+            <div ng-message="pattern">Invalid email</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Company site</label>
+          <input name="site"
+                 ng-model="newCompany.site"
+                 maxlength="45"
+                 md-maxlength="45">
+        </md-input-container>
+      </div>
+
+      <div layout="row"
+           layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   previous-page-get>
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="addCompanyForm.$invalid"
+                   type="submit">
+          {{labelButton}}
+        </md-button>
+      </div>
+    </form>
+  </div>
+</div>

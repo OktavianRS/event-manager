@@ -1,0 +1,25 @@
+<md-content class="event-sidenav md-whiteframe-5dp"
+            ng-if="isHeader"
+            ng-class="class">
+  <md-list>
+    <md-subheader class="md-no-sticky burger" ng-click="colapseMenu()">
+      <md-icon md-svg-icon="menu" class="menu-icon-black"></md-icon>
+    </md-subheader>
+    <md-list-item ui-sref="{{item.itemUrl}}"
+                  ng-repeat="item in menuCfg track by $index"
+                  ng-class="{'active': item.itemUrl === $state.current.name}"
+                  ng-click="states.activeItem=item.itemUrl">
+      <md-icon md-svg-icon="{{item.itemIcon}}" class="menu-icon"></md-icon>
+      <span class="menu-text" ng-if="!colapse">{{item.itemName}}</span>
+      <md-tooltip ng-if="colapse" md-direction="right">{{item.itemName}}</md-tooltip>
+    </md-list-item>
+    <md-list-item ui-sref="listEvent" 
+                  ng-class="{'active': 'listEvent' == $state.current.name}"
+                  ng-click="states.activeItem='listEvent'"
+                  ng-if="user.role === 'ADMIN' || user.role === 'MANAGER'">
+      <md-icon md-svg-icon="archive" class="menu-icon"></md-icon>
+      <span class="menu-text" ng-if="!colapse">Archive</span>
+      <md-tooltip ng-if="colapse" md-direction="right">Archive</md-tooltip>
+    </md-list-item>
+  </md-list>
+</md-content>

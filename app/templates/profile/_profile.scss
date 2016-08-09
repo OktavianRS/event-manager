@@ -1,0 +1,43 @@
+.profile {
+  height: 100%;
+  .photo,
+  .basic,
+  .change-password {
+    .title {
+      font-size: 22px;
+      margin-bottom: 16px;
+      font-style: italic;
+      font-weight: bold;
+    }
+  }
+  .info {
+    border-left: 1px solid #ccc;
+  }
+  .basic,
+  .photo,
+  .change-password {
+    padding: 30px 20px;
+  }
+  .photo {
+    margin-bottom: 32px;
+    .img-box img {
+      width: 100%;
+    }
+    .img-box,
+    .cropArea {
+      border-radius: 5%;
+      overflow: hidden;
+      width: 300px;
+      height: 300px;
+      background-color: $greyBox;
+    }
+    .upload{
+      margin-left: 16px;
+    }
+    .sub-title {
+      font-size: 22px;
+      margin-bottom: 12px;
+      //font-weight: bold;
+    }
+  }
+}

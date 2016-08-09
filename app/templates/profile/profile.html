@@ -1,0 +1,165 @@
+<div class="profile"
+     layout-gt-sm="row"
+     layout="column">
+  <div class="photo" >
+    <div>
+      <div class="title">
+        Profile photo
+      </div>
+      <div class="img-box" ng-if="!myImage && !loading">
+        <img ng-src="{{user.image_id}}">
+      </div>
+
+      <div class="cropArea" ng-if="myImage && !loading">
+        <img-crop image="myImage" area-type="square" result-image="$parent.myCroppedImage"></img-crop>
+      </div>
+
+      <div class="loader" ng-if="loading">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+      <div flow-init="{singleFile : 'false'}"
+           flow-attrs="{accept:'image/*'}"
+           flow-file-success="$file.msg = $message"
+           flow-file-added="addedNewFile($file, $event, $flow )"
+           class="upload-button-container">
+        <md-button class="md-raised md-primary upload-button"
+                   flow-btn
+                   flow-attrs="{accept:'image/*'}">
+          <md-icon md-svg-src="addPhoto"></md-icon>
+          <md-tooltip>Upload photo</md-tooltip>
+        </md-button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="info">
+    <div layout="row">
+    <form flex-gt-sm="50" flex="66" name="basicForm"
+          autocomplete="off"
+          ng-submit="update(user)"
+          class="basic"
+          >
+      <div class="title">
+        Basic information
+      </div>
+
+      <md-input-container>
+        <label>Username</label>
+        <input name="userName"
+               ng-model="user.username"
+               maxlength="50"
+               required>
+        <div ng-messages="basicForm.userName.$error">
+          <div ng-message="required">This is required</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>First name</label>
+        <input name="firstName"
+               ng-model="user.first_name"
+               ng-pattern="/^([a-zA-Zа-яА-Я0-9\x20])*$/"
+               maxlength="50"
+               required>
+        <div ng-messages="basicForm.firstName.$error">
+          <div ng-message="required">This is required</div>
+          <div ng-message="pattern">First name must consist of letters</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Last name</label>
+        <input name="lastName"
+               ng-model="user.last_name"
+               ng-pattern="/^([a-zA-Zа-яА-Я0-9\x20])*$/"
+               maxlength="50"
+               required>
+        <div ng-messages="basicForm.lastName.$error">
+          <div ng-message="required">This is required</div>
+          <div ng-message="pattern">Last name must consist of letters</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Email</label>
+        <input name="email"
+               ng-model="user.email"
+               lower-case-input
+               ng-pattern="/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/"
+               required>
+        <div ng-messages="basicForm.email.$error">
+          <div ng-message="required">This is required</div>
+          <div ng-message="pattern">Invalid email</div>
+        </div>
+      </md-input-container>
+
+      <div>
+        <md-button class="md-primary md-raised"
+                   type="submit"
+                   ng-disabled="basicForm.$invalid">
+          Update
+        </md-button>
+      </div>
+    </form>
+
+    <form flex-gt-sm="50" flex="66" name="passwordForm"
+          autocomplete="off"
+          class="change-password"
+          ng-submit="changePassword(pass)"
+          >
+      <div class="title">
+        Change password
+      </div>
+
+      <md-input-container>
+        <label>Verify current password</label>
+        <input name="oldPass"
+               ng-model="pass.old"
+               type="password"
+               maxlength="32"
+               required>
+        <div ng-messages="passwordForm.oldPass.$error">
+          <div ng-message="required">This is required</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>New password</label>
+        <input name="newPass"
+               ng-model="pass.new"
+               type="password"
+               maxlength="32"
+               minlength="6"
+               required>
+        <div ng-messages="passwordForm.newPass.$error">
+          <div ng-message="required">This is required</div>
+          <div ng-message="minlength">Password min length 6</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Confirm new password</label>
+        <input name="confirmPass"
+               ng-model="pass.confirm"
+               type="password"
+               maxlength="32"
+               confirm-password
+               original-password="pass.new">
+        <div ng-messages="passwordForm.confirmPass.$error">
+          <div ng-message="required">This is required</div>
+          <div ng-message="repeat">Passwords don't match</div>
+        </div>
+      </md-input-container>
+
+      <div>
+        <md-button class="md-primary md-raised"
+                   type="submit"
+                   ng-disabled="passwordForm.$invalid">
+          Update
+        </md-button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

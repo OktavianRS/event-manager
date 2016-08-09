@@ -1,0 +1,201 @@
+<div class="list-user container">
+  <div class="md-whiteframe-3dp tabel-area">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools"
+           layout="row"
+           layout-align="space-between center">
+        <span>Users</span>
+        <md-button class="md-raised md-icon-button md-primary"
+                   ui-sref="addUser"
+                   previous-page-set
+                   aria-label="ok">
+          <md-tooltip md-direction="bottom">
+            add new user
+          </md-tooltip>
+          <md-icon md-svg-src="addUsers"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-on-reorder="onReorderUser">
+        <tr md-row
+            ng-init="searchContainerFirstName = false"
+            ng-init="searchContainerLastName = false"
+            ng-init="searchContainerPosition = false"
+            ng-init="searchContainerCompany = false"
+            ng-init="searchContainerRole = false">
+          <th class="table-logo" md-column><span>Avatar</span></th>
+
+          <th class="table-first-name"
+              md-column
+              md-order-by="first_name"
+              ng-if="!searchContainerFirstName">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerFirstName = true"
+                     class="search"></md-icon>
+            <span>First name</span>
+          </th>
+          <th class="table-first-name"
+              md-column
+              ng-if="searchContainerFirstName">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>First name</label>
+              <input ng-model="searchUserFirstName"
+                     ng-change="searchUser('firstName', searchUserFirstName)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerFirstName = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-last-name"
+              md-column
+              md-order-by="last_name"
+              ng-if="!searchContainerLastName">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerLastName = true"
+                     class="search"></md-icon>
+            <span>Last name</span>
+          </th>
+          <th class="table-last-name"
+              md-column
+              ng-if="searchContainerLastName">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Last name</label>
+              <input ng-model="searchUserLastName"
+                     ng-change="searchUser('lastName', searchUserLastName)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerLastName = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-position"
+              md-column
+              md-order-by="position"
+              ng-if="!searchContainerPosition">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerPosition = true"
+                     class="search"></md-icon>
+            <span>Position</span>
+          </th>
+          <th class="table-position"
+              md-column
+              ng-if="searchContainerPosition">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Position</label>
+              <input ng-model="searchUserPosition"
+                     ng-change="searchUser('position', searchUserPosition)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerPosition = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-company"
+              md-column
+              md-order-by="organization_id"
+              ng-if="!searchContainerCompany">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerCompany = true"
+                     class="search"></md-icon>
+            <span>Company</span>
+          </th>
+          <th class="table-company"
+              md-column
+              ng-if="searchContainerCompany">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Company</label>
+              <input ng-model="searchUserCompany"
+                     ng-change="searchUser('organization', searchUserCompany)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerCompany = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-role"
+              md-column
+              md-order-by="role"
+              ng-if="!searchContainerRole">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerRole = true"
+                     class="search"></md-icon>
+            <span>Role</span>
+          </th>
+          <th class="table-role"
+              md-column
+              ng-if="searchContainerRole">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Role</label>
+              <input ng-model="searchUserRole"
+                     ng-change="searchUser('role', searchUserRole)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerRole = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-action" md-column></th>
+        </tr>
+
+        </thead>
+
+        <tbody md-body>
+        <tr md-row ng-repeat="item in users">
+          <td md-cell>
+            <div class="image-box"><img ng-src="{{item.image}}"></div>
+          </td>
+          <td md-cell>{{item.first_name}}</td>
+          <td md-cell>{{item.last_name}}</td>
+          <td md-cell>{{item.position}}</td>
+          <td md-cell>{{item.organization_id.name}}</td>
+          <td md-cell>{{item.role.name}}</td>
+          <td class="table-action" md-cell>
+            <div layout="row" layout-align="end center">
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="showUserInfo($event, item.id);"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  view user
+                </md-tooltip>
+                <md-icon md-svg-src="view"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         previous-page-set
+                         ui-sref="updateUser({userId: item.id})"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  edit user
+                </md-tooltip>
+                <md-icon md-svg-src="edit"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="deleteUser(item.id)"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  delete user
+                </md-tooltip>
+                <md-icon md-svg-src="delete"></md-icon>
+              </md-button>
+            </div>
+          </td>
+        </tr>
+
+        <tr md-row ng-if="!users.length">
+          <td md-cell colspan="7">Users not found</td>
+        </tr>
+        </tbody>
+      </table>
+      <md-table-pagination ng-if="users.length"
+                           md-limit="userSetting.show"
+                           md-page="userSetting.current"
+                           md-limit-options="[10,25,50]"
+                           md-total="{{userSetting.total}}"
+                           md-on-paginate="onPaginateUser"
+                           md-page-select>
+      </md-table-pagination>
+    </md-table-container>
+  </div>
+</div>

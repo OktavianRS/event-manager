@@ -1,0 +1,6 @@
+/dist
+/q.json
+.idea
+node_modules
+app/bower_components
+app/style.css

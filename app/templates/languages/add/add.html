@@ -1,0 +1,61 @@
+<div class="language-add container"
+     layout="column"
+     layout-align="center stretch">
+  <div layout="row"
+       layout-align="center center"
+       class="header">
+    {{header}}
+  </div>
+  <div class="language-add-box"
+       layout="row"
+       layout-align="center center">
+    <form name="addLanguageForm"
+          autocomplete="off"
+          ng-submit="saveLanguage(language)"
+          flex="50"
+          layout="column"
+          layout-align="start stretch">
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Language name</label>
+          <input name="languageName"
+                 ng-model="language.languageName"
+                 maxlength="45"
+                 md-maxlength="45"
+                 required>
+          <div ng-messages="addLanguageForm.languageName.$error">
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row">
+        <md-input-container flex-auto>
+          <label>Language code</label>
+          <input name="code"
+                 ng-model="language.code"
+                 maxlength="45"
+                 md-maxlength="45"
+                 required>
+          <div ng-messages="addLanguageForm.code.$error">
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <div layout="row"
+           layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   previous-page-get>
+          Cancel
+        </md-button>
+        <md-button class="md-raised md-primary"
+                   ng-disabled="addLanguageForm.$invalid"
+                   type="submit">
+          {{labelButton}}
+        </md-button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+.event-header {
+  background-color: $background-header;
+  height: $height-header;
+  color: $color-header;
+  position: relative;
+  z-index: 1;
+  .home {
+    margin: 0;
+    border-radius: 0;
+    padding: 0 16px;
+    width: $width-sidenav;
+    height: $height-header;
+    line-height: $height-header;
+    font-weight: bold;
+  }
+
+  md-icon {
+    fill: #fff;
+  }
+
+  .event-menu {
+    margin-right: 20px;
+  }
+
+  .badge {
+    margin-top: -20px;
+    margin-right: -10px;
+    background:red;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 12px;
+  }
+
+  .md-menu {
+    padding: 0;
+    height: $height-header;
+    min-height: $height-header;
+    line-height: $height-header;
+    .user-btn {
+      //padding: 0 6px 0 0;
+      margin: 0;
+      text-transform: none;
+      height: $height-header;
+      min-height: $height-header;
+      line-height: $height-header;
+
+      .user {
+        .img-box {
+          height: $height-header - 8px;
+          width: $height-header - 8px;
+          overflow: hidden;
+          border-radius: 6px;
+          margin: 4px 0;
+          box-sizing: border-box;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .name {
+          max-width: 250px;
+          margin: 0 8px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        md-icon{
+          color: $color-header;
+        }
+      }
+    }
+  }
+}

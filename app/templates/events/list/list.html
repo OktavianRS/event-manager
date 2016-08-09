@@ -1,0 +1,145 @@
+<div class="list-event container">
+  <div class="md-whiteframe-3dp table-area">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools"
+           layout="row"
+           layout-align="space-between center">
+        <span>Events</span>
+        <md-button class="md-raised md-icon-button md-primary"
+                   previous-page-set
+                   ui-sref="addEvent"
+                   aria-label="ok">
+          <md-tooltip md-direction="bottom">
+            add new event
+          </md-tooltip>
+          <md-icon md-svg-src="add"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-on-reorder="onReorderEvent">
+        <tr md-row
+            ng-init="searchContainerName = false"
+            ng-init="searchContainerCompany = false">
+          <th class="table-logo"
+              md-column><span>Logo</span></th>
+
+          <th class="table-name"
+              md-column
+              md-order-by="name"
+              ng-if="!searchContainerName">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerName = true"
+                     class="search"></md-icon>
+            <span>Name</span>
+          </th>
+          <th class="table-name"
+              md-column
+              ng-if="searchContainerName">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Name</label>
+              <input ng-model="searchEventName"
+                     ng-change="searchEvent('name', searchEventName)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerName = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-date"
+              md-column
+              md-order-by="date">
+            <span>Date</span>
+          </th>
+
+          <th class="table-company"
+              md-column
+              md-order-by="organization_id"
+              ng-if="!searchContainerCompany">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerCompany = true"
+                     class="search"></md-icon>
+            <span>Company</span>
+          </th>
+          <th class="table-company"
+              md-column
+              ng-if="searchContainerCompany">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Company</label>
+              <input ng-model="searchEventCompany"
+                     ng-change="searchEvent('company', searchEventCompany)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerCompany = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-action"
+              md-column></th>
+        </tr>
+        </thead>
+
+        <tbody md-body>
+        <tr md-row ng-repeat="item in events">
+          <td md-cell>
+            <div class="image-box"><img ng-src="{{item.image}}"></div>
+          </td>
+          <td md-cell>{{item.name}}</td>
+          <td md-cell>{{item.date}}</td>
+          <td md-cell>{{item.organization_id.name}}</td>
+          <td md-cell>
+            <div layout="row" layout-align="end center">
+              <md-button class="md-raised md-icon-button md-primary"
+                         ui-sref="oneEvent({eventId: item.id})"
+                         aria-label="ok">
+                <md-icon md-svg-src="view"></md-icon>
+                <md-tooltip md-direction="bottom">
+                  view event
+                </md-tooltip>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         previous-page-set
+                         ui-sref="stepsCreator({eventId: item.id})"
+                         aria-label="ok">
+                <md-icon md-svg-src="assignment"></md-icon>
+                <md-tooltip md-direction="bottom">
+                  Steps creator
+                </md-tooltip>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         previous-page-set
+                         ui-sref="updateEvent({eventId: item.id})"
+                         aria-label="ok">
+                <md-icon md-svg-src="edit"></md-icon>
+                <md-tooltip md-direction="bottom">
+                  edit event
+                </md-tooltip>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="deleteEvent(item.id)"
+                         aria-label="ok">
+                <md-icon md-svg-src="delete"></md-icon>
+                <md-tooltip md-direction="bottom">
+                  delete event
+                </md-tooltip>
+              </md-button>
+            </div>
+          </td>
+        </tr>
+
+        <tr md-row ng-if="!events.length">
+          <td md-cell colspan="5">Event not found</td>
+        </tr>
+        </tbody>
+      </table>
+      <md-table-pagination md-limit="eventSetting.show"
+                           md-page="eventSetting.current"
+                           md-limit-options="[10,25,50]"
+                           md-total="{{eventSetting.total}}"
+                           md-on-paginate="onPaginateEvent"
+                           md-page-select>
+      </md-table-pagination>
+    </md-table-container>
+  </div>
+</div>

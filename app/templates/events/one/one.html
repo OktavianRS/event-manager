@@ -1,0 +1,180 @@
+<div class="event-one container">
+  <div layout="row" layout-align="space-between center">
+    <div></div>
+    <div class="head-title">
+      {{event.name}}
+    </div>
+    <div layout="row">
+      <md-button class="md-raised md-icon-button md-primary" aria-label="ok" ui-sref="listEvent">
+        <md-icon md-svg-src="list"></md-icon>
+      </md-button>
+      <md-button class="md-raised md-icon-button md-primary" aria-label="ok" previous-page-set
+                 ui-sref="updateEvent({eventId: event.id})">
+        <md-icon md-svg-src="edit"></md-icon>
+      </md-button>
+      <md-button class="md-raised md-icon-button md-primary" aria-label="ok" ng-click="deleteEvent(event.id)">
+        <md-icon md-svg-src="delete"></md-icon>
+      </md-button>
+    </div>
+  </div>
+  <md-tabs md-dynamic-height>
+    <md-tab label="Details">
+      <md-content class="md-padding details">
+        <div layout="row">
+          <div flex="40" class="image-box">
+            <img ng-src="{{event.image}}">
+          </div>
+
+          <div flex="60" class="info">
+            <div class="row-info">
+              <span>Date: </span>{{event.date}}
+            </div>
+            <div class="row-info">
+              <span>Company: </span>{{event.organization_id.name}}
+            </div>
+
+            <div layout="row">
+              <div class="list-box" flex="50" ng-if="event.languages.length">
+                <div class="title">Languages</div>
+                <div class="one-item"
+                     layout="row"
+                     ng-repeat="item in event.languages">
+                  <div class="text">{{item.name}}</div>
+                </div>
+              </div>
+
+              <div class="list-box" flex="50" ng-if="event.location.length">
+                <div class="title">Location</div>
+                <div class="one-item"
+                     layout="row"
+                     ng-repeat="item in event.location">
+                  <div class="text">{{item.name}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attachment-title">Attachment</div>
+        <div class="attachment">
+          <div class="button-aria" layout="row" layout-align="space-between center">
+            <md-button class="md-primary md-raised">
+              upload All
+            </md-button>
+            <div>
+              <md-button class="md-primary md-icon-button md-raised" ng-disabled="configAttachments.currentPage == 1"
+                         aria-label="ok" ng-click="prevAttach()">
+                <md-icon md-svg-src="arrowLeft"></md-icon>
+              </md-button>
+              <md-button class="md-primary md-icon-button md-raised"
+                         ng-disabled="configAttachments.currentPage == configAttachments.totalPages" aria-label="ok"
+                         ng-click="nextAttach()">
+                <md-icon md-svg-src="arrowRight"></md-icon>
+              </md-button>
+            </div>
+          </div>
+          <div class="attachment-aria" layout="row" layout-wrap>
+            <div ng-repeat="item in attachments" class="one-attach" flex="20" ng-click="">
+              <md-icon md-svg-src="file"></md-icon>
+              <div class="name">{{item.name}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comments"
+             flow-init
+             flow-file-success="$file.msg = $message"
+             flow-files-added="addedNewFile($files, $event, $flow )">
+          <div ng-if="!addFlag"
+               layout="row">
+            <md-button class="md-raised md-primary"
+                       ng-click="addButton()">
+              Add comment
+            </md-button>
+          </div>
+          <div ng-if="addFlag"
+               class="new-comment">
+            <div layout="row"
+                 layout-align="space-between center">
+              <div class="user-name">
+                {{$root.user.first_name}} {{$root.user.last_name}}
+              </div>
+              <div>
+                <md-button class="md-raised md-primary md-icon-button"
+                           aria-label="ok"
+                           flow-btn>
+                  <md-icon md-svg-src="attachment"></md-icon>
+                </md-button>
+                <md-button class="md-raised"
+                           ng-click="cancelComment($flow)">
+                  Cancel
+                </md-button>
+                <md-button class="md-raised md-primary"
+                           ng-disabled="!newComment"
+                           ng-click="saveComment(newComment, $flow)">
+                  Send
+                </md-button>
+              </div>
+            </div>
+            <div layout="row">
+              <div class="user-avatar">
+                <img ng-src="{{$root.user.image}}">
+              </div>
+              <md-input-container flex-auto>
+                <label>Add comment</label>
+              <textarea ng-model="newComment"
+                        maxlength="500"
+                        md-maxlength="500"
+                        required></textarea>
+              </md-input-container>
+            </div>
+            <div class="attachments">
+              <div class="one-attach" layout="row" layout-align="start center" ng-repeat="item in $flow.files">
+                <md-icon md-svg-src="file"></md-icon>
+                <div flex-auto class="one-attach-text">{{item.name}}</div>
+                <md-button class="md-raised md-warn md-icon-button"
+                           aria-label="ok"
+                           ng-click="deleteAttachment($index, $flow)">
+                  <md-icon md-svg-src="close"></md-icon>
+                </md-button>
+              </div>
+            </div>
+          </div>
+          <div class="one-comment" ng-repeat="item in comments">
+            <md-divider></md-divider>
+            <div layout="row">
+              <div class="user-avatar">
+                <img ng-src="{{item.created_by.image}}">
+              </div>
+              <div class="user-info">
+                <div class="user-name">
+                  {{item.created_by.fullName}}
+                  <span>{{item.created_at}}</span>
+                </div>
+                <div class="user-position">
+                  {{item.created_by.position}}
+                </div>
+              </div>
+            </div>
+            <div class="comment">
+              {{item.text}}
+            </div>
+            <div class="comment-attachment" layout="row" layout-wrap>
+              <div class="comment-attachment-one" flex="10" ng-repeat="attach in item.attachment" ng-click="">
+                <md-icon md-svg-src="file"></md-icon>
+                <div class="name">{{attach.name}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="no-comment" layout="row" layout-align="center center" ng-if="!comments.length">
+            No comment
+          </div>
+        </div>
+      </md-content>
+    </md-tab>
+    <md-tab label="participate">
+      participate
+    </md-tab>
+  </md-tabs>
+</div>

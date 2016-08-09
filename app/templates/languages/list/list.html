@@ -1,0 +1,126 @@
+<div class="list-language container">
+  <div class="md-whiteframe-3dp table-area">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools"
+           layout="row"
+           layout-align="space-between center">
+        <span>Languages</span>
+        <md-button class="md-raised md-icon-button md-primary"
+                   previous-page-set
+                   ui-sref="addLanguage"
+                   aria-label="ok">
+          <md-tooltip md-direction="bottom">
+            add new language
+          </md-tooltip>
+          <md-icon md-svg-src="add"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-table-container>
+      <table md-table>
+        <thead md-head md-on-reorder="onReorderLanguage">
+        <tr md-row
+            ng-init="searchContainerName = false"
+            ng-init="searchContainerCode = false">
+          <!--name-->
+          <th class="table-name"
+              md-column
+              md-order-by="name"
+              ng-if="!searchContainerName">
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerName = true"
+                     class="search"></md-icon>
+            <span>Name</span>
+          </th>
+          <th class="table-name"
+              md-column
+              ng-if="searchContainerName">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Name</label>
+              <input ng-model="searchLanguageName"
+                     ng-change="searchLanguage('name', searchLanguageName)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerName = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <!--code-->
+          <th class="table-code"
+              md-order-by="code"
+              ng-if="!searchContainerCode"
+              md-column>
+            <md-icon md-svg-src="search"
+                     ng-click="$parent.searchContainerCode = true"
+                     class="search"></md-icon>
+            <span>Code</span>
+          </th>
+          <th class="table-phone"
+              md-column
+              ng-if="searchContainerCode">
+            <md-input-container flex-auto md-no-float class="md-block">
+              <label>Phone</label>
+              <input ng-model="searchLanguageCode"
+                     ng-change="searchLanguage('code', searchLanguageCode)">
+              <md-icon md-svg-src="search"
+                       ng-click="$parent.searchContainerCode = false"
+                       class="search"></md-icon>
+            </md-input-container>
+          </th>
+
+          <th class="table-action"
+              md-column><span></span></th>
+        </tr>
+        </thead>
+
+        <tbody md-body>
+        <tr md-row ng-repeat="item in languages">
+          <td md-cell>{{item.name}}</td>
+          <td md-cell>{{item.code}}</td>
+          <td class="table-action"
+              md-cell>
+            <div layout="row" layout-align="end center">
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="showLanguageInfo($event, item.id)"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  view language
+                </md-tooltip>
+                <md-icon md-svg-src="view"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         previous-page-set
+                         ui-sref="updateLanguage({languageId: item.id})"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  edit language
+                </md-tooltip>
+                <md-icon md-svg-src="edit"></md-icon>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
+                         ng-click="deleteLanguage(item.id)"
+                         aria-label="ok">
+                <md-tooltip md-direction="bottom">
+                  delete language
+                </md-tooltip>
+                <md-icon md-svg-src="delete"></md-icon>
+              </md-button>
+            </div>
+          </td>
+        </tr>
+
+        <tr md-row ng-if="!languages.length">
+          <td md-cell colspan="3">Language not found</td>
+        </tr>
+        </tbody>
+      </table>
+      <md-table-pagination md-limit="languageSetting.show"
+                           md-page="languageSetting.current"
+                           md-limit-options="[10,25,50]"
+                           md-total="{{languageSetting.total}}"
+                           md-on-paginate="onPaginateLanguage"
+                           md-page-select>
+      </md-table-pagination>
+    </md-table-container>
+  </div>
+</div>
