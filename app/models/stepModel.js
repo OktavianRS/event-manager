@@ -42,13 +42,10 @@ angular.module('model.step', [
           })
         }
 
-        this.sendTableData = function(eventId, req, callback) {
+        this.sendTableData = function(req, callback) {
           api.post(
             url.step.generateTable,
-            {
-              _eventId: eventId,
-              TableGenerator: req
-            },
+            req,
             function(res) {
               callback(res);
             }

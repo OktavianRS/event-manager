@@ -1,0 +1,30 @@
+<div class="step-content-row">
+  <md-input-container class="md-block">
+    <label>Model Class</label>
+    <input required type="text" ng-model="datas.modelClass">
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label>Search Model Class</label>
+    <input required type="text" ng-model="datas.searchModelClass">
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label>Controller Class</label>
+    <input required type="text" ng-model="datas.controllerClass">
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label>Base Controller Class</label>
+    <input required type="text" ng-model="datas.baseControllerClass">
+  </md-input-container>
+
+<md-input-container class="field-params-select">
+  <label>Code Template</label>
+  <md-select required ng-model="datas.template">
+    <md-option ng-repeat="type in controllerTemplates" ng-value="type.name">
+      {{type.name}}
+    </md-option>
+  </md-select>
+</md-input-container>
+
+<md-button class="md-raised next-step-button" ng-click="sendTableData()">Done</md-button>
+
+</div>

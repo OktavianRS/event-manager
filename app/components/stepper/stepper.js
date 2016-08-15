@@ -7,19 +7,14 @@ angular.module('components.stepper', [])
     }])
     .controller('stepperCtrl', ['$scope', 'stepModel', function($scope, stepModel){
     	$scope.table = [];
-    	$scope.showInputContainer = false;
 
         $scope.getStep = function() {
             stepModel.getStep($scope.stateParams.eventId,function(res) {
                 $scope.steps = res;
-                $scope.steps.model.step -= 1;
+                $scope.steps.model.step = --res.model.step;
                 $scope.showme = true;
             });
         }
         $scope.getStep();
 
-        $scope.select = function(type) {
-        	console.log(type.params);
-        	$scope.showInputContainer = true;
-        }
     }])

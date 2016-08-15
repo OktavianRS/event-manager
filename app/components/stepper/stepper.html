@@ -9,7 +9,9 @@
     <md-steppers md-selected="steps.model.step" md-stretch-steppers="always">
       <md-step ng-repeat="step in steps.model.steps" label="{{step.name}}" ng-disabled="steps.model.step === $index ? false : true">
         <md-content layout-padding>
-          <step-table-generator></step-table-generator>
+          <step-table-generator ng-if="steps.model.step === 0"></step-table-generator>
+          <step-model-generator ng-if="steps.model.step === 1"></step-model-generator>
+          <step-controller-generator ng-if="steps.model.step === 2"></step-controller-generator>
         </md-content>
       </md-step>
     </md-steppers>

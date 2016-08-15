@@ -1,0 +1,37 @@
+<div class="step-model-generator">
+	<md-input-container class="md-block">
+		<label>Namespace</label>
+		<input required type="text" ng-model="datas.ns">
+	</md-input-container>
+	<md-input-container class="md-block">
+		<label>Base class</label>
+		<input required type="text" ng-model="datas.baseClass">
+	</md-input-container>
+	<md-input-container class="field-type-select">
+		<label>Generate Relations</label>
+		<md-select required ng-model="datas.generateRelations">
+			<md-option ng-repeat="rel in modelRelations" ng-value="rel.value">
+				{{rel.name}}
+			</md-option>
+		</md-select>
+	</md-input-container>
+	<md-switch ng-model="datas.generateLabelsFromComments" aria-label="Switch 1">
+		Generate Labels from DB Comments
+	</md-switch>
+	<md-switch ng-model="datas.enableI18N" aria-label="Switch 2">
+		Enable I18N
+	</md-switch>
+	<md-input-container class="md-block" ng-if="datas.enableI18N">
+		<label>Message Category</label>
+		<input required type="text" ng-model="datas.messageCategory">
+	</md-input-container>
+	<md-input-container class="field-type-select">
+		<label>Code Template</label>
+		<md-select required ng-model="datas.template">
+			<md-option ng-repeat="rel in modelTemplates" ng-value="rel.name">
+				{{rel.name}}
+			</md-option>
+		</md-select>
+	</md-input-container>
+	<md-button class="md-raised next-step-button" ng-click="sendTableData()">Next step</md-button>
+</div>

@@ -3,10 +3,10 @@ angular.module('components.stepTableGenerator', [])
       return {
         restrict: 'E',
         templateUrl: 'components/stepTableGenerator/stepTableGenerator.html',
-        controller: 'stepContentRowCtrl'
+        controller: 'stepTableGenerator'
       }
     }])
-    .controller('stepContentRowCtrl', ['$scope', 'stepModel', function($scope, stepModel){
+    .controller('stepTableGenerator', ['$scope', 'stepModel', function($scope, stepModel){
     	// vars
     	$scope.table = [];
     	$scope.fields = [0]
@@ -21,11 +21,11 @@ angular.module('components.stepTableGenerator', [])
     	// Interaction with model and data
 
         $scope.sendTableData = function() {
-            $scope.datas = {tables: [$scope.datas]};
-            stepModel.sendTableData($scope.stateParams.eventId, $scope.datas, function(data) {
-                if(data.model) {
-                    // $scope.stepperCtrl.steps.model.step += 1;
-                }
+            $scope.datas = {
+                _eventId: $scope.stateParams.eventId,
+                tableGenerator: { tables: [$scope.datas] }
+            };
+            stepModel.sendTableData($scope.datas, function(data) {
                 $scope.datas = {};
         	});
         }
