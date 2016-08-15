@@ -11,7 +11,7 @@ angular.module('components.stepControllerGenerator', [])
             stepModel.getStepInfo($scope.stateParams.eventId,function(data) {
                 $scope.stepInfo = data;
                 $scope.controllerTemplates = data.additional_value.templates;
-                $scope.datas = data.value;
+                $scope.datas = data.value.CrudGenerator;
             })
         }
         $scope.getStepInfo();

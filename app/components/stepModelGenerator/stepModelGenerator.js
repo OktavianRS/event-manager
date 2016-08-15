@@ -12,7 +12,7 @@ angular.module('components.stepModelGenerator', [])
                 $scope.stepInfo = data;
                 $scope.modelRelations = data.additional_value.relations;
                 $scope.modelTemplates = data.additional_value.templates;
-                $scope.datas = data.value;
+                $scope.datas = data.value.ModelGenerator;
             })
         }
         $scope.getStepInfo();
