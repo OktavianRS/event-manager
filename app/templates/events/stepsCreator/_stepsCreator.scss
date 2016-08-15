@@ -12,12 +12,31 @@
 		margin: auto;
 	}
 	.fields {
-		margin: 0px 100px;
+		margin: 0px 100px 10px;
 		border: 1px solid #ccc;
+		-webkit-box-shadow: 4px 9px 18px -5px rgba(0,0,0,0.4);
+		-moz-box-shadow: 4px 9px 18px -5px rgba(0,0,0,0.4);
+		box-shadow: 4px 9px 18px -5px rgba(0,0,0,0.4);
+		border-radius: 5px;
 		.field-name-field {
 			width: 80%;
 			margin: 20px auto 0;
 			display: block;
+		}
+		.field-type-select,
+		.field-params-select {
+			width: 49%;
+		}
+		.two-cols {
+			width: 80%;
+			margin: auto;
+		}
+		.field-type-container,
+		.field-params-container {
+			width: 49%;
+		}
+		.multiple-option .md-container {
+			display: none;
 		}
 	}
 }

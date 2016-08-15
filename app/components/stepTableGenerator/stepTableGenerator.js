@@ -36,9 +36,8 @@ angular.module('components.stepTableGenerator', [])
 
         $scope.sendTableData = function() {
             $scope.datas = {tables: [$scope.datas]};
-        	stepModel.sendTableData($scope.stateParams.eventId, $scope.datas, function(data) {
-                $scope.datas = [];
-                console.log(data);
+            stepModel.sendTableData($scope.stateParams.eventId, $scope.datas, function(data) {
+                $scope.datas = {};
         	});
         }
 
