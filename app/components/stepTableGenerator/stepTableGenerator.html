@@ -12,8 +12,6 @@
   <input type="text" ng-model="datas.fields[field].name">
 </md-input-container>
 
-<div>
-
   <md-input-container>
     <label>Field type</label>
     <md-select ng-model="datas.fields[field].type" ng-change="">
@@ -33,16 +31,14 @@
     <input required type="text" ng-model="datas.fields[field].type.value[$index]">
   </md-input-container>
 
-</div>
 
   <!-- end of field type -->
 
-<div>
 
 <md-input-container>
   <label>Field params</label>
   <md-select multiple ng-model="datas.fields[field].params" ng-change="fieldParamsSelected()">
-    <md-option ng-repeat="type in tableParams" ng-value="{{ {index: $index, name: type.name, val: type.params} }}">
+    <md-option ng-repeat="type in tableParams" ng-value="{{ {index: $index, name: type.value, val: type.params} }}">
       <span>{{type.name}}</span>
     </md-option>
   </md-select>
@@ -53,7 +49,6 @@
   <input type="text" ng-model="datas.fields[field].params[$index].value[$index]">
 </md-input-container>
 
-</div>
 </div><!-- fields -->
 
 <md-button class="md-fab md-mini md-primary" ng-click="addNewField()">

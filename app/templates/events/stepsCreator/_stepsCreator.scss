@@ -14,5 +14,10 @@
 	.fields {
 		margin: 0px 100px;
 		border: 1px solid #ccc;
+		.field-name-field {
+			width: 80%;
+			margin: 20px auto 0;
+			display: block;
+		}
 	}
 }
