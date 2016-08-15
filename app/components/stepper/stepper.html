@@ -1,0 +1,17 @@
+<div class="stepper" ng-controller="stepperCtrl">
+  <md-card>
+    <md-toolbar>
+    <div class="md-toolbar-tools">
+      <img ng-src="{{steps.model.image}}" class="md-icon-button" style="margin-right: 10px;height: 30px; width: 30px;">
+      <h2>{{steps.model.name}}</h2>
+    </div>
+  </md-toolbar>
+    <md-steppers md-selected="steps.model.step" md-stretch-steppers="always">
+      <md-step ng-repeat="step in steps.model.steps" label="{{step.name}}" ng-disabled="steps.model.step === $index ? false : true">
+        <md-content layout-padding>
+          <step-content-row></step-content-row>
+        </md-content>
+      </md-step>
+    </md-steppers>
+  </md-card>
+</div>

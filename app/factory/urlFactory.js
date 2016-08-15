@@ -1,7 +1,7 @@
 angular.module('factory.url', [])
     .factory('url', [
       function() {
-        var baseUrl = 'http://192.168.0.103/api/web/v1/';
+        var baseUrl = 'http://192.168.0.118/api/web/v1/';
         //var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
 
         return {
@@ -33,8 +33,9 @@ angular.module('factory.url', [])
             addComment: baseUrl + 'comment/create',
             getComments: baseUrl + 'comment/index',
             getAttachments: baseUrl + 'attachment/index',
-            uploadAllAttach: baseUrl + '',
-            uploadAttach: baseUrl + 'attachment/download'
+            uploadAllAttach: baseUrl + 'attachment/download-all',
+            uploadOneAttach: baseUrl + 'attachment/download',
+            removeOne: baseUrl + 'attachment/delete'
           },
           language: {
             create: baseUrl + 'language/create',
@@ -51,6 +52,13 @@ angular.module('factory.url', [])
             getAll: baseUrl + 'location/index',
             getAllList: baseUrl + 'location/all',
             remove: baseUrl + 'location/delete'
+          },
+          step: {
+            getStep: baseUrl + 'event-generate/step',
+            getTableType: baseUrl + 'event-generate/table-type',
+            getTableParams: baseUrl + 'event-generate/table-param',
+            getStepInfo: baseUrl + 'event-generate/step-info',
+            generateTable: baseUrl + 'event-generate/generate'
           }
         }
       }

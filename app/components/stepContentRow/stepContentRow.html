@@ -1,0 +1,66 @@
+<md-input-container class="md-block">
+  <label>Table name</label>
+  <input type="text" ng-model="datas.table">
+</md-input-container>
+
+<div class="fields" ng-repeat="field in fields">
+
+<md-input-container>
+  <label>Field name</label>
+  <input type="text" ng-model="datas.fields[field].name">
+</md-input-container>
+
+<div>
+
+  <md-input-container>
+    <label>Field type</label>
+    <md-select ng-model="datas.fields[field].type.primaryKey" ng-change="">
+      <md-option ng-repeat="type in tableType" ng-value="{{ {index: $index, name: type.name} }}">
+        {{type.name}}
+      </md-option>
+    </md-select>
+  </md-input-container>
+
+
+  <!-- field type -->
+
+
+  <md-input-container
+    ng-repeat="val in tableType[datas.fields[field].type.primaryKey.index].params track by $index">
+    <label>{{ val }}</label>
+    <input required type="text" ng-model="datas.fields[field].type.value[$index]">
+  </md-input-container>
+
+</div>
+
+  <!-- end of field type -->
+
+<div>
+
+<md-input-container>
+  <label>Field params</label>
+  <md-select multiple ng-model="datas.fields[field].params" ng-change="fieldParamsSelected()">
+    <md-option ng-repeat="type in tableParams" ng-value="{{ {index: $index, name: type.name, val: type.params} }}">
+      <span>{{type.name}}</span>
+    </md-option>
+  </md-select>
+</md-input-container>
+
+<md-input-container ng-repeat="par in datas.fields[field].params" ng-if="par.name === 'Comment' || par.name === 'Default'">
+  <label>Value for {{par.name}}</label>
+  <input type="text" ng-model="datas.fields[field].params[$index].value" ng-click="log(par.val)">
+</md-input-container>
+
+</div>
+<hr>
+</div><!-- fields -->
+
+<md-button class="md-fab md-mini md-primary" ng-click="sendTableData()">
+  <md-icon md-svg-src="done" style="color: greenyellow;" ></md-icon>
+  <md-tooltip>Done</md-tooltip>
+</md-button>
+
+<md-button class="md-fab md-mini md-primary" ng-click="addNewField()">
+  <md-icon md-svg-src="add" style="color: greenyellow;" ></md-icon>
+  <md-tooltip>Add field</md-tooltip>
+</md-button>

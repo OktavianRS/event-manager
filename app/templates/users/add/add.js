@@ -36,7 +36,7 @@ angular.module('eventManager')
               newUser.organizationId,
               newUser.userPassword,
               function(data) {
-                $state.go('oneUser', {userId: data.id});
+                $state.go('listUser');
               }
           )
         };

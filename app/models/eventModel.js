@@ -202,15 +202,45 @@ angular.module('model.event', [])
           )
         };
 
+        /**
+         * Upload one attachment
+         * @param {int} attachmentId - Attachment ID
+         * @param {function} callback - request callback
+         */
+        this.uploadOneAttach = function(attachmentId, callback) {
+          api.get(
+            url.event.uploadOneAttach,
+            {
+              id: attachmentId
+            },
+            function(data) {
+              callback(data);
+            }
+          )
+        }
+
         this.uploadAttach = function(attachmentId, callback) {
           api.get(
               url.event.uploadAttach,
               {
-                id: attachmentId
+                id: attachmentId,
+                type: 'all'
               },
               function(data) {
                 callback(data);
               }
+          )
+        }
+
+        this.deleteOneAttach = function(attachmentId, callback) {
+          api.delete(
+            url.event.removeOne,
+            {
+              id: attachmentId
+            },
+            function(data) {
+              callback(data);
+            }
           )
         }
       }

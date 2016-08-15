@@ -16,7 +16,7 @@ angular.module('eventManager')
           $scope.event.id = data.model.id;
           $scope.event.oldImage = data.model.image;
           $scope.event.eventName = data.model.name;
-          $scope.event.date = moment(data.model.dateUnix, 'X').format('DD/MM/YYYY');
+          $scope.event.date = moment(data.model.dateUnix, 'X')._d;
           $scope.event.time = moment(data.model.dateUnix, 'X').format('HH:mm');
           $scope.event.company = data.model.organization_id.id;
           $scope.locations = data.model.location;
@@ -28,10 +28,11 @@ angular.module('eventManager')
         });
 
         $scope.saveEvent = function(event) {
+          $scope.date = moment.utc(event.date).format('DD/MM/YYYY');
           eventModel.update(
               $scope.event.id,
               event.eventName,
-              moment(event.date+' '+event.time, 'DD/MM/YYYY HH:mm', true).format('X'),
+              moment($scope.date +' '+event.time, 'DD/MM/YYYY HH:mm', true).format('X'),
               event.company,
               $scope.languages.map(function(v){
                 return v.id;

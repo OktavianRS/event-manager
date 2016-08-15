@@ -19,6 +19,7 @@ angular.module('eventManager', [
       'model.company',
       'model.language',
       'model.location',
+      'model.step',
 
       'components.confirm-password',
       'components.lower-case-input',
@@ -31,7 +32,9 @@ angular.module('eventManager', [
       'components.languageModal',
       'components.homeEventCard',
       'components.homeAdmin',
-      'components.homeCompany'
+      'components.homeCompany',
+      'components.stepper',
+      'components.stepContentRow'
     ])
     //routing config
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -217,6 +220,8 @@ angular.module('eventManager', [
           .icon('notifications', 'images/icons/ic_notifications_white_24px.svg')
           .icon('archive', 'images/icons/ic_archive_white_24px.svg')
           .icon('assignment', 'images/icons/ic_assignment_white_24px.svg')
+          .icon('copy', 'images/icons/ic_content_copy_black_24px.svg')
+          .icon('upload', 'images/icons/ic_file_upload_black_24px.svg')
     }])
     //theme config
     .config(['$mdThemingProvider', function($mdThemingProvider) {

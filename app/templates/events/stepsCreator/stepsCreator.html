@@ -1,17 +1,3 @@
 <div class="steps-creator container">
-<h1>Steps creator</h1>
-  <md-card ng-init="selected = selected">
-    <md-steppers  md-selected="selected" md-stretch-steppers="always">
-      <md-step ng-repeat="step in steps" label="{{step.name}}" md-complete="step.completed" ng-disabled="step.disabled">
-        <md-content>
-          <h1>
-          {{step.content}}
-          </h1>
-          <label for="checker">Click to unlock next step</label>
-          <input name="checker" type="checkbox" ng-model="checker" ng-change="checkNextStep($index)">
-          <md-button class="md-raised md-primary" ng-click="completeStep($index);">NEXT</md-button>
-        </md-content>
-      </md-step>
-    </md-steppers>
-  </md-card>
+  <stepper/>
 </div>

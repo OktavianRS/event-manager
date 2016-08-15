@@ -33,27 +33,27 @@ angular.module('components.sidenav', [])
             itemUrl: 'home'
           },
           {
-            itemName: 'User',
+            itemName: 'Users',
             itemIcon: 'group',
             itemUrl: 'listUser'
           },
           {
-            itemName: 'Event',
+            itemName: 'Events',
             itemIcon: 'event',
             itemUrl: 'listEvent'
           },
           {
-            itemName: 'Company',
+            itemName: 'Companies',
             itemIcon: 'business',
             itemUrl: 'listCompany'
           },
           {
-            itemName: 'Language',
+            itemName: 'Languages',
             itemIcon: 'language',
             itemUrl: 'listLanguage'
           },
           {
-            itemName: 'Location',
+            itemName: 'Locations',
             itemIcon: 'edit-location',
             itemUrl: 'listLocation'
           }

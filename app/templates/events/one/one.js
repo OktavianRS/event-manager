@@ -1,6 +1,6 @@
 angular.module('eventManager')
-    .controller('oneEventCtrl', ['$scope', 'eventModel', '$state',
-      function($scope, eventModel, $state) {
+    .controller('oneEventCtrl', ['url', '$scope', 'eventModel', '$state', '$mdBottomSheet', '$mdDialog', '$sessionStorage',
+      function(url, $scope, eventModel, $state, $mdBottomSheet, $mdDialog, $sessionStorage) {
         console.info('oneEventCtrl');
         $scope.event = null;
         $scope.addFlag = false;
@@ -20,6 +20,7 @@ angular.module('eventManager')
 
         eventModel.getOne($scope.stateParams.eventId, function(data) {
           $scope.event = data.model;
+          $scope.uploadAllUrl = url.event.uploadAllAttach + '?access-token=' + $sessionStorage.auth_key + '&obj_id=' + $scope.stateParams.eventId + '&type=all&obj_type=event_attachment';
         });
 
         eventModel.getComments($scope.stateParams.eventId, function(data) {
@@ -34,6 +35,48 @@ angular.module('eventManager')
         };
         getAttach();
 
+        $scope.showBottomListAtachment = function(item) {
+          $scope.currentItem = item;
+          $mdBottomSheet.show({
+            templateUrl: 'components/bottomListAtachment/bottomListAtachment.html',
+            controller: 'bottomListAtachmentCtrl',
+            locals: {
+              currentItem: item,
+              uploadUrl: url.event.uploadOneAttach + '?access-token=' + $sessionStorage.auth_key + '&id=' + $scope.currentItem.id
+            }
+          }).then(function(clickedItem) {
+            clickedItem.name === 'View' ? $scope.showAtachmentModal() : false;
+            clickedItem.name === 'Upload' ? $scope.uploadOneAtachment() : false;
+            clickedItem.name === 'Delete' ? $scope.removeOneAttach() : false;
+          });
+        }
+
+        $scope.showAtachmentModal = function(ev) {
+          $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'components/atachmentViewModal/atachmentViewModal.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true,
+            fullscreen: true,
+            locals: {
+              item: $scope.currentItem
+            }
+          })
+        }
+
+        function DialogController($scope, $mdDialog, item) {
+          $scope.item = item;
+          $scope.hide = function() {
+            $mdDialog.hide();
+          };
+          $scope.cancel = function() {
+            $mdDialog.cancel();
+          };
+          $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+          };
+        }
 
         $scope.addButton = function() {
           $scope.addFlag = true;
@@ -60,6 +103,7 @@ angular.module('eventManager')
                 $scope.comments.unshift(data);
                 flow.files = [];
                 $scope.addFlag = false;
+                getAttach();
               }
           )
         };
@@ -69,6 +113,12 @@ angular.module('eventManager')
             $state.go('listEvent');
           })
         };
+
+        $scope.removeOneAttach = function() {
+          eventModel.deleteOneAttach($scope.currentItem.id, function(data) {
+            getAttach();
+          });
+        }
 
         $scope.uploadAttach = function(attachmentId) {
           eventModel.uploadAttach(attachmentId, function(data) {
@@ -98,6 +148,12 @@ angular.module('eventManager')
           //reader.readAsDataURL(file.file);
         };
 
+        $scope.deleteOneAttachment = function() {
+          eventModel($scope.currentItem.id, function(data) {
+
+          })
+        }
+
         $scope.deleteAttachment = function(index, flow) {
           flow.files.splice(index, 1);
         };
@@ -114,4 +170,21 @@ angular.module('eventManager')
           getAttach();
         };
       }
-    ]);
+    ])
+    .controller('bottomListAtachmentCtrl', ['$scope', '$mdBottomSheet', 'uploadUrl', 'currentItem',
+          function($scope, $mdBottomSheet, uploadUrl, currentItem) {
+        $scope.uploadUrl = uploadUrl;
+        $scope.currentItem = currentItem;
+        $scope.items = [
+          { name: 'View', icon: 'view', show: true},
+          { name: 'Upload', icon: 'upload', show: true },
+          { name: 'Delete', icon: 'delete', show: true }
+        ];
+        if($scope.currentItem.type !== 'image') {
+          $scope.items[0].show = false;
+        }
+        $scope.listItemClick = function($index) {
+          var clickedItem = $scope.items[$index];
+          $mdBottomSheet.hide(clickedItem);
+        };
+      }])

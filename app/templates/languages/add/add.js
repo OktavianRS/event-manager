@@ -10,7 +10,7 @@ angular.module('eventManager')
               language.languageName,
               language.code,
               function(data){
-                $state.go('oneLanguage', {languageId: data.id});
+                $state.go('listLanguage');
               }
           )
         };

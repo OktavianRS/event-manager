@@ -10,15 +10,17 @@ angular.module('eventManager')
         $scope.locations = [];
         $scope.languages = [];
         $scope.companies = [];
+        event.date = moment().format('DD/MM/YYYY');
 
         companyModel.getAllList(function(data) {
           $scope.companies = data;
         });
 
         $scope.saveEvent = function(event) {
+          $scope.date = moment.utc(event.date).format('DD/MM/YYYY')
           eventModel.create(
               event.eventName,
-              moment(event.date+' '+event.time, 'DD/MM/YYYY HH:mm', true).format('X'),
+              moment($scope.date + ' ' + event.time, 'DD/MM/YYYY HH:mm', true).format('X'),
               event.company,
               $scope.languages.map(function(v){
                 return v.id;

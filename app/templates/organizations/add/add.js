@@ -18,7 +18,7 @@ angular.module('eventManager')
               company.site,
               $scope.myCroppedImage,
               function(data){
-                $state.go('company.oneCompany', {companyId: data.id});
+                $state.go('listCompany');
               }
           )
         };

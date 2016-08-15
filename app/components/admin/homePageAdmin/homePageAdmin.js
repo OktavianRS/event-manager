@@ -6,6 +6,7 @@ angular.module('components.homeAdmin', [])
       }
     }])
     .controller('homeAdminCtrl', ['$scope', 'companyModel', function($scope, companyModel){
+
     	$scope.events = [
     		{
     			eventName: 'Company name',
@@ -39,3 +40,4 @@ angular.module('components.homeAdmin', [])
             }
     	];
     }])
+

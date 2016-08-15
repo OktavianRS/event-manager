@@ -1,0 +1,25 @@
+<md-bottom-sheet class="md-grid" ng-cloak>
+  <div layout="row" layout-align="center center">
+    <h4>Atachment: {{ currentItem.name }}</h4>
+  </div>
+  <md-list>
+    <md-list-item ng-if="item.show && item.name !== 'Upload'" ng-repeat="item in items">
+      <md-button
+          ng-click="listItemClick($index)"
+          class="md-list-item-content" >
+        <md-icon md-svg-src="{{item.icon}}" style="height: 48px; width: 48px;"></md-icon>
+        <span class="md-inline-list-icon-label">{{ item.name }}</span>
+      </md-button>
+    </md-list-item>
+    <md-list-item>
+      <a href="{{uploadUrl}}" download="">
+        <md-button
+            ng-click="listItemClick(1)"
+            class="md-list-item-content" >
+          <md-icon md-svg-src="{{items[1].icon}}" style="height: 48px; width: 48px;"></md-icon>
+          <span class="md-inline-list-icon-label">{{ items[1].name }}</span>
+        </md-button>
+      </a>
+    </md-list-item>
+  </md-list>
+</md-bottom-sheet>

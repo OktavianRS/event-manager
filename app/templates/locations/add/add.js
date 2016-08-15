@@ -36,7 +36,7 @@ angular.module('eventManager')
               ($scope.coords)? $scope.coords.longitude : null,
               location.link,
               function(data) {
-                $state.go('oneLocation', {locationId: data.id});
+                $state.go('listLocation');
               }
           )
         };

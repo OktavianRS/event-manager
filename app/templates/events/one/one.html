@@ -58,9 +58,11 @@
         <div class="attachment-title">Attachment</div>
         <div class="attachment">
           <div class="button-aria" layout="row" layout-align="space-between center">
-            <md-button class="md-primary md-raised">
-              upload All
-            </md-button>
+            <a href="{{ uploadAllUrl }}" download>
+              <md-button class="md-primary md-raised">
+                upload All
+              </md-button>
+            </a>
             <div>
               <md-button class="md-primary md-icon-button md-raised" ng-disabled="configAttachments.currentPage == 1"
                          aria-label="ok" ng-click="prevAttach()">
@@ -74,8 +76,9 @@
             </div>
           </div>
           <div class="attachment-aria" layout="row" layout-wrap>
-            <div ng-repeat="item in attachments" class="one-attach" flex="20" ng-click="">
-              <md-icon md-svg-src="file"></md-icon>
+            <div ng-repeat="item in attachments" class="one-attach" flex="10" ng-click="showBottomListAtachment(item)">
+               <img ng-if="item.type === 'image'" ng-src="{{item.image}}" class="icon-atachment" alt="{{item.name}}" />
+               <md-icon ng-if="item.type === 'unknown'" md-svg-src="file" style="height: 100px;"></md-icon>
               <div class="name">{{item.name}}</div>
             </div>
           </div>
@@ -160,8 +163,9 @@
               {{item.text}}
             </div>
             <div class="comment-attachment" layout="row" layout-wrap>
-              <div class="comment-attachment-one" flex="10" ng-repeat="attach in item.attachment" ng-click="">
-                <md-icon md-svg-src="file"></md-icon>
+              <div class="comment-attachment-one" flex="10" ng-repeat="attach in item.attachment" ng-click="showBottomListAtachment(attach)">
+                <img ng-if="attach.type === 'image'" ng-src="{{attach.miniature}}" class="icon-atachment" alt="{{attach.name}}" style="height: 48px;" />
+                <md-icon ng-if="attach.type === 'unknown'" md-svg-src="file"></md-icon>
                 <div class="name">{{attach.name}}</div>
               </div>
             </div>

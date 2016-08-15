@@ -45,23 +45,3 @@
 		</md-content>
 	</div><!-- right column -->
 </div>
-	<div flex class="full-width-column" ng-if="user.role === 'ROOT ADMIN'">
-		<calendar-md flex layout layout-fill
-		  calendar-direction="direction"
-		  on-prev-month="prevMonth"
-		  on-next-month="nextMonth"
-		  on-day-click="dayClick"
-		  title-format="'MMMM y'"
-		  ng-model='selectedDate'
-		  week-starts-on="firstDayOfWeek"
-		  data-start-month="8"
-		  data-start-year="2014"
-		  tooltips="tooltips"
-		  day-format="dayFormat"
-		  day-label-format="'EEE'"
-		  day-label-tooltip-format="'EEEE'"
-		  day-tooltip-format="'fullDate'"
-		  day-content="setDayContent"
-		  disable-future-selection="false"
-		  ></calendar-md>
-	</div><!-- full width column -->
