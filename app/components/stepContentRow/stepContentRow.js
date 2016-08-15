@@ -35,7 +35,7 @@ angular.module('components.stepContentRow', [])
         $scope.getTableParams();
 
         $scope.sendTableData = function() {
-            $scope.datas = {tables: $scope.datas}
+            $scope.datas = {tables: [$scope.datas]};
             console.log($scope.datas);
         	stepModel.sendTableData($scope.stateParams.eventId, $scope.datas, function(data) {
                 $scope.datas = [];
