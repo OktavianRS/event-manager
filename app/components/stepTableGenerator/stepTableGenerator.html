@@ -2,20 +2,20 @@
 
   <md-input-container class="md-block table-name-field">
     <label>Table name</label>
-    <input type="text" ng-model="datas.table">
+    <input required type="text" ng-model="datas.table">
   </md-input-container>
 
 <div class="fields" ng-repeat="field in fields">
 
 <md-input-container class="field-name-field">
   <label>Field name</label>
-  <input type="text" ng-model="datas.fields[field].name">
+  <input required type="text" ng-model="datas.fields[field].name">
 </md-input-container>
 
 <div class="two-cols">
   <md-input-container class="field-type-select">
     <label>Field type</label>
-    <md-select ng-model="datas.fields[field].type" ng-change="">
+    <md-select required ng-model="datas.fields[field].type" ng-change="">
       <md-option ng-repeat="type in tableType" ng-value="{{ {index: $index, name: type.value} }}">
         {{type.name}}
       </md-option>
@@ -24,7 +24,7 @@
 
 <md-input-container class="field-params-select">
   <label>Field params</label>
-  <md-select class="multiple-option" multiple ng-model="datas.fields[field].params" ng-change="fieldParamsSelected()">
+  <md-select required class="multiple-option" multiple ng-model="datas.fields[field].params" ng-change="fieldParamsSelected()">
     <md-option ng-repeat="type in tableParams" ng-value="{{ {index: $index, name: type.value, val: type.params} }}">
       {{type.name}}
     </md-option>
@@ -42,7 +42,7 @@
   class="field-params-container"
  ng-repeat="par in datas.fields[field].params" ng-if="par.name === 'comment' || par.name === 'defaultValue'">
   <label>Field parameter: {{par.name}}</label>
-  <input type="text" ng-model="datas.fields[field].params[$index].value[$index]">
+  <input required type="text" ng-model="datas.fields[field].params[$index].value[$index]">
 </md-input-container>
 </div>
 </div><!-- fields -->
