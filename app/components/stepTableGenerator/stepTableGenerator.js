@@ -1,8 +1,8 @@
-angular.module('components.stepContentRow', [])
-    .directive('stepContentRow', [function() {
+angular.module('components.stepTableGenerator', [])
+    .directive('stepTableGenerator', [function() {
       return {
         restrict: 'E',
-        templateUrl: 'components/stepContentRow/stepContentRow.html',
+        templateUrl: 'components/stepTableGenerator/stepTableGenerator.html',
         controller: 'stepContentRowCtrl'
       }
     }])
@@ -36,9 +36,9 @@ angular.module('components.stepContentRow', [])
 
         $scope.sendTableData = function() {
             $scope.datas = {tables: [$scope.datas]};
-            console.log($scope.datas);
         	stepModel.sendTableData($scope.stateParams.eventId, $scope.datas, function(data) {
                 $scope.datas = [];
+                console.log(data);
         	});
         }
 

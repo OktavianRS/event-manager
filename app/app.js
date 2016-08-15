@@ -34,7 +34,7 @@ angular.module('eventManager', [
       'components.homeAdmin',
       'components.homeCompany',
       'components.stepper',
-      'components.stepContentRow'
+      'components.stepTableGenerator'
     ])
     //routing config
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {

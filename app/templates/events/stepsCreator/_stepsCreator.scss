@@ -1,3 +1,18 @@
 .steps-creator {
-	
+	.next-step-button {
+		float: right;
+	}
+	md-card {
+		md-steppers {
+			min-height: 450px!important;
+		}
+	}
+	.table-name-field {
+		width: 80%;
+		margin: auto;
+	}
+	.fields {
+		margin: 0px 100px;
+		border: 1px solid #ccc;
+	}
 }

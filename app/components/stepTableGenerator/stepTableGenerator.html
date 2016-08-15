@@ -1,11 +1,9 @@
-<div>
+<div class="step-content-row">
 
-<md-input-container class="md-block">
-  <label>Table name</label>
-  <input type="text" ng-model="datas.table">
-</md-input-container>
-
-</div>
+  <md-input-container class="md-block table-name-field">
+    <label>Table name</label>
+    <input type="text" ng-model="datas.table">
+  </md-input-container>
 
 <div class="fields" ng-repeat="field in fields">
 
@@ -19,7 +17,7 @@
   <md-input-container>
     <label>Field type</label>
     <md-select ng-model="datas.fields[field].type" ng-change="">
-      <md-option ng-repeat="type in tableType" ng-value="{{ {index: $index, name: type.name} }}">
+      <md-option ng-repeat="type in tableType" ng-value="{{ {index: $index, name: type.value} }}">
         {{type.name}}
       </md-option>
     </md-select>
@@ -56,15 +54,12 @@
 </md-input-container>
 
 </div>
-<hr>
 </div><!-- fields -->
-
-<md-button class="md-fab md-mini md-primary" ng-click="sendTableData()">
-  <md-icon md-svg-src="done" style="color: greenyellow;" ></md-icon>
-  <md-tooltip>Done</md-tooltip>
-</md-button>
 
 <md-button class="md-fab md-mini md-primary" ng-click="addNewField()">
   <md-icon md-svg-src="add" style="color: greenyellow;" ></md-icon>
   <md-tooltip>Add field</md-tooltip>
 </md-button>
+
+<md-button class="md-raised next-step-button" ng-click="sendTableData()">Next step</md-button>
+</div>

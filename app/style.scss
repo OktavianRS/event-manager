@@ -4,6 +4,7 @@
 @import 'components/sidenav/sidenav';
 @import 'components/footer/footer';
 @import 'components/locationModal/locationModal';
+@import 'components/stepTableGenerator/stepTableGenerator';
 
 @import 'templates/login/login';
 @import 'templates/profile/profile';
@@ -19,7 +20,6 @@
 @import 'templates/events/list/list';
 @import 'templates/events/one/one';
 @import 'templates/events/stepsCreator/stepsCreator';
-@import 'components/stepContentRow/stepContentRow';
 
 @import 'templates/languages/add/add';
 @import 'templates/languages/list/list';
