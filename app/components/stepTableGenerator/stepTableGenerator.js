@@ -6,19 +6,18 @@ angular.module('components.stepTableGenerator', [])
         controller: 'stepTableGenerator'
       }
     }])
-    .controller('stepTableGenerator', ['$scope', 'stepModel', function($scope, stepModel){
-    	// vars
-    	$scope.table = [];
-    	$scope.fields = [0]
-    	$scope.showTypeFields = false;
+    .controller('stepTableGenerator', ['$scope', 'stepModel','$timeout', '$q', function($scope, stepModel, $timeout, $q){
+        $scope.datas = [];
+        $scope.datas.fields = [{}];
 
     	// Interaction with View
 
-    	$scope.addNewField = function() {
-    		$scope.fields.push($scope.fields.length)
-    	}
 
     	// Interaction with model and data
+
+        $scope.addNewField = function() {
+            $scope.datas.fields.push([]);
+        }
 
         $scope.sendTableData = function() {
             $scope.datas = {
@@ -26,18 +25,38 @@ angular.module('components.stepTableGenerator', [])
                 TableGenerator: { tables: [$scope.datas] }
             };
             stepModel.sendTableData($scope.datas, function(data) {
-                $scope.datas = {};
+                $scope.getStepInfo();
         	});
         }
 
         $scope.getStepInfo = function() {
             stepModel.getStepInfo($scope.stateParams.eventId,function(data) {
-                $scope.stepInfo = data;
                 $scope.tableType = data.additional_value.type;
-                $scope.tableParams = data.additional_value.param; 
+                $scope.tableParams = data.additional_value.param;
+                $scope.datas = data.value.TableGenerator.tables[0];
             })
         }
         $scope.getStepInfo();
 
+        $scope.uniquenessCheck = function() {
+            var valueArray = $scope.datas.fields.map(function(item){ return item.name });
+            var isDuplicate = valueArray.some(function(item, idx) {
+                return valueArray.indexOf(item) != idx
+            });
+        }
+
+        $scope.initialState = function(index) {
+            console.log(index);
+            $scope.select = [
+                {checked: false},{checked: false},{checked: false},{checked: false},{checked: false}
+            ];
+            angular.forEach($scope.datas.fields[index].params,function(item, key) {
+                    $scope.select[item.id].checked = true;
+            });
+        }
+
+        $scope.checkState = function(name, index) {
+            console.log(index);
+        }
 
     }])

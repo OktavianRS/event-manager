@@ -1,63 +1,37 @@
 <div class="step-content-row">
-<form name="tableForm">
+<form name="tableForm"
+  ng-submit="sendTableData()"
+>
   <md-input-container class="md-block table-name-field">
     <label>Table name</label>
-    <input name="table" required type="text" ng-model="datas.table">
+    <input
+     name="table"
+     required type="text"
+     ng-model="datas.table"
+     ng-pattern="/^([a-z])*$/">
     <div ng-messages="tableForm.table.$error">
       <div ng-message="required">This is required.</div>
+      <div ng-message="pattern">Table name must be a word without spaces and others symbols</div>
     </div>
   </md-input-container>
 
-<div class="fields" ng-repeat="field in fields">
+<div class="fields" ng-repeat="field in datas.fields">
 
-<md-input-container class="field-name-field">
-  <label>Field name</label>
-  <input name="field" required type="text" ng-model="datas.fields[field].name">
-  <div ng-messages="tableForm.field.$error">
-    <div ng-message="required">This is required.</div>
-  </div>
-</md-input-container>
+<step-table-generator-field></step-table-generator-field>
 
-<div class="two-cols">
-  <md-input-container class="field-type-select">
-    <label>Field type</label>
-    <md-select required ng-model="datas.fields[field].type" ng-change="">
-      <md-option ng-repeat="type in tableType" ng-value="{{ {index: $index, name: type.value} }}">
-        {{type.name}}
-      </md-option>
-    </md-select>
-  </md-input-container>
-
-<md-input-container class="field-params-select">
-  <label>Field params</label>
-  <md-select required class="multiple-option" multiple ng-model="datas.fields[field].params" ng-change="fieldParamsSelected()">
-    <md-option ng-repeat="type in tableParams" ng-value="{{ {index: $index, name: type.value, val: type.params} }}">
-      {{type.name}}
-    </md-option>
-  </md-select>
-</md-input-container>
-
-<md-input-container
-  class="field-type-container"
-  ng-repeat="val in tableType[datas.fields[field].type.index].params track by $index">
-  <label>Field type: {{ val }}</label>
-  <input required type="text" ng-model="datas.fields[field].type.value[$index]">
-</md-input-container>
-
-<md-input-container
-  class="field-params-container"
- ng-repeat="par in datas.fields[field].params" ng-if="par.name === 'comment' || par.name === 'defaultValue'">
-  <label>Field parameter: {{par.name}}</label>
-  <input required type="text" ng-model="datas.fields[field].params[$index].value[$index]">
-</md-input-container>
-</div>
 </div><!-- fields -->
 
-<md-button class="md-raised next-step-button" ng-click="sendTableData()">Next step</md-button>
+<md-button class="md-raised next-step-button"
+ ng-disabled="tableForm.$invalid"
+ type="submit">Send</md-button>
 
 <md-button class="md-fab md-mini md-primary next-step-button" ng-click="addNewField()">
   <md-icon md-svg-src="add" style="color: greenyellow;" ></md-icon>
   <md-tooltip>Add field</md-tooltip>
+</md-button>
+<md-button class="md-fab md-mini md-primary next-step-button" ng-click="" ng-if="steps.model.step !== 0">
+  <md-icon md-svg-src="back" style="color: greenyellow;" ></md-icon>
+  <md-tooltip>Roll back</md-tooltip>
 </md-button>
 </form>
 </div>

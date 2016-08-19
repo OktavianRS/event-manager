@@ -1,0 +1,53 @@
+<md-button class="md-fab md-mini md-raised next-step-button" ng-click="deleteField()">
+  <md-icon md-svg-src="close" style="color: greenyellow;" ></md-icon>
+  <md-tooltip>Delete field</md-tooltip>
+</md-button>
+<div class="two-cols">
+
+<md-input-container class="field-type-select ">
+  <label>Field name</label>
+  <input name="field" required type="text" ng-model="field.name">
+</md-input-container>
+
+
+<md-input-container class="field-type-select">
+<label>Field type</label>
+<md-select required ng-model="field.type.name">
+  <md-option ng-repeat="type in tableType" ng-selected="type.id === field.type.name.id" ng-value="{value: type.value, index: $index, id: type.id}">
+    {{type.name}}
+  </md-option>
+</md-select>
+</md-input-container>
+
+<md-input-container
+  class="field-type-container"
+  ng-repeat="val in tableType[field.type.name.index].params track by $index">
+  <label>Field type: {{ val }}</label>
+  <input type="text" ng-model="field.type.value[$index]">
+</md-input-container>
+
+  <md-switch ng-model="field.params.notnull.checked" ng-click="!field.params.notnull.checked ? checkState(tableParams[0], this) : false" aria-label="tableParams[0].name">
+    {{tableParams[0].name}}
+  </md-switch>
+  <md-switch ng-model="field.params.unique.checked" ng-click="checkState(tableParams[1], $index)" aria-label="tableParams[1].name">
+    {{tableParams[1].name}}
+  </md-switch>
+    <md-switch ng-model="field.params.unsigned.checked" ng-click="checkState(tableParams[2], $index)" aria-label="tableParams[2].name">
+    {{tableParams[2].name}}
+  </md-switch>
+    <md-switch ng-model="field.params.comment.checked" ng-click="checkState(tableParams[3], $index)" aria-label="tableParams[3].name">
+    {{tableParams[3].name}}
+  </md-switch>
+    <md-switch ng-model="field.params.default.checked" ng-click="checkState(tableParams[4], $index)" aria-label="tableParams[4].name">
+    {{tableParams[4].name}}
+  </md-switch>
+
+<md-input-container
+  class="field-params-container"
+ ng-repeat="par in field.params" ng-if="par.name === 'comment' || par.name === 'defaultValue'">
+  <label>Field parameter: {{par.name}}</label>
+  <input required type="text" ng-model="field.params[$index].value[$index]">
+</md-input-container>
+</div>
+
+</div><!-- two cols -->
