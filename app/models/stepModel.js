@@ -51,4 +51,14 @@ angular.module('model.step', [
             }
           )
         }
+
+        this.getPanel = function(req, callback) {
+          api.get(
+            url.step.getTable,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
       }]);

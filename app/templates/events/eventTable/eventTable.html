@@ -11,66 +11,34 @@
 	      <table md-table>
 	        <thead md-head md-on-reorder="onReorderEvent">
 		        <tr md-row>
-		        	<th class="table-logo fixed-cell"
-              			md-column>
-              			<span>Name</span>
-              		</th>
-		        	<th class="table-logo"
-              			md-column>
-              			<span>Sur name</span>
-              		</th>		        	<th class="table-logo"
-              			md-column>
-              			<span>Another fucking name</span>
-              		</th>
-		        	<th class="table-logo"
-              			md-column>
-              			<span>Name</span>
-              		</th>
-		        	<th class="table-logo"
-              			md-column>
-              			<span>Sur name</span>
-              		</th>		        	<th class="table-logo"
-              			md-column>
-              			<span>Another fucking name</span>
-              		</th>
-		        	<th class="table-logo"
-              			md-column>
-              			<span>Name</span>
-              		</th>
-		        	<th class="table-logo"
-              			md-column>
-              			<span>Sur name</span>
-              		</th>		        	<th class="table-logo"
-              			md-column>
-              			<span>Another fucking name</span>
-              		</th>
-		        	<th class="table-logo"
-              			md-column>
-              			<span>Name</span>
-              		</th>
-		        	<th class="table-logo"
-              			md-column>
-              			<span>Sur name</span>
-              		</th>		        	<th class="table-logo"
-              			md-column>
-              			<span>Another fucking name</span>
-              		</th>
+
+		          <th class="table-name"
+		              md-column
+		              md-order-by="name"
+		              ng-if="!searchContainerName">
+		            <md-icon md-svg-src="search"
+		                     ng-click="$parent.searchContainerName = true"
+		                     class="search"></md-icon>
+		            <span>Name</span>
+		          </th>
+		          <th class="table-name"
+		              md-column
+		              ng-if="searchContainerName">
+		            <md-input-container flex-auto md-no-float class="md-block">
+		              <label>Name</label>
+		              <input ng-model="searchEventName"
+		                     ng-change="searchEvent('name', searchEventName)">
+		              <md-icon md-svg-src="search"
+		                       ng-click="$parent.searchContainerName = false"
+		                       class="search"></md-icon>
+		            </md-input-container>
+		          </th>
+
 		        </tr>
 	        </thead>
 	        <tbody md-body>
 		        <tr md-row ng-repeat="item in events">
-		          <td md-cell class="fixed-cell">MMMMMMM</td>
-		          <td md-cell>LLLLLLL</td>
-		          <td md-cell>GGGGGGG</td>
 		          <td md-cell>MMMMMMM</td>
-		          <td md-cell>LLLLLLL</td>
-		          <td md-cell>GGGGGGG</td>
-		          <td md-cell>MMMMMMM</td>
-		          <td md-cell>LLLLLLL</td>
-		          <td md-cell>GGGGGGG</td>
-		          <td md-cell>MMMMMMM</td>
-		          <td md-cell>LLLLLLL</td>
-		          <td md-cell>GGGGGGG</td>
 				</tr>
 			</tbody>
 	      </table>

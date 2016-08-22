@@ -58,7 +58,8 @@ angular.module('factory.url', [])
             getTableType: baseUrl + 'event-generate/table-type',
             getTableParams: baseUrl + 'event-generate/table-param',
             getStepInfo: baseUrl + 'event-generate/step-info',
-            generateTable: baseUrl + 'event-generate/generate'
+            generateTable: baseUrl + 'event-generate/generate',
+            getTable: baseUrl + 'panel/attribute-labels'
           }
         }
       }
