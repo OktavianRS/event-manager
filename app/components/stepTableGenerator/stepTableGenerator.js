@@ -20,11 +20,11 @@ angular.module('components.stepTableGenerator', [])
         }
 
         $scope.sendTableData = function() {
-            $scope.datas = {
+            $scope.dataToSend = {
                 _eventId: $scope.stateParams.eventId,
                 TableGenerator: { tables: [$scope.datas] }
             };
-            stepModel.sendTableData($scope.datas, function(data) {
+            stepModel.sendTableData($scope.dataToSend, function(data) {
                 $scope.$emit('getStep', 'new step pls');
         	});
         }
@@ -32,8 +32,7 @@ angular.module('components.stepTableGenerator', [])
         $scope.getStepInfo = function() {
             stepModel.getStepInfo($scope.stateParams.eventId,function(data) {
                 $scope.tableType = data.additional_value.type;
-                $scope.tableParams = data.additional_value.param;
-                $scope.datas = data.value.TableGenerator.tables[0];
+                $scope.tableParams = data.additional_value.param;                $scope.datas = data.value.TableGenerator.tables[0];
             })
         }
         $scope.getStepInfo();

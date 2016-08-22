@@ -18,12 +18,12 @@ angular.module('components.stepModelGenerator', [])
         $scope.getStepInfo();
 
         $scope.sendTableData = function() {
-            $scope.datas = {
+            $scope.dataToSend = {
                 _eventId: $scope.stateParams.eventId,
                 ModelGenerator: $scope.datas
             };
-            stepModel.sendTableData($scope.datas, function(data) {
-                $scope.datas = {};
+            stepModel.sendTableData($scope.dataToSend, function(data) {
+                $scope.$emit('getStep', 'new step pls');
         	});
         }
 

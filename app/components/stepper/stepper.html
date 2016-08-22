@@ -8,6 +8,7 @@
   </md-toolbar>
     <md-steppers md-selected="steps.model.step" md-stretch-steppers="always">
       <md-step ng-repeat="step in steps.model.steps" label="{{step.name}}" ng-disabled="steps.model.step === $index ? false : true">
+      <md-progress-linear md-mode="determinate" value="30"></md-progress-linear>
         <md-content layout-padding>
           <step-table-generator ng-if="steps.model.step === 0"></step-table-generator>
           <step-model-generator ng-if="steps.model.step === 1"></step-model-generator>
