@@ -16,7 +16,7 @@ angular.module('components.stepTableGenerator', [])
     	// Interaction with model and data
 
         $scope.addNewField = function() {
-            $scope.datas.fields.push([]);
+            $scope.datas.fields.push({});
         }
 
         $scope.sendTableData = function() {
@@ -38,11 +38,12 @@ angular.module('components.stepTableGenerator', [])
         }
         $scope.getStepInfo();
 
-        $scope.uniquenessCheck = function() {
+        $scope.uniquenessCheck = function(field) {
             var valueArray = $scope.datas.fields.map(function(item){ return item.name });
             var isDuplicate = valueArray.some(function(item, idx) {
-                return valueArray.indexOf(item) != idx
+                return valueArray.indexOf(item) != idx;
             });
+            console.log(field);
         }
 
         $scope.get = function() {

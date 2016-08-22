@@ -6,7 +6,12 @@
 
 <md-input-container class="field-type-select " ng-click="get()">
   <label>Field name</label>
-  <input name="field" required type="text" ng-model="field.name">
+  <input name="field" required type="text" ng-model="field.name" ng-change="uniquenessCheck( {{ tableForm.field }} )">
+  <div ng-messages="tableForm.field.$error">
+    <div ng-message="uniqueness">Fields must be unique</div>
+    <div ng-message="required">This field is required.</div>
+    <div ng-message="pattern">Field name must be a word without spaces and others symbols</div>
+  </div>
 </md-input-container>
 
 

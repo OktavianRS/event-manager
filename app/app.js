@@ -133,6 +133,11 @@ angular.module('eventManager', [
             templateUrl: "templates/events/stepsCreator/stepsCreator.html",
             controller: "stepsCreatorCtrl"
           })
+          .state('eventTable', {
+            url: "/event/:eventId/eventTable",
+            templateUrl: "templates/events/eventTable/eventTable.html",
+            controller: "eventTableCtrl"
+          })
 
           ////////Language
           .state('addLanguage', {
