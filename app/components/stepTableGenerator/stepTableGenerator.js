@@ -25,7 +25,7 @@ angular.module('components.stepTableGenerator', [])
                 TableGenerator: { tables: [$scope.datas] }
             };
             stepModel.sendTableData($scope.datas, function(data) {
-                $scope.getStepInfo();
+                $scope.$emit('getStep', 'new step pls');
         	});
         }
 
@@ -45,18 +45,17 @@ angular.module('components.stepTableGenerator', [])
             });
         }
 
-        $scope.initialState = function(index) {
-            console.log(index);
-            $scope.select = [
-                {checked: false},{checked: false},{checked: false},{checked: false},{checked: false}
-            ];
-            angular.forEach($scope.datas.fields[index].params,function(item, key) {
-                    $scope.select[item.id].checked = true;
-            });
+        $scope.deleteProperty = function(index, param) {
+            delete $scope.datas.fields[index].params[param];
         }
 
-        $scope.checkState = function(name, index) {
-            console.log(index);
+        $scope.createProperty = function(index, param, val) {
+            $scope.datas.fields[index].params[param].name = param;
+            $scope.datas.fields[index].params[param].value = val;
+        }
+
+        $scope.deleteField = function(index) {
+            $scope.datas.fields.splice(index, 1);
         }
 
     }])

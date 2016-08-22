@@ -17,4 +17,8 @@ angular.module('components.stepper', [])
         }
         $scope.getStep();
 
+        $scope.$on('getStep', function(event, data) {
+            $scope.getStep();
+        });
+
     }])

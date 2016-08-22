@@ -1,8 +1,8 @@
 angular.module('factory.url', [])
     .factory('url', [
       function() {
-        //var baseUrl = 'http://192.168.0.132/api/web/v1/';
-        var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
+        var baseUrl = 'http://192.168.0.114/api/web/v1/';
+        //var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
 
         return {
           user: {

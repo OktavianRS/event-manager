@@ -1,10 +1,10 @@
-<md-button class="md-fab md-mini md-raised next-step-button" ng-click="deleteField()">
+<md-button class="md-fab md-mini md-raised next-step-button" ng-click="deleteField($index)">
   <md-icon md-svg-src="close" style="color: greenyellow;" ></md-icon>
   <md-tooltip>Delete field</md-tooltip>
 </md-button>
 <div class="two-cols">
 
-<md-input-container class="field-type-select ">
+<md-input-container class="field-type-select " ng-click="get()">
   <label>Field name</label>
   <input name="field" required type="text" ng-model="field.name">
 </md-input-container>
@@ -26,27 +26,43 @@
   <input type="text" ng-model="field.type.value[$index]">
 </md-input-container>
 
-  <md-switch ng-model="field.params.notnull.checked" ng-click="!field.params.notnull.checked ? checkState(tableParams[0], this) : false" aria-label="tableParams[0].name">
+  <md-switch ng-model="field.params.notNull.checked"
+             aria-label="tableParams[0].name"
+             ng-change="field.params.notNull.checked ? createProperty($index, 'notNull', []) : deleteProperty($index, 'notNull')">
     {{tableParams[0].name}}
   </md-switch>
-  <md-switch ng-model="field.params.unique.checked" ng-click="checkState(tableParams[1], $index)" aria-label="tableParams[1].name">
+  <md-switch ng-model="field.params.unique.checked"
+             aria-label="tableParams[1].name"
+             ng-change="field.params.unique.checked ? createProperty($index, 'unique', []) : deleteProperty($index, 'unique'">
     {{tableParams[1].name}}
   </md-switch>
-    <md-switch ng-model="field.params.unsigned.checked" ng-click="checkState(tableParams[2], $index)" aria-label="tableParams[2].name">
+  <md-switch ng-model="field.params.unsigned.checked"
+             aria-label="tableParams[2].name"
+             ng-change="field.params.unsigned.checked ? createProperty($index, 'unsigned', []) : deleteProperty($index, 'unsigned')">
     {{tableParams[2].name}}
   </md-switch>
-    <md-switch ng-model="field.params.comment.checked" ng-click="checkState(tableParams[3], $index)" aria-label="tableParams[3].name">
+    <md-switch ng-model="field.params.comment.checked"
+               aria-label="tableParams[3].name"
+               ng-change="field.params.comment.checked ? createProperty($index, 'comment', [string]) : deleteProperty($index, 'comment')">
     {{tableParams[3].name}}
   </md-switch>
-    <md-switch ng-model="field.params.default.checked" ng-click="checkState(tableParams[4], $index)" aria-label="tableParams[4].name">
+    <md-switch ng-model="field.params.defaultValue.checked" 
+               aria-label="tableParams[4].name"
+               ng-change="field.params.defaultValue.checked ? createProperty($index, 'defaultValue', [string]) : deleteProperty($index, 'defaultValue')">
     {{tableParams[4].name}}
   </md-switch>
 
 <md-input-container
   class="field-params-container"
- ng-repeat="par in field.params" ng-if="par.name === 'comment' || par.name === 'defaultValue'">
-  <label>Field parameter: {{par.name}}</label>
-  <input required type="text" ng-model="field.params[$index].value[$index]">
+ ng-if="field.params.comment.checked">
+  <label>Field parameter: comment</label>
+  <input required type="text" ng-model="field.params.comment.value[0]">
+</md-input-container>
+<md-input-container
+  class="field-params-container"
+ ng-if="field.params.defaultValue.checked">
+  <label>Field parameter: default</label>
+  <input required type="text" ng-model="field.params.defaultValue.value[0]">
 </md-input-container>
 </div>
 
