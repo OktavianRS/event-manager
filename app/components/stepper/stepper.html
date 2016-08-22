@@ -8,11 +8,16 @@
   </md-toolbar>
     <md-steppers md-selected="steps.model.step" md-stretch-steppers="always">
       <md-step ng-repeat="step in steps.model.steps" label="{{step.name}}" ng-disabled="steps.model.step === $index ? false : true">
-      <md-progress-linear md-mode="determinate" value="30"></md-progress-linear>
         <md-content layout-padding>
           <step-table-generator ng-if="steps.model.step === 0"></step-table-generator>
           <step-model-generator ng-if="steps.model.step === 1"></step-model-generator>
           <step-controller-generator ng-if="steps.model.step === 2"></step-controller-generator>
+          <div ng-if="steps.model.step === steps.model.steps.length - 1">
+            <md-button class="md-fab md-mini md-primary roll-back-button" ng-click="" ng-if="steps.model.step !== 0">
+              <md-icon md-svg-src="back" style="color: greenyellow;" ></md-icon>
+              <md-tooltip>Roll back</md-tooltip>
+            </md-button>
+          </div>
         </md-content>
       </md-step>
     </md-steppers>

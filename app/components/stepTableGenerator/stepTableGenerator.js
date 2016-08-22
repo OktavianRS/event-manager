@@ -32,7 +32,8 @@ angular.module('components.stepTableGenerator', [])
         $scope.getStepInfo = function() {
             stepModel.getStepInfo($scope.stateParams.eventId,function(data) {
                 $scope.tableType = data.additional_value.type;
-                $scope.tableParams = data.additional_value.param;                $scope.datas = data.value.TableGenerator.tables[0];
+                $scope.tableParams = data.additional_value.param;
+                $scope.datas = data.value.TableGenerator.tables[0];
             })
         }
         $scope.getStepInfo();
@@ -42,6 +43,10 @@ angular.module('components.stepTableGenerator', [])
             var isDuplicate = valueArray.some(function(item, idx) {
                 return valueArray.indexOf(item) != idx
             });
+        }
+
+        $scope.get = function() {
+            console.log($scope.datas.fields);
         }
 
         $scope.deleteProperty = function(index, param) {

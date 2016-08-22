@@ -6,10 +6,12 @@ angular.module('components.stepper', [])
       }
     }])
     .controller('stepperCtrl', ['$scope', 'stepModel', function($scope, stepModel){
-    	$scope.table = [];
+        $scope.table = [];
+        $scope.grade = 1;
 
         $scope.getStep = function() {
             stepModel.getStep($scope.stateParams.eventId,function(res) {
+                res.model.steps.push({ id: res.model.steps.length, name: 'Done', required: 1});
                 $scope.steps = res;
                 $scope.steps.model.step = --res.model.step;
                 $scope.showme = true;
