@@ -58,7 +58,6 @@ angular.module('eventManager')
                 $scope.attributeLabels = attributeLabels;
                 $scope.fieldSettings = fieldSettings.model;
                 $scope.dragndrop = {
-                  group: 'settings',
                   sort: true,
                   animation: 150,
                   store: {
@@ -67,8 +66,8 @@ angular.module('eventManager')
                           return order ? order.split('|') : [];
                       },
                       set: function (sortable) {
+                        console.log(sortable);
                         $scope.order = sortable.toArray();
-                        console.log($scope.order);
                       }
                   }
                 }
