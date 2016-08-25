@@ -9,6 +9,7 @@ angular.module('eventManager', [
       'uiGmapgoogle-maps',
       'materialCalendar',
       'md-steppers',
+      'ng-sortable',
 
       'factory.url',
       'factory.toast',
@@ -20,6 +21,7 @@ angular.module('eventManager', [
       'model.language',
       'model.location',
       'model.step',
+      'model.panel',
 
       'components.confirm-password',
       'components.lower-case-input',
@@ -138,6 +140,11 @@ angular.module('eventManager', [
             templateUrl: "templates/events/eventTable/eventTable.html",
             controller: "eventTableCtrl"
           })
+          .state('panelSearch', {
+            url: "/event/:eventId/panelSearch",
+            templateUrl: "templates/events/panelSearch/panelSearch.html",
+            controller: "panelSearchCtrl"
+          })
 
           ////////Language
           .state('addLanguage', {
@@ -230,6 +237,7 @@ angular.module('eventManager', [
           .icon('assignment', 'images/icons/ic_assignment_white_24px.svg')
           .icon('copy', 'images/icons/ic_content_copy_black_24px.svg')
           .icon('upload', 'images/icons/ic_file_upload_black_24px.svg')
+          .icon('settings', 'images/icons/ic_settings_black_24px.svg')
     }])
     //theme config
     .config(['$mdThemingProvider', function($mdThemingProvider) {

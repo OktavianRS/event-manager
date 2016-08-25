@@ -1,3 +1,32 @@
 .event-table {
+	.fixed-header {
+		float: left;
+		height: 56px;
+		background: #fff;
+		padding: 0!important;
 
+		span {
+			display: block;
+			margin-top: 17px;
+			margin-left: 27px;
+		}
+	}
+	.fixed-header-0 {
+		left: 16px!important;
+	}
+	.fixed-column {
+		float: left;
+		height: 32px;
+		background: #fff;
+		padding: 15px 0 0 15px!important;
+		border-right: 1px solid #ccc;
+	}
+	.fixed-column-0 {
+		left: 16px!important;
+	}
+	.table {
+	}
+	.add-button {
+		float: right;
+	}
 }

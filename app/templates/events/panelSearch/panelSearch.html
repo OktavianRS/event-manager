@@ -1,0 +1,52 @@
+<div class="event-table container">
+  <div class="md-whiteframe-3dp table-area">
+    <md-toolbar class="md-table-toolbar md-default">
+        <div class="md-toolbar-tools"
+             layout="row"
+             layout-align="space-between center">
+          <span>Quick search</span>
+        </div>
+      </md-toolbar>
+      <md-table-container>
+        <table md-table class="table">
+          <thead md-head md-on-reorder="onReorderEvent">
+            <tr md-row>
+
+              <th class="table-name"
+                  md-column
+                  >
+                <span>Name</span>
+              </th>
+
+              <th>Edit</th>
+              <th>Delete</th>
+
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="cell in attributeLabels.model track by $index">
+              <td md-cell
+                  ><span>{{cell.name}}</span>
+              </td>
+              <td md-cell>
+              <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="showUpdateNewFieldModal($event, cell)">
+                  <md-icon md-svg-src="edit"></md-icon>
+                  <md-tooltip>Edit</md-tooltip>
+              </md-button>
+              </td>
+              <td md-cell>
+              <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="deleteField(cell)">
+                  <md-icon md-svg-src="delete"></md-icon>
+                  <md-tooltip>Delete</md-tooltip>
+              </md-button>
+              </td>
+        </tr>
+      </tbody>
+        </table>
+      </md-table-container>
+        <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="showAddNewFieldModal()">
+            <md-icon md-svg-src="add"></md-icon>
+            <md-tooltip>Add new field</md-tooltip>
+        </md-button>
+  </div>
+</div>

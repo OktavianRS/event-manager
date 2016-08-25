@@ -14,6 +14,15 @@
     "angular-datepicker": "^2.0.3",
     "angular-google-maps": "^2.3.3",
     "material-calendar": "~0.2.14",
-    "md-steppers": "~0.3.3"
+    "md-steppers": "~0.3.3",
+    "Sortable": "sortablejs#~1.4.2"
+  },
+  "overrides": {
+    "Sortable": {
+      "main": [
+        "Sortable.js",
+        "ng-sortable.js"
+      ]
+    }
   }
 }

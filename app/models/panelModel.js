@@ -1,0 +1,118 @@
+angular.module('model.panel', [
+      'ngStorage'
+    ])
+    .service('panelModel', ['url', 'api', 'toast',
+      function(url, api, toast) {
+
+        this.getAttributeLabels = function(req, callback) {
+          api.get(
+            url.panel.getAttributeLabels,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.getIndex = function(req, callback) {
+        	api.get(
+        		url.panel.getIndex,
+        		req,
+        		function(res) {
+        			callback(res);
+        		}
+        	)
+        }
+
+        this.createField = function(req, callback) {
+          api.post(
+            url.panel.createField,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.updateField = function(req, callback) {
+          api.put(
+            url.panel.updateField,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.deleteField = function(req, callback) {
+          api.delete(
+            url.panel.deleteField,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.getIndexSearch = function(req, callback) {
+          api.get(
+            url.panel.getIndexSearch,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.createSearch = function(req, callback) {
+          api.post(
+            url.panel.createSearch,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.updateSearch = function(req, callback) {
+          api.put(
+            url.panel.updateSearch,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.deleteSearch = function(req, callback) {
+          api.delete(
+            url.panel.deleteSearch,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.getFieldSettings = function(req, callback) {
+          api.get(
+            url.panel.getFieldSettings,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.updateFieldSettings = function(req, callback) {
+          api.put(
+            url.panel.updateFieldSettings,
+            req,
+            function(res) {
+              callback(res)
+            }
+          )
+        }
+
+
+      }]);

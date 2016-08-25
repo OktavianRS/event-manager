@@ -1,0 +1,86 @@
+<md-dialog>
+	<form ng-cloak>
+	    <md-toolbar>
+	      <div class="md-toolbar-tools">
+	        <h2>Field settings</h2>
+	        <span flex></span>
+	        <md-button class="md-icon-button" ng-click="cancel()">
+	          <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
+	        </md-button>
+	      </div>
+	    </md-toolbar>
+	    <md-dialog-content>
+	    	<div class="md-dialog-content">
+    		  <md-content layout-gt-sm="row" layout-padding>
+<div class="event-table container">
+	<div class="md-whiteframe-3dp table-area">
+	    <md-table-container>
+	      <table md-table class="table">
+	        <thead md-head md-on-reorder="onReorderEvent">
+		        <tr md-row>
+
+		          <th class="table-name"
+		              md-column>
+		              <span>label</span>
+		          </th>
+		          <th class="table-name"
+		              md-column>
+		              <span>fix</span>
+		          </th>
+		          <th class="table-name"
+		              md-column>
+		              <span>show</span>
+		          </th>
+		          <th class="table-name"
+		              md-column>
+		              <span>export</span>
+		          </th>
+		          <th class="table-name"
+		              md-column>
+		              <span>import</span>
+		          </th>
+
+		        </tr>
+	        </thead>
+	        <tbody md-body ng-sortable="dragndrop">
+		        <tr md-row ng-repeat="cell in attributeLabels track by $index" data-id="{{$index}}">
+		          <td md-cell>
+	          		<span ng-dblclick="edit[cell.label] = true;" ng-show="!edit[cell.label]">{{cell.label}}</span>
+				    <md-input-container ng-show="edit[cell.label]" style="padding-left: 0;"  class="md-icon-float md-icon-right md-block">
+				      <!-- Use floating label instead of placeholder -->
+				      <input ng-model="user.name" type="text">
+				      <md-icon md-svg-src="done" ng-click="edit[cell.label] = false" class="done-icon"></md-icon>
+				    </md-input-container>
+		          </td>
+		          <td md-cell>
+		          	  <md-switch ng-model="fieldSettings[$index].fix" aria-label="Fix">
+					  </md-switch>
+		          </td>
+		          <td md-cell>
+		          	  <md-switch ng-model="fieldSettings[$index].show" aria-label="Show">
+					  </md-switch>
+		          </td>
+		          <td md-cell>
+		          	  <md-switch ng-model="fieldSettings[$index].export" aria-label="Export">
+					  </md-switch>
+		          </td>
+		          <td md-cell>
+		          	  <md-switch ng-model="fieldSettings[$index].import" aria-label="Import">
+					  </md-switch>
+		          </td>
+				</tr>
+			</tbody>
+	      </table>
+	    </md-table-container>
+	</div>
+</div>
+			  </md-content>
+	    	</div>
+	    </md-dialog-content>
+	    <md-dialog-actions layout="row">
+	    	<md-button ng-click="answer(fieldSettings, order)">
+				Done
+      		</md-button>
+	    </md-dialog-actions>
+	</form>
+</md-dialog>

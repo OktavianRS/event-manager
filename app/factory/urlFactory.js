@@ -1,7 +1,7 @@
 angular.module('factory.url', [])
     .factory('url', [
       function() {
-        var baseUrl = 'http://192.168.0.114/api/web/v1/';
+        var baseUrl = 'http://192.168.0.119/api/web/v1/';
         //var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
 
         return {
@@ -58,8 +58,20 @@ angular.module('factory.url', [])
             getTableType: baseUrl + 'event-generate/table-type',
             getTableParams: baseUrl + 'event-generate/table-param',
             getStepInfo: baseUrl + 'event-generate/step-info',
-            generateTable: baseUrl + 'event-generate/generate',
-            getTable: baseUrl + 'panel/attribute-labels'
+            generateTable: baseUrl + 'event-generate/generate'
+          },
+          panel: {
+            getAttributeLabels: baseUrl + 'panel/attribute-labels',
+            getIndex: baseUrl + 'panel/index',
+            createField: baseUrl + 'panel/create',
+            updateField: baseUrl + 'panel/update',
+            deleteField: baseUrl + 'panel/delete',
+            getIndexSearch: baseUrl + 'panel-search/index',
+            createSearch: baseUrl + 'panel-search/create',
+            updateSearch: baseUrl + 'panel-search/update',
+            deleteSearch: baseUrl + 'panel-search/delete',
+            getFieldSettings: baseUrl + 'field-setting/index',
+            updateFieldSettings: baseUrl + 'field-setting/update'
           }
         }
       }

@@ -4,44 +4,53 @@
 	      <div class="md-toolbar-tools"
 	           layout="row"
 	           layout-align="space-between center">
-	        <span>Table</span>
+	        <span>Table
+	        <md-icon md-svg-src="settings" style="cursor: pointer;" ng-click="shewFieldSettings()"></md-icon>
+	        </span>
 	      </div>
 	    </md-toolbar>
 	    <md-table-container>
-	      <table md-table>
+	      <table md-table class="table">
 	        <thead md-head md-on-reorder="onReorderEvent">
 		        <tr md-row>
 
 		          <th class="table-name"
 		              md-column
-		              md-order-by="name"
-		              ng-if="!searchContainerName">
-		            <md-icon md-svg-src="search"
-		                     ng-click="$parent.searchContainerName = true"
-		                     class="search"></md-icon>
-		            <span>Name</span>
+		              ng-repeat="label in attributeLabels track by $index"
+		              >
+		            <span>{{label.label}}</span>
 		          </th>
-		          <th class="table-name"
-		              md-column
-		              ng-if="searchContainerName">
-		            <md-input-container flex-auto md-no-float class="md-block">
-		              <label>Name</label>
-		              <input ng-model="searchEventName"
-		                     ng-change="searchEvent('name', searchEventName)">
-		              <md-icon md-svg-src="search"
-		                       ng-click="$parent.searchContainerName = false"
-		                       class="search"></md-icon>
-		            </md-input-container>
-		          </th>
+
+		          <th>Edit</th>
+		          <th>Delete</th>
 
 		        </tr>
 	        </thead>
 	        <tbody md-body>
-		        <tr md-row ng-repeat="item in events">
-		          <td md-cell>MMMMMMM</td>
+		        <tr md-row ng-repeat="cell in index.model track by $index">
+		          <td md-cell
+		          	  ng-repeat="label in attributeLabels"
+		              ><span>{{cell[label.name]}}</span>
+		          </td>
+		          <td md-cell>
+			        <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="showUpdateNewFieldModal($event, cell)">
+			            <md-icon md-svg-src="edit"></md-icon>
+			            <md-tooltip>Edit</md-tooltip>
+			        </md-button>
+		          </td>
+		          <td md-cell>
+			        <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="deleteField(cell)">
+			            <md-icon md-svg-src="delete"></md-icon>
+			            <md-tooltip>Delete</md-tooltip>
+			        </md-button>
+		          </td>
 				</tr>
 			</tbody>
 	      </table>
 	    </md-table-container>
+        <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="showAddNewFieldModal()">
+            <md-icon md-svg-src="add"></md-icon>
+            <md-tooltip>Add new field</md-tooltip>
+        </md-button>
 	</div>
 </div>

@@ -91,6 +91,14 @@
           <td md-cell>
             <div layout="row" layout-align="end center">
               <md-button class="md-raised md-icon-button md-primary"
+                         ui-sref="panelSearch({eventId: item.id})"
+                         aria-label="ok">
+                <md-icon md-svg-src="search"></md-icon>
+                <md-tooltip md-direction="bottom">
+                  Quick search
+                </md-tooltip>
+              </md-button>
+              <md-button class="md-raised md-icon-button md-primary"
                          ui-sref="eventTable({eventId: item.id})"
                          aria-label="ok">
                 <md-icon md-svg-src="list"></md-icon>
