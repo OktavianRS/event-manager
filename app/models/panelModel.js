@@ -114,5 +114,14 @@ angular.module('model.panel', [
           )
         }
 
+        this.allByEvent = function(req, callback) {
+          api.get(
+            url.panel.allByEvent,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
 
       }]);

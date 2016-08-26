@@ -1,8 +1,8 @@
 angular.module('factory.url', [])
     .factory('url', [
       function() {
-        var baseUrl = 'http://192.168.0.124/api/web/v1/';
-        //var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
+        //var baseUrl = 'http://192.168.0.124/api/web/v1/';
+        var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
 
         return {
           user: {
@@ -71,6 +71,7 @@ angular.module('factory.url', [])
             createSearch: baseUrl + 'panel-search/create',
             updateSearch: baseUrl + 'panel-search/update',
             deleteSearch: baseUrl + 'panel-search/delete',
+            allByEvent: baseUrl + 'panel-search/all-by-event',
             getFieldSettings: baseUrl + 'field-setting/index',
             updateFieldSettings: baseUrl + 'field-setting/update'
           }

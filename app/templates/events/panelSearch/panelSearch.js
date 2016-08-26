@@ -3,10 +3,24 @@ angular.module('eventManager')
 
         $scope.getIndexSearch = function() {
           panelModel.getIndexSearch({event_id: $scope.stateParams.eventId},function(data) {
-                $scope.attributeLabels = data;
+                $scope.indexLabels = data;
             })
         }
         $scope.getIndexSearch();
+
+        $scope.getAttributeLabels = function() {
+            panelModel.getAttributeLabels({_eventId: $scope.stateParams.eventId},function(data) {
+                $scope.attributeLabels = data;
+            })
+        }
+        $scope.getAttributeLabels();
+
+        // $scope.allByEvent = function() {
+        //   panelModel.allByEvent({event_id: $scope.stateParams.eventId},function(data) {
+                
+        //     })
+        // }
+        // $scope.allByEvent();
 
         $scope.deleteField = function(cell) {
           panelModel.deleteSearch({id: cell.id}, function(data) {
@@ -22,12 +36,13 @@ angular.module('eventManager')
               targetEvent: ev,
               clickOutsideToClose:true,
               locals: {
+                indexLabels: $scope.indexLabels,
                 attributeLabels: $scope.attributeLabels
               },
               fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
             .then(function(answer) {
-              panelModel.createSearch({event_id: $scope.stateParams.eventId, name: answer}, function(data) {
+              panelModel.createSearch({event_id: $scope.stateParams.eventId, params: answer.cards, name: answer.name}, function(data) {
                 $scope.getIndexSearch();
               })
             }, function() {
@@ -35,8 +50,35 @@ angular.module('eventManager')
             });
             };
 
-              function newDialogCtrl($scope, $mdDialog,attributeLabels) {
+              function newDialogCtrl($scope, $mdDialog,indexLabels,attributeLabels) {
+                $scope.indexLabels = indexLabels;
                 $scope.attributeLabels = attributeLabels;
+                $scope.answerObject = {
+                  name: 'Default name',
+                  cards: [
+                    {
+                      name: 1
+                    }
+                  ],
+                  types: attributeLabels
+                };
+                $scope.deleteType = function(index) {
+                  $scope.answerObject.types.splice(index,1);
+                  $scope.nextCard = true;
+                }
+                $scope.addCard = function() {
+                  $scope.answerObject.cards.push({name: $scope.answerObject.cards.length});
+                  $scope.nextCard = false;
+                }
+                $scope.deleteCard = function(index, params) {
+                  $scope.answerObject.types.push({name: params.name, label: params.label});
+                  $scope.answerObject.cards.splice(index,1);
+                  $scope.nextCard = true;
+                }
+                $scope.showAns = function() {
+                console.log($scope.answerObject);
+                }
+                $scope.quickSearch = {};
                 $scope.hide = function() {
                   $mdDialog.hide();
                 };
@@ -57,7 +99,7 @@ angular.module('eventManager')
               clickOutsideToClose:true,
               locals: {
                 updateField: field,
-                attributeLabels: $scope.attributeLabels
+                indexLabels: $scope.indexLabels
               },
               fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
@@ -71,9 +113,9 @@ angular.module('eventManager')
             });
             };
 
-              function updateDialogCtrl($scope, $mdDialog,updateField, attributeLabels) {
+              function updateDialogCtrl($scope, $mdDialog,updateField, indexLabels) {
                 $scope.updateField = updateField;
-                $scope.attributeLabels = attributeLabels;
+                $scope.indexLabels = indexLabels;
                 console.log(updateField);
                 $scope.hide = function() {
                   $mdDialog.hide();

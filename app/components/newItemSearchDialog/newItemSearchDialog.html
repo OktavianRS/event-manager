@@ -2,7 +2,7 @@
 	<form ng-cloak>
 	    <md-toolbar>
 	      <div class="md-toolbar-tools">
-	        <h2>New field</h2>
+	        <h2 ng-click="showAns()">New field</h2>
 	        <span flex></span>
 	        <md-button class="md-icon-button" ng-click="cancel()">
 	          <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
@@ -11,18 +11,49 @@
 	    </md-toolbar>
 	    <md-dialog-content>
 	    	<div class="md-dialog-content">
-    		  <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
-			    <div>
+    		  <md-content layout-padding>
+			    <div layout="row">
 			      <md-input-container>
 			        <label>Name</label>
-			        <input ng-model="newField">
+			        <input ng-model="answerObject.name">
 			      </md-input-container>
 			    </div>
+				<md-card ng-repeat="card in answerObject.cards">
+				    <md-card-title>
+				      <md-card-title-text>
+				        <span class="md-headline">Card {{card.name}}</span>
+				      </md-card-title-text>
+				    </md-card-title>
+					<md-card-content style="margin-top: 30px;">
+					<md-select ng-if="!answerObject.cards[$index].type"
+							   ng-model="answerObject.cards[$index].type"
+							   placeholder="type"
+							   ng-change="deleteType(answerObject.cards[$index].type.index)"
+							   class="md-no-underline">
+			          <md-option ng-repeat="(key, attribute) in answerObject.types"
+			          			 ng-value="{name: attribute.name, index: $index, label: attribute.label}">
+			          	{{attribute.label}}
+			          </md-option>
+			        </md-select>
+				      <md-input-container ng-if="answerObject.cards[$index].type">
+				        <label>{{answerObject.cards[$index].type.name}}</label>
+				        <input ng-model="answerObject.cards[$index].value">
+				      </md-input-container>
+					</md-card-content>
+			        <md-button ng-if="answerObject.cards.length > 1" class="md-fab-sm add-button" aria-label="delete item" ng-click="deleteCard($index, answerObject.cards[$index].type)">
+			            <md-icon md-svg-src="delete"></md-icon>
+			            <md-tooltip>Delete card</md-tooltip>
+			        </md-button>
+			        <md-button ng-if="answerObject.types.length !== 0 && nextCard" class="md-fab-sm add-button" aria-label="New item" ng-click="addCard()">
+			            <md-icon md-svg-src="add"></md-icon>
+			            <md-tooltip>Add new card</md-tooltip>
+			        </md-button>
+				</md-card>
 			  </md-content>
 	    	</div>
 	    </md-dialog-content>
 	    <md-dialog-actions layout="row">
-	    	<md-button ng-click="answer(newField)">
+	    	<md-button ng-click="answer(answerObject)">
 				create
       		</md-button>
 	    </md-dialog-actions>
