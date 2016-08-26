@@ -13,11 +13,11 @@
           <step-model-generator ng-if="steps.model.step === 1"></step-model-generator>
           <step-controller-generator ng-if="steps.model.step === 2"></step-controller-generator>
           <div ng-if="steps.model.step === steps.model.steps.length - 1">
-            <md-button class="md-fab md-mini md-primary roll-back-button" ng-click="" ng-if="steps.model.step !== 0">
+          </div>
+        <md-button class="md-fab md-mini md-primary roll-back-button" ng-click="rollBack()" ng-if="steps.model.step !== 0 && steps.model.step !== steps.model.steps.length - 1">
               <md-icon md-svg-src="back" style="color: greenyellow;" ></md-icon>
               <md-tooltip>Roll back</md-tooltip>
             </md-button>
-          </div>
         </md-content>
       </md-step>
     </md-steppers>

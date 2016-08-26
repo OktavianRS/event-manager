@@ -51,4 +51,14 @@ angular.module('model.step', [
             }
           )
         }
+
+        this.rollBack = function(req, callback) {
+          api.get(
+            url.step.rollBack,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
       }]);

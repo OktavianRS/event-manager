@@ -19,6 +19,12 @@ angular.module('components.stepper', [])
         }
         $scope.getStep();
 
+        $scope.rollBack = function() {
+            stepModel.rollBack({_eventId: $scope.stateParams.eventId, step: ++$scope.steps.model.step}, function(data) {
+                console.log(data);
+            })
+        }
+
         $scope.$on('getStep', function(event, data) {
             $scope.getStep();
         });
