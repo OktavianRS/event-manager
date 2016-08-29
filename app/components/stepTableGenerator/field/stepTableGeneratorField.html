@@ -1,4 +1,4 @@
-<md-button class="md-fab md-mini md-raised next-step-button" ng-click="deleteField($index)">
+<md-button ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-raised next-step-button" ng-click="deleteField($index)">
   <md-icon md-svg-src="close" style="color: greenyellow;" ></md-icon>
   <md-tooltip>Delete field</md-tooltip>
 </md-button>
@@ -6,7 +6,7 @@
 
 <md-input-container class="field-type-select " ng-click="get()">
   <label>Field name</label>
-  <input name="field" required type="text" ng-model="field.name" ng-change="uniquenessCheck( {{ tableForm.field }} )">
+  <input name="field" disabled="steps.model.steps[0].check" required type="text" ng-model="field.name" ng-change="uniquenessCheck( {{ tableForm.field }} )">
   <div ng-messages="tableForm.field.$error">
     <div ng-message="uniqueness">Fields must be unique</div>
     <div ng-message="required">This field is required.</div>
@@ -17,7 +17,7 @@
 
 <md-input-container class="field-type-select">
 <label>Field type</label>
-<md-select required ng-model="field.type.name">
+<md-select required ng-model="field.type.name" disabled="steps.model.steps[0].check">
   <md-option ng-repeat="type in tableType" ng-selected="type.id === field.type.name.id" ng-value="{value: type.value, index: $index, id: type.id}">
     {{type.name}}
   </md-option>
@@ -28,32 +28,37 @@
   class="field-type-container"
   ng-repeat="val in tableType[field.type.name.index].params track by $index">
   <label>Field type: {{ val }}</label>
-  <input type="text" ng-model="field.type.value[$index]">
+  <input type="text" ng-model="field.type.value[$index]" disabled="steps.model.steps[0].check">
 </md-input-container>
 
   <md-switch ng-model="field.params.notNull.checked"
              aria-label="tableParams[0].name"
-             ng-change="field.params.notNull.checked ? createProperty($index, 'notNull', []) : deleteProperty($index, 'notNull')">
+             ng-change="field.params.notNull.checked ? createProperty($index, 'notNull', []) : deleteProperty($index, 'notNull')"
+             disabled="steps.model.steps[0].check">
     {{tableParams[0].name}}
   </md-switch>
   <md-switch ng-model="field.params.unique.checked"
              aria-label="tableParams[1].name"
-             ng-change="field.params.unique.checked ? createProperty($index, 'unique', []) : deleteProperty($index, 'unique'">
+             ng-change="field.params.unique.checked ? createProperty($index, 'unique', []) : deleteProperty($index, 'unique'" 
+             ng-disabled="steps.model.steps[0].check">
     {{tableParams[1].name}}
   </md-switch>
   <md-switch ng-model="field.params.unsigned.checked"
              aria-label="tableParams[2].name"
-             ng-change="field.params.unsigned.checked ? createProperty($index, 'unsigned', []) : deleteProperty($index, 'unsigned')">
+             ng-change="field.params.unsigned.checked ? createProperty($index, 'unsigned', []) : deleteProperty($index, 'unsigned')" 
+             ng-disabled="steps.model.steps[0].check">
     {{tableParams[2].name}}
   </md-switch>
     <md-switch ng-model="field.params.comment.checked"
                aria-label="tableParams[3].name"
-               ng-change="field.params.comment.checked ? createProperty($index, 'comment', [string]) : deleteProperty($index, 'comment')">
+               ng-change="field.params.comment.checked ? createProperty($index, 'comment', [string]) : deleteProperty($index, 'comment')"
+               ng-disabled="steps.model.steps[0].check">
     {{tableParams[3].name}}
   </md-switch>
     <md-switch ng-model="field.params.defaultValue.checked" 
                aria-label="tableParams[4].name"
-               ng-change="field.params.defaultValue.checked ? createProperty($index, 'defaultValue', [string]) : deleteProperty($index, 'defaultValue')">
+               ng-change="field.params.defaultValue.checked ? createProperty($index, 'defaultValue', [string]) : deleteProperty($index, 'defaultValue')"
+               ng-disabled="steps.model.steps[0].check">
     {{tableParams[4].name}}
   </md-switch>
 
@@ -61,13 +66,13 @@
   class="field-params-container"
  ng-if="field.params.comment.checked">
   <label>Field parameter: comment</label>
-  <input required type="text" ng-model="field.params.comment.value[0]">
+  <input required type="text" ng-model="field.params.comment.value[0]" disabled="steps.model.steps[0].check">
 </md-input-container>
 <md-input-container
   class="field-params-container"
  ng-if="field.params.defaultValue.checked">
   <label>Field parameter: default</label>
-  <input required type="text" ng-model="field.params.defaultValue.value[0]">
+  <input required type="text" ng-model="field.params.defaultValue.value[0]" disabled="steps.model.steps[0].check">
 </md-input-container>
 </div>
 

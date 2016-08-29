@@ -2,20 +2,18 @@ angular.module('components.stepModelGenerator', [])
     .directive('stepModelGenerator', [function() {
       return {
         restrict: 'E',
-        templateUrl: 'components/stepModelGenerator/stepModelGenerator.html',
-        controller: 'stepModelGenerator'
+        templateUrl: 'components/stepModelGenerator/stepModelGenerator.html'
       }
     }])
     .controller('stepModelGenerator', ['$scope', 'stepModel', function($scope, stepModel){
-    	$scope.getStepInfo = function() {
-            stepModel.getStepInfo($scope.stateParams.eventId,function(data) {
-                $scope.stepInfo = data;
-                $scope.modelRelations = data.additional_value.relations;
-                $scope.modelTemplates = data.additional_value.templates;
-                $scope.datas = data.value.ModelGenerator;
-            })
-        }
-        $scope.getStepInfo();
+
+            alert(true)
+        $scope.$on('get-model-info', function(event, data) {
+            $scope.stepInfo = data;
+            $scope.modelRelations = data.additional_value.relations;
+            $scope.modelTemplates = data.additional_value.templates;
+            $scope.datas = data.value.ModelGenerator;
+        });
 
         $scope.sendTableData = function() {
             $scope.dataToSend = {

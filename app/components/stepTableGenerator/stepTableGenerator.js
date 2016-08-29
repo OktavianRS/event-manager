@@ -2,8 +2,7 @@ angular.module('components.stepTableGenerator', [])
     .directive('stepTableGenerator', [function() {
       return {
         restrict: 'E',
-        templateUrl: 'components/stepTableGenerator/stepTableGenerator.html',
-        controller: 'stepTableGenerator'
+        templateUrl: 'components/stepTableGenerator/stepTableGenerator.html'
       }
     }])
     .controller('stepTableGenerator', ['$scope', 'stepModel','$timeout', '$q', function($scope, stepModel, $timeout, $q){
@@ -27,27 +26,6 @@ angular.module('components.stepTableGenerator', [])
             stepModel.sendTableData($scope.dataToSend, function(data) {
                 $scope.$emit('getStep', 'new step pls');
         	});
-        }
-
-        $scope.getStepInfo = function() {
-            stepModel.getStepInfo($scope.stateParams.eventId,function(data) {
-                $scope.tableType = data.additional_value.type;
-                $scope.tableParams = data.additional_value.param;
-                $scope.datas = data.value.TableGenerator.tables[0];
-            })
-        }
-        $scope.getStepInfo();
-
-        $scope.uniquenessCheck = function(field) {
-            var valueArray = $scope.datas.fields.map(function(item){ return item.name });
-            var isDuplicate = valueArray.some(function(item, idx) {
-                return valueArray.indexOf(item) != idx;
-            });
-            console.log(field);
-        }
-
-        $scope.get = function() {
-            console.log($scope.datas.fields);
         }
 
         $scope.deleteProperty = function(index, param) {

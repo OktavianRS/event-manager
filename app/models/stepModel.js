@@ -23,11 +23,10 @@ angular.module('model.step', [
       		)
       	}
 
-        this.getStepInfo = function(eventId, callback) {
+        this.getStepInfo = function(req, callback) {
         api.get(
-          url.step.getStepInfo,{
-            _eventId: eventId
-          },
+          url.step.getStepInfo,
+          req,
           function(res) {
             callback(res);
           })
@@ -53,7 +52,7 @@ angular.module('model.step', [
         }
 
         this.rollBack = function(req, callback) {
-          api.get(
+          api.post(
             url.step.rollBack,
             req,
             function(res) {

@@ -71,6 +71,9 @@ angular.module('eventManager')
                       }
                   }
                 }
+                $scope.dragStart = function($event) {
+                  console.log($event);
+                } 
                 $scope.hide = function() {
                   $mdDialog.hide();
                 };

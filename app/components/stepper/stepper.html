@@ -7,14 +7,19 @@
     </div>
   </md-toolbar>
     <md-steppers md-selected="steps.model.step" md-stretch-steppers="always">
-      <md-step ng-repeat="step in steps.model.steps" label="{{step.name}}" ng-disabled="steps.model.step === $index ? false : true">
-        <md-content layout-padding>
+      <md-step label="start" ng-click="navigateStep(0)" md-complete="steps.model.steps[0].check" ng-disabled="steps.model.steps[0].check"">
+        <md-conttent layout-padding>
           <step-table-generator ng-if="steps.model.step === 0"></step-table-generator>
-          <step-model-generator ng-if="steps.model.step === 1"></step-model-generator>
-          <step-controller-generator ng-if="steps.model.step === 2"></step-controller-generator>
-          <div ng-if="steps.model.step === steps.model.steps.length - 1">
+        </md-conttent>
+      </md-step>
+      <md-step ng-repeat="step in steps.model.steps" label="{{step.name}}" ng-click="navigateStep(step.order)" md-complete="step.check">
+        <md-content layout-padding>
+          <step-table-generator ng-if="steps.model.step === 1"></step-table-generator>
+          <step-model-generator ng-if="steps.model.step === 2"></step-model-generator>
+          <step-controller-generator ng-if="steps.model.step === 3"></step-controller-generator>
+          <div ng-show="steps.model.step === steps.model.steps.length - 1">
           </div>
-        <md-button class="md-fab md-mini md-primary roll-back-button" ng-click="rollBack()" ng-if="steps.model.step !== 0 && steps.model.step !== steps.model.steps.length - 1">
+        <md-button class="md-fab md-mini md-primary roll-back-button" ng-click="rollBack()" ng-if="step.check">
               <md-icon md-svg-src="back" style="color: greenyellow;" ></md-icon>
               <md-tooltip>Roll back</md-tooltip>
             </md-button>
