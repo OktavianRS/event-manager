@@ -5,7 +5,7 @@
 	           layout="row"
 	           layout-align="space-between center">
 	        <span>Table
-	        <md-icon md-svg-src="settings" style="cursor: pointer;" ng-click="shewFieldSettings()"></md-icon>
+	        <md-icon md-svg-src="settings" ng-if="attributeLabels && fieldSettings" style="cursor: pointer;" ng-click="shewFieldSettings()"></md-icon>
 	        </span>
 	      </div>
 	    </md-toolbar>

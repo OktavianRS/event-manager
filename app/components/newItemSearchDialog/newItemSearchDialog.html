@@ -1,5 +1,5 @@
 <md-dialog>
-	<form ng-cloak>
+	<form name="quickSearch" ng-submit="answer(answerObject)" ng-cloak>
 	    <md-toolbar>
 	      <div class="md-toolbar-tools">
 	        <h2 ng-click="showAns()">New field</h2>
@@ -15,7 +15,7 @@
 			    <div layout="row">
 			      <md-input-container>
 			        <label>Name</label>
-			        <input ng-model="answerObject.name">
+			        <input required ng-model="answerObject.name">
 			      </md-input-container>
 			    </div>
 				<md-card ng-repeat="card in answerObject.cards">
@@ -29,7 +29,8 @@
 							   ng-model="answerObject.cards[$index].type"
 							   placeholder="type"
 							   ng-change="deleteType(answerObject.cards[$index].type.index)"
-							   class="md-no-underline">
+							   class="md-no-underline"
+							   required>
 			          <md-option ng-repeat="(key, attribute) in answerObject.types"
 			          			 ng-value="{name: attribute.name, index: $index, label: attribute.label}">
 			          	{{attribute.label}}
@@ -37,14 +38,14 @@
 			        </md-select>
 				      <md-input-container ng-if="answerObject.cards[$index].type">
 				        <label>{{answerObject.cards[$index].type.name}}</label>
-				        <input ng-model="answerObject.cards[$index].value">
+				        <input required ng-model="answerObject.cards[$index].value">
 				      </md-input-container>
 					</md-card-content>
-			        <md-button ng-if="answerObject.cards.length > 1" class="md-fab-sm add-button" aria-label="delete item" ng-click="deleteCard($index, answerObject.cards[$index].type)">
+			        <md-button ng-if="answerObject.cards.length > 1 && answerObject.cards[$index].value" class="md-fab-sm add-button" aria-label="delete item" ng-click="deleteCard($index, answerObject.cards[$index].type)">
 			            <md-icon md-svg-src="delete"></md-icon>
 			            <md-tooltip>Delete card</md-tooltip>
 			        </md-button>
-			        <md-button ng-if="answerObject.types.length !== 0 && nextCard" class="md-fab-sm add-button" aria-label="New item" ng-click="addCard()">
+			        <md-button ng-if="answerObject.types.length !== 0 && nextCard && answerObject.cards[$index].value" class="md-fab-sm add-button" aria-label="New item" ng-click="addCard()">
 			            <md-icon md-svg-src="add"></md-icon>
 			            <md-tooltip>Add new card</md-tooltip>
 			        </md-button>
@@ -53,7 +54,7 @@
 	    	</div>
 	    </md-dialog-content>
 	    <md-dialog-actions layout="row">
-	    	<md-button ng-click="answer(answerObject)">
+	    	<md-button type="submit" >
 				create
       		</md-button>
 	    </md-dialog-actions>

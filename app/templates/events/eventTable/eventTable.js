@@ -29,7 +29,7 @@ angular.module('eventManager')
 
         $scope.shewFieldSettings = function(ev) {
             $mdDialog.show({
-              controller: newFieldSettingsCtrl,
+              controller: 'openFieldSettingsCtrl',
               templateUrl: 'components/openFieldSettings/openFieldSettings.html',
               parent: angular.element(document.body),
               targetEvent: ev,
@@ -45,49 +45,14 @@ angular.module('eventManager')
                 _eventId: $scope.stateParams.eventId,
                 fields: answer
               }
-              console.log(dataToSend);
               panelModel.updateFieldSettings(dataToSend, function(data) {
-                console.log(data);
+                $scope.getFieldSettings();
+                $scope.getAttributeLabels();
               })
             }, function() {
               //when close dialog
             });
-            };
-
-              function newFieldSettingsCtrl($scope, $mdDialog,attributeLabels, fieldSettings) {
-                $scope.attributeLabels = attributeLabels;
-                $scope.fieldSettings = fieldSettings.model;
-                $scope.dragndrop = {
-                  sort: true,
-                  animation: 150,
-                  store: {
-                      get: function (sortable) {
-                          var order = localStorage.getItem(sortable.options.group.name);
-                          return order ? order.split('|') : [];
-                      },
-                      set: function (sortable) {
-                        console.log(sortable);
-                        $scope.order = sortable.toArray();
-                      }
-                  }
-                }
-                $scope.dragStart = function($event) {
-                  console.log($event);
-                } 
-                $scope.hide = function() {
-                  $mdDialog.hide();
-                };
-                $scope.cancel = function() {
-                  $mdDialog.cancel();
-                };
-                $scope.answer = function(answer, order) {
-                  angular.forEach(order, function(value, key) {
-                    answer[value].order = key;
-                  })
-
-                  $mdDialog.hide(answer);
-                };
-              }
+        };
 
         $scope.showAddNewFieldModal = function(ev) {
             $mdDialog.show({
@@ -111,19 +76,19 @@ angular.module('eventManager')
             });
             };
 
-              function newDialogCtrl($scope, $mdDialog,attributeLabels) {
-                $scope.attributeLabels = attributeLabels;
-                $scope.newField = {};
-                $scope.hide = function() {
-                  $mdDialog.hide();
-                };
-                $scope.cancel = function() {
-                  $mdDialog.cancel();
-                };
-                $scope.answer = function(answer) {
-                  $mdDialog.hide(answer);
-                };
-              }
+            function newDialogCtrl($scope, $mdDialog,attributeLabels) {
+              $scope.attributeLabels = attributeLabels;
+              $scope.newField = {};
+              $scope.hide = function() {
+                $mdDialog.hide();
+              };
+              $scope.cancel = function() {
+                $mdDialog.cancel();
+              };
+              $scope.answer = function(answer) {
+                $mdDialog.hide(answer);
+              };
+            }
 
         $scope.showUpdateNewFieldModal = function(ev, field) {
             $mdDialog.show({
@@ -163,4 +128,44 @@ angular.module('eventManager')
                 };
               }
     }
-    ]);
+    ])
+
+    .controller('openFieldSettingsCtrl', ['$scope', '$mdDialog', 'attributeLabels', 'fieldSettings', function($scope, $mdDialog, attributeLabels, fieldSettings) {
+      $scope.attributeLabels = attributeLabels;
+      $scope.fieldSettings = fieldSettings.model;
+
+      $scope.dragndrop = {
+        sort: true,
+        animation: 150,
+        scroll: true, // or HTMLElement
+        scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
+        scrollSpeed: 10,
+        store: {
+            get: function (sortable) {
+                var order = localStorage.getItem(sortable.options.group.name);
+                return order ? order.split('|') : [];
+            },
+            set: function (sortable) {
+              $scope.order = sortable.toArray();
+            }
+        },
+        onUpdate: function (evt) {
+          $scope.fieldSettings[evt.oldIndex].order = evt.newIndex;
+          $scope.fieldSettings[evt.oldIndex].edited = true;
+        }
+      }
+
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function(answer) {
+        var toSend = [];
+        angular.forEach(answer, (value, key) => {
+          value.edited ? delete value.edited && toSend.push(value) : false;
+        })
+        $mdDialog.hide(toSend);
+      };
+    }])

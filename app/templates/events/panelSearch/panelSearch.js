@@ -48,7 +48,7 @@ angular.module('eventManager')
             }, function() {
               //when close dialog
             });
-            };
+        };
 
               function newDialogCtrl($scope, $mdDialog,indexLabels,attributeLabels) {
                 $scope.indexLabels = indexLabels;
