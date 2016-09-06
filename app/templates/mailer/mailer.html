@@ -1,0 +1,112 @@
+<div class="mailer container">
+  <div class="md-whiteframe-3dp">
+    <md-content>
+    <mailer-toolbar></mailer-toolbar>
+<div class="home container"
+     ng-if="isLogged">
+  <div class="header"
+       layout="row"
+       layout-align="start center">
+    Get started
+  </div>
+
+  <md-divider></md-divider>
+  <div class="list-item"
+       layout="row"
+       layout-xs="column"
+       layout-align="space-between center">
+    <div layout="row"
+         layout-xs="column"
+         layout-align="start center">
+      <div class="img-box">
+        <img src="images/campaign.png">
+      </div>
+
+      <div class="text-area"
+           layout="column">
+        <div class="title">
+          Create and send a campaign
+        </div>
+        <div class="text">
+          You need to create a campaing object to send emails to your contacts. In campaign you can specify contacts
+          list and emails template you would like to use in a particular campaign.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <md-button class="md-raised md-primary"
+                 ui-sref="mailerCampaigns">
+        View Campaigns
+      </md-button>
+    </div>
+  </div>
+
+  <md-divider></md-divider>
+  <div class="list-item"
+       layout="row"
+       layout-xs="column"
+       layout-align="space-between center">
+    <div layout="row"
+         layout-xs="column"
+         layout-align="start center">
+      <div class="img-box">
+        <img src="images/template.png">
+      </div>
+
+      <div class="text-area"
+           layout="column">
+        <div class="title">
+          Create a template
+        </div>
+        <div class="text">
+          When you create a campaign, you can select from different templates to create your email campaign. Basic
+          templates provide you with blank layouts where you can add and style content to create a customized,
+          mobile-friendly email.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <md-button class="md-raised md-primary"
+                 ui-sref="mailerTemplates">
+        View Templates
+      </md-button>
+    </div>
+  </div>
+
+  <md-divider></md-divider>
+  <div class="list-item"
+       layout="row"
+       layout-xs="column"
+       layout-align="space-between center">
+    <div layout="row"
+         layout-xs="column"
+         layout-align="start center">
+      <div class="img-box">
+        <img src="images/list.png">
+      </div>
+
+      <div class="text-area"
+           layout="column">
+        <div class="title">
+          Create a list
+        </div>
+        <div class="text">
+          The foundation of great email marketing is an up-to-date list of email contacts who have opted in to receive
+          your campaigns. With AGP Mailer you can easily manage your contacts.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <md-button class="md-raised md-primary"
+                 ui-sref="mailerLists">
+        View Lists
+      </md-button>
+    </div>
+  </div>
+</div>
+    </md-content>
+  </div>
+</div>

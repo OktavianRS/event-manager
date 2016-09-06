@@ -5,6 +5,9 @@
              layout="row"
              layout-align="space-between center">
           <span>Quick search</span>
+          <span flex></span>
+          <md-progress-circular ng-if="processing" class="md-hue-2" md-diameter="40px"></md-progress-circular>
+          <span ng-if="processing">Processing</span>
         </div>
       </md-toolbar>
       <md-table-container>
@@ -13,9 +16,12 @@
             <tr md-row>
 
               <th class="table-name"
-                  md-column
-                  >
+                  md-column>
                 <span>Name</span>
+              </th>
+              <th class="table-name"
+                  md-column>
+                <span>Params</span>
               </th>
 
               <th>Edit</th>
@@ -24,9 +30,12 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row ng-repeat="cell in attributeLabels.model track by $index">
+            <tr md-row ng-repeat="cell in indexLabels.model track by $index">
               <td md-cell
                   ><span>{{cell.name}}</span>
+              </td>
+              <td md-cell
+                  ><span>{{cell.params}}</span>
               </td>
               <td md-cell>
               <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="showUpdateNewFieldModal($event, cell)">

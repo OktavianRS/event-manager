@@ -46,6 +46,7 @@ angular.module('model.step', [
             url.step.generateTable,
             req,
             function(res) {
+              toast('success', 'Step finished successfully');
               callback(res);
             }
           )
@@ -56,6 +57,7 @@ angular.module('model.step', [
             url.step.rollBack,
             req,
             function(res) {
+              toast('success', 'Step rollback');
               callback(res);
             }
           )

@@ -1,0 +1,19 @@
+<md-dialog aria-label="template"
+           flex="80"
+           class="template-modal">
+  <md-toolbar layout
+              layout-align="space-between center">
+    <div class="header">
+      Template
+    </div>
+    <md-button class="md-icon-button"
+               aria-label="icon"
+               ng-click="close()">
+      <md-icon md-svg-src="close"></md-icon>
+    </md-button>
+  </md-toolbar>
+
+  <md-dialog-content >
+    <div ng-bind-html="sce.trustAsHtml(template.content)"></div>
+  </md-dialog-content>
+</md-dialog>

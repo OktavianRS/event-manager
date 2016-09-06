@@ -2,15 +2,19 @@ angular.module('eventManager')
     .controller('panelSearchCtrl', ['$scope', 'panelModel', '$mdDialog', function($scope, panelModel, $mdDialog) {
 
         $scope.getIndexSearch = function() {
+          $scope.processing = true;
           panelModel.getIndexSearch({event_id: $scope.stateParams.eventId},function(data) {
                 $scope.indexLabels = data;
+                $scope.processing = false;
             })
         }
         $scope.getIndexSearch();
 
         $scope.getAttributeLabels = function() {
+          $scope.processing = true;
             panelModel.getAttributeLabels({_eventId: $scope.stateParams.eventId},function(data) {
                 $scope.attributeLabels = data;
+                $scope.processing = false;
             })
         }
         $scope.getAttributeLabels();
@@ -23,8 +27,10 @@ angular.module('eventManager')
         // $scope.allByEvent();
 
         $scope.deleteField = function(cell) {
+          $scope.processing = true;
           panelModel.deleteSearch({id: cell.id}, function(data) {
             $scope.getIndexSearch();
+            $scope.processing = false;
           })
         }
 
@@ -42,8 +48,10 @@ angular.module('eventManager')
               fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
             .then(function(answer) {
-              panelModel.createSearch({event_id: $scope.stateParams.eventId, params: answer.cards, name: answer.name}, function(data) {
+              $scope.processing = true;
+              panelModel.createSearch({event_id: $scope.stateParams.eventId, params: answer.sql, name: answer.name}, function(data) {
                 $scope.getIndexSearch();
+                $scope.processing = false;
               })
             }, function() {
               //when close dialog
@@ -104,9 +112,11 @@ angular.module('eventManager')
               fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
             .then(function(answer) {
+              $scope.processing = true;
               answer._eventId = $scope.stateParams.eventId; 
-              panelModel.updateField(answer, function(data) {
-                $scope.getIndex();
+              panelModel.updateSearch(answer, function(data) {
+                $scope.getIndexSearch();
+                $scope.processing = false;
               })
             }, function() {
               //when close dialog

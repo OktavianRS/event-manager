@@ -5,19 +5,24 @@
 	           layout="row"
 	           layout-align="space-between center">
 	        <span>Table
-	        <md-icon md-svg-src="settings" ng-if="attributeLabels && fieldSettings" style="cursor: pointer;" ng-click="shewFieldSettings()"></md-icon>
+	        <md-icon md-svg-src="settings" ng-if="attributeLabels && fieldSettings" style="cursor: pointer; width: 20px; margin-top: -5px;" ng-click="shewFieldSettings()"></md-icon>
 	        </span>
+	      <span flex></span>
+	      <span>
+	      	<md-icon md-svg-src="error" style="cursor: pointer; width: 20px; margin-top: -5px;" ui-sref='mailer'></md-icon>
+	      </span>
+	      <md-progress-circular ng-if="processing" class="md-hue-2" md-diameter="40px"></md-progress-circular>
+	      <span ng-if="processing">Processing</span>
 	      </div>
 	    </md-toolbar>
 	    <md-table-container>
-	      <table md-table class="table">
+	      <table md-table class="event-table">
 	        <thead md-head md-on-reorder="onReorderEvent">
 		        <tr md-row>
 
 		          <th class="table-name"
 		              md-column
-		              ng-repeat="label in attributeLabels track by $index"
-		              >
+		              ng-repeat="label in attributeLabels track by $index">
 		            <span>{{label.label}}</span>
 		          </th>
 
@@ -27,19 +32,23 @@
 		        </tr>
 	        </thead>
 	        <tbody md-body>
-		        <tr md-row ng-repeat="cell in index.model track by $index">
-		          <td md-cell
-		          	  ng-repeat="label in attributeLabels"
-		              ><span>{{cell[label.name]}}</span>
+		        <tr md-row ng-repeat="cell in index.model | orderBy: 'order'">
+		          <td md-cell class="cell" ng-repeat="label in attributeLabels">
+		          	  <span class="cell-name" ng-dblclick="cell[label.label].edit = true;" ng-if="!cell[label.label].edit">{{cell[label.name]}}</span>
+		          	  <input type="text" class="cell-input"
+		          	  		 ng-if="cell[label.label].edit" 
+		          	  		 ng-model="cell[label.name]"
+		          	  		 ng-blur="storeInputChanges(cell, $index, label.label); cell[label.label].edit = false;">
+		          	  <md-icon ng-if="cell[label.label].edit" class="edit-field-icon" md-svg-src="edit"></md-icon>
 		          </td>
 		          <td md-cell>
-			        <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="showUpdateNewFieldModal($event, cell)">
+			        <md-button class="md-fab-sm" aria-label="New item" ng-click="showUpdateNewFieldModal($event, cell)">
 			            <md-icon md-svg-src="edit"></md-icon>
 			            <md-tooltip>Edit</md-tooltip>
 			        </md-button>
 		          </td>
 		          <td md-cell>
-			        <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="deleteField(cell)">
+			        <md-button class="md-fab-sm" aria-label="New item" ng-click="deleteField(cell)">
 			            <md-icon md-svg-src="delete"></md-icon>
 			            <md-tooltip>Delete</md-tooltip>
 			        </md-button>

@@ -18,38 +18,12 @@
 			        <input required ng-model="answerObject.name">
 			      </md-input-container>
 			    </div>
-				<md-card ng-repeat="card in answerObject.cards">
-				    <md-card-title>
-				      <md-card-title-text>
-				        <span class="md-headline">Card {{card.name}}</span>
-				      </md-card-title-text>
-				    </md-card-title>
-					<md-card-content style="margin-top: 30px;">
-					<md-select ng-if="!answerObject.cards[$index].type"
-							   ng-model="answerObject.cards[$index].type"
-							   placeholder="type"
-							   ng-change="deleteType(answerObject.cards[$index].type.index)"
-							   class="md-no-underline"
-							   required>
-			          <md-option ng-repeat="(key, attribute) in answerObject.types"
-			          			 ng-value="{name: attribute.name, index: $index, label: attribute.label}">
-			          	{{attribute.label}}
-			          </md-option>
-			        </md-select>
-				      <md-input-container ng-if="answerObject.cards[$index].type">
-				        <label>{{answerObject.cards[$index].type.name}}</label>
-				        <input required ng-model="answerObject.cards[$index].value">
-				      </md-input-container>
-					</md-card-content>
-			        <md-button ng-if="answerObject.cards.length > 1 && answerObject.cards[$index].value" class="md-fab-sm add-button" aria-label="delete item" ng-click="deleteCard($index, answerObject.cards[$index].type)">
-			            <md-icon md-svg-src="delete"></md-icon>
-			            <md-tooltip>Delete card</md-tooltip>
-			        </md-button>
-			        <md-button ng-if="answerObject.types.length !== 0 && nextCard && answerObject.cards[$index].value" class="md-fab-sm add-button" aria-label="New item" ng-click="addCard()">
-			            <md-icon md-svg-src="add"></md-icon>
-			            <md-tooltip>Add new card</md-tooltip>
-			        </md-button>
-				</md-card>
+			    <div layout="row">
+			      <md-input-container>
+			        <label>SQL</label>
+			        <textarea name="sql" cols="30" rows="10" ng-model="answerObject.sql"></textarea>
+			      </md-input-container>
+			    </div>
 			  </md-content>
 	    	</div>
 	    </md-dialog-content>

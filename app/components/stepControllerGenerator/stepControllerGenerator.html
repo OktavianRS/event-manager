@@ -1,25 +1,25 @@
 <div class="step-content-row">
   <md-input-container class="md-block">
     <label>Model Class</label>
-    <input required type="text" ng-model="datas.modelClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
+    <input required type="text" ng-model="controllerTemplateStp.data.modelClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
   </md-input-container>
   <md-input-container class="md-block">
     <label>Search Model Class</label>
-    <input required type="text" ng-model="datas.searchModelClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
+    <input required type="text" ng-model="controllerTemplateStp.data.searchModelClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
   </md-input-container>
   <md-input-container class="md-block">
     <label>Controller Class</label>
-    <input required type="text" ng-model="datas.controllerClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
+    <input required type="text" ng-model="controllerTemplateStp.data.controllerClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
   </md-input-container>
   <md-input-container class="md-block">
     <label>Base Controller Class</label>
-    <input required type="text" ng-model="datas.baseControllerClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
+    <input required type="text" ng-model="controllerTemplateStp.data.baseControllerClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
   </md-input-container>
 
 <md-input-container class="field-params-select"> 
   <label>Code Template</label>
-  <md-select required ng-model="datas.template" ng-disabled="steps.model.steps[steps.model.step-1].check">
-    <md-option ng-repeat="type in controllerTemplates" ng-value="type.name">
+  <md-select required ng-model="controllerTemplateStp.data.template" ng-disabled="steps.model.steps[steps.model.step-1].check">
+    <md-option ng-repeat="type in controllerTemplateStp.controllerTemplates" ng-value="type.name">
       {{type.name}}
     </md-option>
   </md-select>

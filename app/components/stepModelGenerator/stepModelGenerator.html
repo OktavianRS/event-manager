@@ -1,37 +1,42 @@
 <div class="step-model-generator">
 	<md-input-container class="md-block">
 		<label>Namespace</label>
-		<input required type="text" ng-model="datas.ns" ng-disabled="steps.model.steps[steps.model.step-1].check">
+		<input required type="text" ng-model="modelTemplateStp.data.ns" ng-disabled="steps.model.steps[steps.model.step-1].check">
 	</md-input-container>
 	<md-input-container class="md-block">
 		<label>Base class</label>
-		<input required type="text" ng-model="datas.baseClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
+		<input required type="text" ng-model="modelTemplateStp.data.baseClass" ng-disabled="steps.model.steps[steps.model.step-1].check">
 	</md-input-container>
 	<md-input-container class="field-type-select">
 		<label>Generate Relations</label>
-		<md-select required ng-model="datas.generateRelations" ng-disabled="steps.model.steps[steps.model.step-1].check">
-			<md-option ng-repeat="rel in modelRelations" ng-value="rel.value">
+		<md-select required ng-model="modelTemplateStp.data.generateRelations" ng-disabled="steps.model.steps[steps.model.step-1].check" >
+			<md-option aria-label="{{rel.name}}" ng-repeat="rel in modelTemplateStp.modelTemplateStp.modelRelations" ng-value="rel.value">
 				{{rel.name}}
 			</md-option>
 		</md-select>
 	</md-input-container>
-	<md-switch ng-model="datas.generateLabelsFromComments" aria-label="Switch 1" ng-disabled="steps.model.steps[steps.model.step-1].check">
+	<md-switch ng-model="modelTemplateStp.data.generateLabelsFromComments" aria-label="Switch 1" ng-disabled="steps.model.steps[steps.model.step-1].check">
 		Generate Labels from DB Comments
 	</md-switch>
-	<md-switch ng-model="datas.enableI18N" aria-label="Switch 2" ng-disabled="steps.model.steps[steps.model.step-1].check">
+	<md-switch ng-model="modelTemplateStp.data.enableI18N" aria-label="Switch 2" ng-disabled="steps.model.steps[steps.model.step-1].check">
 		Enable I18N
 	</md-switch>
-	<md-input-container class="md-block" ng-if="datas.enableI18N">
+	<md-input-container class="md-block" ng-if="modelTemplateStp.data.enableI18N">
 		<label>Message Category</label>
-		<input required type="text" ng-model="datas.messageCategory" ng-disabled="steps.model.steps[steps.model.step-1].check">
+		<input required type="text" ng-model="modelTemplateStp.data.messageCategory" ng-disabled="steps.model.steps[steps.model.step-1].check">
 	</md-input-container>
 	<md-input-container class="field-type-select">
 		<label>Code Template</label>
-		<md-select required ng-model="datas.template" ng-disabled="steps.model.steps[steps.model.step-1].check">
-			<md-option ng-repeat="rel in modelTemplates" ng-value="rel.name">
+		<md-select required ng-model="modelTemplateStp.data.template" ng-disabled="steps.model.steps[steps.model.step-1].check">
+			<md-option ng-repeat="rel in modelTemplateStp.modelTemplates" ng-value="rel.name">
 				{{rel.name}}
 			</md-option>
 		</md-select>
 	</md-input-container>
-	<md-button ng-hide="steps.model.steps[steps.model.step-1].check" class="md-raised next-step-button" ng-click="sendTableData('model')">Generate</md-button>
+	<md-button ng-hide="steps.model.steps[steps.model.step-1].check"
+	 class="md-raised next-step-button"
+	  ng-click="sendTableData('model')">Generate</md-button>
+	<md-button ng-hide="!steps.model.steps[steps.model.step-1].check"
+	 class="md-raised next-step-button"
+	  ng-click="steps.model.step = 3;">Next step</md-button>
 </div>

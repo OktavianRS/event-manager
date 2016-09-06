@@ -7,7 +7,7 @@
     <input
      name="table"
      required type="text"
-     ng-model="datas.table"
+     ng-model="tableTemplateStp.data.table"
      ng-pattern="/^([a-z])*$/"
      ng-disabled="steps.model.steps[0].check">
     <div ng-messages="tableForm.table.$error">
@@ -16,7 +16,7 @@
     </div>
   </md-input-container>
 
-<div class="fields" ng-repeat="field in datas.fields">
+<div class="fields" ng-repeat="field in tableTemplateStp.data.fields">
 
 <step-table-generator-field></step-table-generator-field>
 
@@ -25,6 +25,9 @@
 <md-button ng-hide="steps.model.steps[0].check" class="md-raised next-step-button"
  ng-disabled="tableForm.$invalid"
  type="submit">Generate</md-button>
+ <md-button ng-hide="!steps.model.steps[0].check" class="md-raised next-step-button"
+ ng-click="steps.model.step = 2;"
+ type="submit">Next step</md-button>
 
 <md-button ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-primary next-step-button" ng-click="addNewField()">
   <md-icon md-svg-src="add" style="color: greenyellow;" ></md-icon>

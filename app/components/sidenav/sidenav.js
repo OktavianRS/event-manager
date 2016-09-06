@@ -56,6 +56,11 @@ angular.module('components.sidenav', [])
             itemName: 'Locations',
             itemIcon: 'edit-location',
             itemUrl: 'listLocation'
+          },
+          {
+            itemName: 'Mailer',
+            itemIcon: 'mail',
+            itemUrl: 'mailer'
           }
         ];
 

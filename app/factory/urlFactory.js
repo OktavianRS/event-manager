@@ -1,10 +1,13 @@
 angular.module('factory.url', [])
     .factory('url', [
       function() {
-        var baseUrl = 'http://192.168.0.122/api/web/v1/';
-        //var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
-
+        var baseUrl = 'http://192.168.0.124/api/web/v1/';
+        var baseMailerUrl = 'http://192.168.0.124/api/web/mailer/';
+        // var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
+        // var baseMailerUrl = 'http://event.vt-host.co.ua/backend/api/web/mailer/';
         return {
+          baseUrl: baseUrl,
+          baseMailerUrl: baseMailerUrl,
           user: {
             current: baseUrl + 'site/auth',
             login: baseUrl + 'site/login',
@@ -74,6 +77,10 @@ angular.module('factory.url', [])
             allByEvent: baseUrl + 'panel-search/all-by-event',
             getFieldSettings: baseUrl + 'field-setting/index',
             updateFieldSettings: baseUrl + 'field-setting/update'
+          },
+          template: {
+            recipientInsert: baseMailerUrl + 'template/recipient-insert',
+            uploadImage: baseMailerUrl + 'template/upload-image'
           }
         }
       }

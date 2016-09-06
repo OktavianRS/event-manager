@@ -1,0 +1,43 @@
+<md-dialog aria-label="Email">
+  <form ng-cloak name="projectForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add subscriber</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+    <md-content style="padding: 10px 10px;">
+        <md-input-container flex="50">
+          <label>First name</label>
+          <input required name="clientName" ng-model="data.firstName">
+          <div ng-messages="projectForm.clientName.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50">
+          <label>Last name</label>
+          <input required name="clientName" ng-model="data.lastName">
+          <div ng-messages="projectForm.clientName.$error">
+            <div ng-message="required">This is required.</div>
+          </div>
+        </md-input-container>
+      <md-input-container class="md-block">
+        <label>Client Email</label>
+        <input required type="email" name="clientEmail" ng-model="data.name"
+               minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" style="width: 100%"/>
+        <div ng-messages="projectForm.clientEmail.$error" role="alert">
+          <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+            Must look like an e-mail address.
+          </div>
+        </div>
+      </md-input-container>
+      <md-button class="md-raised" ng-disabled="projectForm.$invalid" ng-click="answer(data)">Done</md-button>
+    </md-content>
+    </md-dialog-content>
+  </form>
+</md-dialog>

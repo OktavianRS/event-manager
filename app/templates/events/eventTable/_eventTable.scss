@@ -29,4 +29,59 @@
 	.add-button {
 		float: right;
 	}
+	.event-table.md-table td.md-cell, .event-table.md-table th.md-column {
+		text-align: center;
+	}
+	.event-table.md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2), table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2) {
+		padding: 0;
+	}
+	.event-table.md-table td.md-cell:last-child, table.md-table th.md-column:last-child {
+		padding: 0;
+	}
+	.cell-name {
+		display: block;
+		margin: auto;
+	}
+	.cell-input,
+	.cell-name {
+		width: 100px;
+	}
+	.cell-input {
+		float: none;
+		margin: auto;
+		text-align: center;
+	}
+	.edit-field-icon {
+		position: absolute;
+		top: 15px;
+		left: 0;
+		right: -120px;
+		height: 15px;
+		fill: rgb(142, 140, 140);
+		animation: typing-animation 1s infinite;
+	}
+	.cell {
+		position: relative;
+	}
+}
+.fieldSettingsDialog {
+	.field-settings-content-wraper {
+		overflow-x: hidden;
+	}
+}
+@-webkit-keyframes typing-animation {
+    0%   {opacity: 1;}
+    25%  {opacity: .5;}
+    50%  {opacity: 0;}
+    75%  {opacity: .5;}
+    100% {opacity: 1;}
+} 
+
+/* Standard syntax */ 
+@keyframes typing-animation {
+    0%   {opacity: 1;}
+    25%  {opacity: .5;}
+    50%  {opacity: 0;}
+    75%  {opacity: .5;}
+    100% {opacity: 1;}
 }

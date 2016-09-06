@@ -10,6 +10,9 @@ angular.module('eventManager', [
       'materialCalendar',
       'md-steppers',
       'ng-sortable',
+      'froala',
+      'ngAnimate',
+      'angular-loading-bar',
 
       'factory.url',
       'factory.toast',
@@ -22,6 +25,9 @@ angular.module('eventManager', [
       'model.location',
       'model.step',
       'model.panel',
+      'model.mailer',
+      'model.crud',
+      'model.template',
 
       'components.confirm-password',
       'components.lower-case-input',
@@ -40,6 +46,8 @@ angular.module('eventManager', [
       'components.stepModelGenerator',
       'components.stepControllerGenerator',
       'components.stepTableGeneratorField',
+      'components.mailerToolbar',
+      'components.templateModal',
 
     ])
     //routing config
@@ -59,6 +67,11 @@ angular.module('eventManager', [
             url: "/profile",
             templateUrl: "templates/profile/profile.html",
             controller: "profileCtrl"
+          })
+          .state('passwordReset', {
+            url: "/reset",
+            templateUrl: "templates/passwordReset/passwordReset.html",
+            controller: "passwordResetCtrl"
           })
 
           ////////Users
@@ -189,7 +202,51 @@ angular.module('eventManager', [
             url: "/location/:locationId/update",
             templateUrl: "templates/locations/add/add.html",
             controller: "updateLocationCtrl"
-          });
+          })
+
+
+          //mailer
+          .state('mailerEmails', {
+            url: "/mailer/emails",
+            templateUrl: "templates/mailer/emails/mailerEmails.html",
+            controller: "mailerEmailsCtrl"
+          })
+
+          .state('mailerLists', {
+            url: "/mailer/Lists",
+            templateUrl: "templates/mailer/lists/mailerLists.html",
+            controller: "mailerListsCtrl"
+          })
+
+          .state('mailerCampaigns', {
+            url: "/mailer/campaigns",
+            templateUrl: "templates/mailer/campaigns/mailerCampaigns.html",
+            controller: "mailerCampaignsCtrl"
+          })
+
+          .state('mailerTemplates', {
+            url: "/mailer/templates",
+            templateUrl: "templates/mailer/templates/mailerTemplates.html",
+            controller: "mailerTemplatesCtrl"
+          })
+
+          .state('mailerTemplate', {
+            url: "/mailer/templates/template/:id/:rec",
+            templateUrl: "templates/mailer/template/mailerTemplate.html",
+            controller: "mailerTemplateCtrl"
+          })
+
+          .state('mailerReports', {
+            url: "/mailer/reports/",
+            templateUrl: "templates/mailer/reports/mailerReports.html",
+            controller: "mailerReportsCtrl"
+          })
+
+          .state('mailer', {
+            url: "/mailer",
+            templateUrl: "templates/mailer/mailer.html"
+          })
+
 
       //rerouting
       $urlRouterProvider.otherwise('/login');
@@ -239,6 +296,10 @@ angular.module('eventManager', [
           .icon('copy', 'images/icons/ic_content_copy_black_24px.svg')
           .icon('upload', 'images/icons/ic_file_upload_black_24px.svg')
           .icon('settings', 'images/icons/ic_settings_black_24px.svg')
+          .icon('mail', 'images/icons/ic_mail_outline_white_24px.svg')
+
+          //mailer icons
+
     }])
     //theme config
     .config(['$mdThemingProvider', function($mdThemingProvider) {
@@ -256,6 +317,7 @@ angular.module('eventManager', [
     .run(['$sessionStorage', '$localStorage', '$rootScope', '$state', '$stateParams', 'userModel',
       function($sessionStorage, $localStorage, $rootScope, $state, $stateParams, userModel) {
         //save state params for all states
+        console.log($stateParams);
         $rootScope.stateParams = $stateParams;
         //$sessionStorage.auth_key = '1234567890';
         //load user if user is logged
@@ -271,7 +333,9 @@ angular.module('eventManager', [
         }
 
         $rootScope.$on('$stateChangeStart', function(event, state, params) {
-          if(!$sessionStorage.auth_key && state.name != 'login') {
+          if(state.name === 'passwordReset'){
+            
+          } else if(!$sessionStorage.auth_key && state.name !== 'login') {
             event.preventDefault();
             $state.go('login');
           }

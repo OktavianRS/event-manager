@@ -82,7 +82,7 @@ gulp.task('images', function() {
 gulp.task('build', ['bower', 'sass', 'html', 'images'], function() {
   return gulp.src('app/index.html')
       .pipe(useref())
-      .pipe(gulpif('*.js', uglify()))
+      // .pipe(gulpif('*.js', uglify()))
       .pipe(gulpif('*.css', minifyCss()))
       .pipe(gulp.dest('dist/'));
 });

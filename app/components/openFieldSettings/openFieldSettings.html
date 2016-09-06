@@ -1,4 +1,4 @@
-<md-dialog>
+<md-dialog class="fieldSettingsDialog">
 	<form ng-cloak>
 	    <md-toolbar>
 	      <div class="md-toolbar-tools">
@@ -11,11 +11,11 @@
 	    </md-toolbar>
 	    <md-dialog-content>
 	    	<div class="md-dialog-content">
-    		  <md-content layout-gt-sm="row" layout-padding>
+    		  <md-content layout-gt-sm="row" layout-padding class="field-settings-content-wraper">
 <div class="event-table container">
 	<div class="md-whiteframe-3dp table-area">
 	    <md-table-container>
-	      <table md-table class="table">
+	      <table md-table>
 	        <thead md-head md-on-reorder="onReorderEvent">
 		        <tr md-row>
 
@@ -43,7 +43,7 @@
 		        </tr>
 	        </thead>
 	        <tbody md-body ng-sortable="dragndrop">
-		        <tr md-row ng-repeat="cell in fieldSettings track by $index" data-id="{{$index}}">
+		        <tr md-row ng-repeat="cell in fieldSettings | orderBy: order" data-id="{{$index}}">
 		          <td md-cell>
 	          		<span ng-dblclick="edit[cell.name] = true; cell.edited = true;" style="min-width: 189px; display: block;" ng-show="!edit[cell.name]">{{cell.label}}</span>
 				    <div ng-show="edit[cell.name]">

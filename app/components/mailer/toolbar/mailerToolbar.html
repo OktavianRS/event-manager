@@ -1,0 +1,42 @@
+			<md-toolbar class="">
+			  <div class="md-toolbar-tools">
+			    <h2>
+			      <span>Mailer</span>
+			    </h2>
+			  	<span flex></span>
+				<md-progress-circular ng-if="processingToolbar" class="md-hue-2" md-diameter="20px" style="margin: 0 10px;"></md-progress-circular>
+				<span ng-if="processingToolbar" style=" border-right: 1px solid #ccc; padding-right: 10px;">Processing </span>
+			  	<md-menu>
+				    <md-button class="md-icon-button" aria-label="menu" ng-click="$mdOpenMenu($event)">
+				      <md-icon md-svg-icon="menu"></md-icon>
+				    </md-button>
+						<md-menu-content width="4">
+							<md-menu-item>
+							  <md-button ui-sref="mailerCampaigns">
+							    Campaigns
+							  </md-button>
+							</md-menu-item>
+							<md-menu-item>
+							  <md-button ui-sref="mailerTemplates">
+							    Templates
+							  </md-button>
+							</md-menu-item>
+							<md-menu-item>
+							  <md-button ui-sref="mailerLists">
+							    Lists
+							  </md-button>
+							</md-menu-item>
+							<md-menu-item>
+							  <md-button ui-sref="mailerReports">
+							    Reports
+							  </md-button>
+							</md-menu-item>
+							<md-menu-item>
+							  <md-button ui-sref="mailerEmails">
+							    Emails
+							  </md-button>
+							</md-menu-item>
+						</md-menu-content>
+			  	</md-menu>
+			  </div>
+			</md-toolbar>

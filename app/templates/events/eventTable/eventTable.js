@@ -1,29 +1,45 @@
 angular.module('eventManager')
     .controller('eventTableCtrl', ['$scope', 'panelModel', '$mdDialog', function($scope, panelModel, $mdDialog) {
         $scope.getAttributeLabels = function() {
+          $scope.processing = true;
             panelModel.getAttributeLabels({_eventId: $scope.stateParams.eventId},function(data) {
                 $scope.attributeLabels = data;
+                $scope.processing = false;
             })
         }
         $scope.getAttributeLabels();
 
         $scope.getFieldSettings = function() {
+          $scope.processing = true;
           panelModel.getFieldSettings({_eventId: $scope.stateParams.eventId}, function(data) {
             $scope.fieldSettings = data;
+            $scope.processing = false;
           })
         }
         $scope.getFieldSettings();
 
+        $scope.storeInputChanges = function(cell, index, label) {
+          $scope.processing = true;
+            cell._eventId = $scope.stateParams.eventId; 
+            panelModel.updateField(cell, function(data) {
+              $scope.processing = false;
+            })
+        }
+
         $scope.getIndex = function() {
+          $scope.processing = true;
             panelModel.getIndex({_eventId: $scope.stateParams.eventId}, function(data) {
                 $scope.index = data;
+                $scope.processing = false;
             })
         }
         $scope.getIndex();
 
         $scope.deleteField = function(cell) {
+          $scope.processing = true;
           panelModel.deleteField({_eventId: $scope.stateParams.eventId, id: cell.id}, function(data) {
             $scope.getIndex();
+            $scope.processing = false;
           })
         }
 
@@ -41,11 +57,13 @@ angular.module('eventManager')
               fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
             .then(function(answer) {
+              $scope.processing = true;
               var dataToSend = {
                 _eventId: $scope.stateParams.eventId,
                 fields: answer
               }
               panelModel.updateFieldSettings(dataToSend, function(data) {
+                $scope.processing = false;
                 $scope.getFieldSettings();
                 $scope.getAttributeLabels();
               })
@@ -67,9 +85,11 @@ angular.module('eventManager')
               fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
             .then(function(answer) {
+              $scope.processing = true;
               answer._eventId = $scope.stateParams.eventId; 
               panelModel.createField(answer, function(data) {
                 $scope.getIndex();
+                $scope.processing = false;
               })
             }, function() {
               //when close dialog
@@ -104,9 +124,11 @@ angular.module('eventManager')
               fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
             .then(function(answer) {
+              $scope.processing = true;
               answer._eventId = $scope.stateParams.eventId; 
               panelModel.updateField(answer, function(data) {
                 $scope.getIndex();
+                $scope.processing = false;
               })
             }, function() {
               //when close dialog
@@ -132,7 +154,7 @@ angular.module('eventManager')
 
     .controller('openFieldSettingsCtrl', ['$scope', '$mdDialog', 'attributeLabels', 'fieldSettings', function($scope, $mdDialog, attributeLabels, fieldSettings) {
       $scope.attributeLabels = attributeLabels;
-      $scope.fieldSettings = fieldSettings.model;
+      $scope.fieldSettings = fieldSettings;
 
       $scope.dragndrop = {
         sort: true,
@@ -150,8 +172,7 @@ angular.module('eventManager')
             }
         },
         onUpdate: function (evt) {
-          $scope.fieldSettings[evt.oldIndex].order = evt.newIndex;
-          $scope.fieldSettings[evt.oldIndex].edited = true;
+
         }
       }
 
@@ -162,10 +183,10 @@ angular.module('eventManager')
         $mdDialog.cancel();
       };
       $scope.answer = function(answer) {
-        var toSend = [];
-        angular.forEach(answer, (value, key) => {
-          value.edited ? delete value.edited && toSend.push(value) : false;
+        angular.forEach($scope.order, (value, key) => {
+          answer[Number(value)].order = key;
         })
-        $mdDialog.hide(toSend);
+        console.log(answer);
+        $mdDialog.hide(answer);
       };
     }])
