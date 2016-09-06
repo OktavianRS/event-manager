@@ -205,5 +205,17 @@ angular.module('model.user', [
               }
           );
         }
+
+        this.verifyEmail = function(req, callback) {
+          api.post(
+              url.user.verifyEmail,
+              req,
+              function(res) {
+                toast('success', 'Password changed successfully!');
+                callback(res);
+              }
+          );
+        }
+
       }
     ]);

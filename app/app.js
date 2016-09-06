@@ -334,7 +334,7 @@ angular.module('eventManager', [
 
         $rootScope.$on('$stateChangeStart', function(event, state, params) {
           if(state.name === 'passwordReset'){
-            
+
           } else if(!$sessionStorage.auth_key && state.name !== 'login') {
             event.preventDefault();
             $state.go('login');
@@ -345,6 +345,7 @@ angular.module('eventManager', [
         $rootScope.$on('$stateChangeSuccess', function() {
           console.log('state', $state.current.name);
           $rootScope.isHeader = $state.current.name != 'login';
+          $state.current.name === 'passwordReset' ? $rootScope.isHeader = false : false;
         });
       }
     ]);

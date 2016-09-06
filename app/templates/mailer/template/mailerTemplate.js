@@ -98,6 +98,7 @@ angular.module('eventManager')
           '|',
           'insertLink',
           'insertTable',
+          'insertImage',
           '|',
           'formatOL',
           'formatUL',
@@ -134,7 +135,7 @@ angular.module('eventManager')
           ],
 
           imageUploadParam: 'image',
-          // imageUploadURL: url.template.uploadImage,
+          imageUploadURL: url.template.uploadImage,
           imageUploadParams: {'id': $scope.stateParams.id},
           imageAllowedTypes: ['jpeg', 'jpg', 'png'],
           imageInsertButtons: ['imageUpload', 'imageByURL'],

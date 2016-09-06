@@ -1,8 +1,11 @@
 angular.module('factory.url', [])
     .factory('url', [
       function() {
+        //localhost dev
         var baseUrl = 'http://192.168.0.124/api/web/v1/';
         var baseMailerUrl = 'http://192.168.0.124/api/web/mailer/';
+
+        //host dev
         // var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
         // var baseMailerUrl = 'http://event.vt-host.co.ua/backend/api/web/mailer/';
         return {
@@ -16,7 +19,8 @@ angular.module('factory.url', [])
             getOne: baseUrl + 'user/view',
             getAll: baseUrl + 'user/index',
             remove: baseUrl + 'user/delete',
-            getRoleList: baseUrl + 'user/role'
+            getRoleList: baseUrl + 'user/role',
+            verifyEmail: baseMailerUrl + 'site/request-password-reset method'
           },
           company: {
             create: baseUrl + 'organization/create',
