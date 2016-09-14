@@ -11,14 +11,16 @@
 			margin-left: 27px;
 		}
 	}
+	.table-container-fixed {
+		float: left;
+	}
 	.fixed-header-0 {
 		left: 16px!important;
 	}
 	.fixed-column {
-		float: left;
-		height: 32px;
+		position: absolute;
+		padding: 21px;
 		background: #fff;
-		padding: 15px 0 0 15px!important;
 		border-right: 1px solid #ccc;
 	}
 	.fixed-column-0 {
@@ -53,12 +55,12 @@
 	}
 	.edit-field-icon {
 		position: absolute;
-		top: 15px;
-		left: 0;
+		top: 10px;
+		left: 10;
 		right: -120px;
 		height: 15px;
 		fill: rgb(142, 140, 140);
-		animation: typing-animation 1s infinite;
+		cursor: pointer;
 	}
 	.cell {
 		position: relative;
@@ -68,20 +70,4 @@
 	.field-settings-content-wraper {
 		overflow-x: hidden;
 	}
-}
-@-webkit-keyframes typing-animation {
-    0%   {opacity: 1;}
-    25%  {opacity: .5;}
-    50%  {opacity: 0;}
-    75%  {opacity: .5;}
-    100% {opacity: 1;}
-} 
-
-/* Standard syntax */ 
-@keyframes typing-animation {
-    0%   {opacity: 1;}
-    25%  {opacity: .5;}
-    50%  {opacity: 0;}
-    75%  {opacity: .5;}
-    100% {opacity: 1;}
 }

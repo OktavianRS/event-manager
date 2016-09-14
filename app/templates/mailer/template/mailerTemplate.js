@@ -23,13 +23,13 @@ angular.module('eventManager')
           callback: function(cmd, val) {
             switch(val) {
               case 'fl':
-                this.html.insert('{RECIPIENT}');
+                this.html.insert('{email}');
                 break;
               case 'f':
-                this.html.insert('{FIRST_NAME}');
+                this.html.insert('{first_name}');
                 break;
               case 'l':
-                this.html.insert('{LAST_NAME}');
+                this.html.insert('{last_name}');
                 break;
             }
           }
@@ -41,7 +41,7 @@ angular.module('eventManager')
           undo: false,
           refreshAfterCallback: true,
           callback: function() {
-            this.html.insert('<a href="{UNSUBSCRIBE}">unsubscribe</a>');
+            this.html.insert('<a href="' + url.baseMailerUrl + 'report/unsubscribe">unsubscribe</a>');
           }
         });
 
@@ -134,11 +134,11 @@ angular.module('eventManager')
             'tableCellStyle'
           ],
 
-          imageUploadParam: 'image',
-          imageUploadURL: url.template.uploadImage,
-          imageUploadParams: {'id': $scope.stateParams.id},
-          imageAllowedTypes: ['jpeg', 'jpg', 'png'],
-          imageInsertButtons: ['imageUpload', 'imageByURL'],
+          // imageUploadParam: 'image',
+          // imageUploadURL: 'http://192.168.0.133/api/web/mailer/template/upload-image',
+          // imageUploadParams: {id: $scope.stateParams.id},
+          // imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+          // imageInsertButtons: ['imageUpload', 'imageByURL'],
         };
 
         $scope.viewTemplate = function(templateId, ev) {

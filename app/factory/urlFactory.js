@@ -2,12 +2,12 @@ angular.module('factory.url', [])
     .factory('url', [
       function() {
         //localhost dev
-        var baseUrl = 'http://192.168.0.124/api/web/v1/';
-        var baseMailerUrl = 'http://192.168.0.124/api/web/mailer/';
+        // var baseUrl = 'http://192.168.0.122/api/web/v1/';
+        // var baseMailerUrl = 'http://192.168.0.122/api/web/mailer/';
 
         //host dev
-        // var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
-        // var baseMailerUrl = 'http://event.vt-host.co.ua/backend/api/web/mailer/';
+        var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
+        var baseMailerUrl = 'http://event.vt-host.co.ua/backend/api/web/mailer/';
         return {
           baseUrl: baseUrl,
           baseMailerUrl: baseMailerUrl,
@@ -20,7 +20,8 @@ angular.module('factory.url', [])
             getAll: baseUrl + 'user/index',
             remove: baseUrl + 'user/delete',
             getRoleList: baseUrl + 'user/role',
-            verifyEmail: baseMailerUrl + 'site/request-password-reset method'
+            verifyEmail: baseMailerUrl + 'site/request-password-reset',
+            resetPassword: baseMailerUrl + 'site/reset-password'
           },
           company: {
             create: baseUrl + 'organization/create',
@@ -85,6 +86,32 @@ angular.module('factory.url', [])
           template: {
             recipientInsert: baseMailerUrl + 'template/recipient-insert',
             uploadImage: baseMailerUrl + 'template/upload-image'
+          },
+          list: {
+            create: baseMailerUrl + 'subscriber/create',
+            delete: baseMailerUrl + 'subscriber/delete',
+            getAll: baseMailerUrl + 'subscriber/index',
+            addSubscriber: baseMailerUrl + 'subscriber/create',
+            getOne: baseMailerUrl + 'subscriber/index',
+            deleteSubscriber: baseMailerUrl + 'subscriber/delete',
+            export: baseMailerUrl + 'list/export',
+            import: baseMailerUrl + 'list/import',
+            merge: baseMailerUrl + 'subscriber/add-from-list',
+            copySubscriber: baseMailerUrl + 'subscriber/copy-to-list',
+            moveSubscriber: baseMailerUrl + 'subscriber/move-to-list',
+            addSubsFromEvent: baseMailerUrl + 'subscriber/add-from-event'
+          },
+          campaign: {
+            getAll: baseMailerUrl + 'campaign/all',
+            create: baseMailerUrl + 'campaign/create',
+            delete: baseMailerUrl + 'campaign/delete',
+            getOne: baseMailerUrl + 'campaign/view',
+            update: baseMailerUrl + 'campaign/update',
+            send: baseMailerUrl + 'campaign/send',
+            unsubscribe: baseMailerUrl + 'unsubscribe/save',
+            geAllReports: baseMailerUrl + 'campaign/get-distributions',
+            deleteReports: baseMailerUrl + 'campaign/delete-distributions',
+            getOneReports: baseMailerUrl + 'campaign/distribution'
           }
         }
       }

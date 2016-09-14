@@ -6,8 +6,13 @@
 <md-list style="margin-bottom: 80px;" ng-cloak>
 
   <md-subheader class="md-no-sticky">Lists</md-subheader>
+     <md-button ng-if="changed.length" ng-click="deleteSelected()" class="md-raised md-primary delete-selected-button">Delete selected</md-button>
    <md-list-item ng-repeat="index in Index.model">
-    <h3>{{index.name}}</h3>
+   <md-checkbox ng-click="changeOne(index.id)" aria-label="Checkbox 1"></md-checkbox>
+    <div class="md-list-item-text" layout="column">
+    <h3 style="margin: 10px 0;"><a ui-sref="mailerList({id: index.id})">{{index.name}}</a></h3>
+      <h6 style="margin: 5px 0;">Created {{index.created_at}}</h6>
+    </div>
       <md-button aria-label="edit"
                  ng-click="showDialog($event, $index)"
                  class="md-icon-button md-secondary">
@@ -18,10 +23,23 @@
                  class="md-icon-button md-secondary" >
         <md-icon md-svg-icon="close"></md-icon>
       </md-button>
+      <md-divider></md-divider>
   </md-list-item>
+  <div class="no-data"
+       layout="column"
+       ng-if="!Index.model.length"
+       layout-align="center center">
+    <md-icon md-svg-src="data"></md-icon>
+    <div class="no-data-title">
+      You have no templates
+    </div>
+    <div>
+      <a href="" ng-click="showDialog($event, 'create')">Add template</a> to get started.
+    </div>
+  </div>
 </md-list>
 
-    <md-button class="md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
+    <md-button class="md-raised md-icon-button md-primary md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
         <md-icon md-svg-icon="add" ng-click="showDialog($event, 'create')"></md-icon>
     </md-button>
 </div>

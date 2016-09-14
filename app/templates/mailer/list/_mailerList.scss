@@ -1,0 +1,55 @@
+.list {
+  min-height: 470px;
+  padding: 0;
+  .manage_subs_table {
+    max-height: 300px;
+  }
+  .no-data md-icon {
+      height: 150px;
+      width: 150px;
+      margin: 16px;
+  }
+  .add-form {
+    margin-left: 30px;
+  }
+  .md-input-has-value {
+    margin-left: 30px;
+  }
+  md-tabs {
+    .tab-title {
+      margin: 32px 0;
+      font-size: 24px;
+      font-weight: bold;
+      padding-left: 30px;
+    }
+
+    .add-form {
+      max-width: 600px;
+    }
+    .layout-fill {
+      min-height: 215px;
+      height: 215px;
+      cursor: pointer;
+    }
+    .flow-box {
+      .drop-box {
+        padding: 16px;
+        background-color: $box;
+        height: 215px;
+        .inner-box {
+          border: 2px dashed grey;
+          border-radius: 10px;
+          background-color: #f7f7f7;
+          md-icon {
+            margin: 0;
+            height: 150px;
+            width: 150px;
+          }
+          .md-button {
+            z-index: 99;
+          }
+        }
+      }
+    }
+  }
+}

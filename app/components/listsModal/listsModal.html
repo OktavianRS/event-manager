@@ -1,0 +1,96 @@
+<md-dialog aria-label="lists"
+           flex="40"
+           class="lists-modal">
+  <md-toolbar layout
+              layout-align="space-between center">
+    <div class="header">
+      Change list
+    </div>
+    <md-button class="md-icon-button"
+               aria-label="icon"
+               ng-click="close()">
+      <md-icon md-svg-src="close"></md-icon>
+    </md-button>
+  </md-toolbar>
+
+  <md-dialog-content>
+
+    <md-input-container>
+      <label>Sort By</label>
+      <md-select ng-model="listSortBy"
+                 ng-change="changeSort(listSortBy)">
+        <md-option value="-created_at">Recently created first</md-option>
+        <md-option value="created_at">Recently created last</md-option>
+        <md-option value="-updated_at">Recently edited first</md-option>
+        <md-option value="updated_at">Recently edited last</md-option>
+        <md-option value="name">Name (A-Z)</md-option>
+        <md-option value="-name">Name (Z-A)</md-option>
+      </md-select>
+    </md-input-container>
+
+    <md-radio-group ng-model="changeList">
+      <div ng-repeat="item in lists"
+           class="list-item"
+           layout="column">
+        <div layout="row"
+             layout-align="space-between center">
+          <div layout="row" flex="100" flex-gt-sm="70">
+            <md-radio-button ng-value="item.id"
+                             class="md-primary">
+              <div layout="column" class="overflow-title">
+                <div class="title">{{item.name}}</div>
+                <div class="text">Created {{item.created_at}}</div>
+              </div>
+            </md-radio-button>
+          </div>
+
+          <div layout="column"
+               show-gt-sm
+               hide>
+            <div class="title">{{item.count}}</div>
+            <div class="text">Subscribers</div>
+          </div>
+
+          <div></div>
+        </div>
+        <md-divider></md-divider>
+      </div>
+    </md-radio-group>
+
+    <div class="pagination"
+         layout-gt-sm="row"
+         layout="column"
+         layout-align="space-between center">
+      <md-button class="md-raised md-primary"
+                 ng-click="save(changeList)">
+        Save
+      </md-button>
+      <div layout="row"
+           layout-align="space-between center">
+        {{((listSetting.current - 1) * listSetting.show + 1)
+        + ' - '
+        + (((listSetting.current * listSetting.show)>listSetting.total) ? listSetting.total : (listSetting.current *
+        listSetting.show))
+        + ' of ' + listSetting.total}}
+
+        <md-button ng-if="listSetting.current != 1"
+                   class="md-raised md-primary md-icon-button"
+                   aria-label="prev"
+                   ng-click="prev()">
+          <md-icon md-svg-src="arrowLeft"></md-icon>
+        </md-button>
+
+        <md-button ng-if="listSetting.current != listSetting.totalPage"
+                   aria-label="next"
+                   class="md-raised md-primary md-icon-button"
+                   ng-click="next('listSetting')">
+          <md-icon md-svg-src="arrowRight"></md-icon>
+        </md-button>
+      </div>
+    </div>
+
+    <div layout="row"
+         layout-align="end center">
+    </div>
+  </md-dialog-content>
+</md-dialog>

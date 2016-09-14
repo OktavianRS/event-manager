@@ -43,7 +43,7 @@
 		        </tr>
 	        </thead>
 	        <tbody md-body ng-sortable="dragndrop">
-		        <tr md-row ng-repeat="cell in fieldSettings | orderBy: order" data-id="{{$index}}">
+		        <tr md-row ng-repeat="cell in fieldSettings | orderBy: 'order'" data-id="{{$index}}">
 		          <td md-cell>
 	          		<span ng-dblclick="edit[cell.name] = true; cell.edited = true;" style="min-width: 189px; display: block;" ng-show="!edit[cell.name]">{{cell.label}}</span>
 				    <div ng-show="edit[cell.name]">
@@ -52,19 +52,19 @@
 				    </div>
 		          </td>
 		          <td md-cell>
-		          	  <md-switch ng-change="cell.edited = true;" ng-model="fieldSettings[$index].fix" aria-label="Fix">
+		          	  <md-switch ng-change="cell.edited = true;" ng-model="cell.fix" aria-label="Fix">
 					  </md-switch>
 		          </td>
 		          <td md-cell>
-		          	  <md-switch ng-change="cell.edited = true;" ng-model="fieldSettings[$index].show" aria-label="Show">
+		          	  <md-switch ng-change="cell.edited = true;" ng-model="cell.show" aria-label="Show">
 					  </md-switch>
 		          </td>
 		          <td md-cell>
-		          	  <md-switch ng-change="cell.edited = true;" ng-model="fieldSettings[$index].export" aria-label="Export">
+		          	  <md-switch ng-change="cell.edited = true;" ng-model="cell.export" aria-label="Export">
 					  </md-switch>
 		          </td>
 		          <td md-cell>
-		          	  <md-switch ng-change="cell.edited = true;" ng-model="fieldSettings[$index].import" aria-label="Import">
+		          	  <md-switch ng-change="cell.edited = true;" ng-model="cell.import" aria-label="Import">
 					  </md-switch>
 		          </td>
 				</tr>

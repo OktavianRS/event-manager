@@ -4,6 +4,7 @@
 @import 'components/sidenav/sidenav';
 @import 'components/footer/footer';
 @import 'components/locationModal/locationModal';
+@import 'components/listsModal/listsModal';
 
 @import 'templates/login/login';
 @import 'templates/profile/profile';
@@ -29,3 +30,5 @@
 @import 'templates/locations/list/list';
 
 @import 'templates/mailer/mailer';
+@import 'templates/mailer/list/mailerList';
+@import 'templates/mailer/campaignAdd/campaignAdd';

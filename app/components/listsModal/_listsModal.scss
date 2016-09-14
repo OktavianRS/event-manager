@@ -1,0 +1,23 @@
+.lists-modal {
+  .header {
+    padding-left: 16px;
+  }
+
+  md-dialog-content {
+    padding: 16px;
+  }
+  .list-item {
+    padding: 16px 0 0;
+  }
+  md-radio-button{
+    width: 100%;
+    .md-label{
+      display: block;
+    }
+  }
+
+  .overflow-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

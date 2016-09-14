@@ -149,6 +149,7 @@ angular.module('eventManager')
                   $mdDialog.hide(answer);
                 };
               }
+
     }
     ])
 
@@ -189,4 +190,10 @@ angular.module('eventManager')
         console.log(answer);
         $mdDialog.hide(answer);
       };
+
+
+      // tympanus solution for fixed colums (uses jquery)
+
+
+
     }])

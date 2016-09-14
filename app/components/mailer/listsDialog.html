@@ -1,0 +1,29 @@
+<md-dialog aria-label="Email">
+  <form ng-cloak name="projectForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>New list</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="close" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+    <md-content style="padding: 10px 10px;">
+      <md-input-container class="md-block">
+        <label>List name</label>
+        <input required type="text" name="template" ng-model="data.name"
+               minlength="4" maxlength="100" style="width: 100%"/>
+        <div ng-messages="projectForm.template.$error" role="alert">
+          <div ng-message-exp="['required', 'minlength', 'maxlength']">
+            List name not valid
+          </div>
+        </div>
+      </md-input-container>
+      <md-button class="md-raised" ng-disabled="projectForm.$invalid" ng-click="answer(data)">Done</md-button>
+    </md-content>
+    </md-dialog-content>
+  </form>
+</md-dialog>

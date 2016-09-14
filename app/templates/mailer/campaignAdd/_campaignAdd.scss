@@ -1,0 +1,63 @@
+.campaign-add {
+  max-height: 460px;
+  md-tab-content {
+    height: 360px;
+    overflow: auto;
+  }
+  .setup-form {
+    //max-width: 50%;
+  }
+
+  .send-btn.md-accent {
+    //background-color: #FB5D23;
+    color: white;
+  }
+
+  .tab-padding {
+    padding: 16px;
+  }
+
+  md-tabs.md-primary md-tabs-wrapper {
+    background-color: rgb(0, 150, 136);
+    md-tab-item:not([disabled]),
+    md-tab-item:not([disabled]).md-active {
+      color: white;
+    }
+  }
+
+
+  md-radio-button{
+    width: 100%;
+    .md-label{
+      display: block;
+    }
+  }
+
+  .error-email{
+    border: 1px solid $greyBox;
+    padding: 16px;
+    border-radius: 6px;
+    margin-bottom: 32px;
+    md-icon{
+      height: 64px;
+      width: 64px;
+      margin-right: 16px;
+    }
+  }
+
+  md-icon.icon-done {
+    color: green!important;
+  }
+
+  md-icon.icon-error {
+    color: red!important;
+  }
+
+  md-icon.icon-warning {
+    color: yellow!important;
+  }
+
+  .no-data {
+    margin-top: 32px;
+  }
+}

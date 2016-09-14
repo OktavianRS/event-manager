@@ -28,6 +28,8 @@ angular.module('eventManager', [
       'model.mailer',
       'model.crud',
       'model.template',
+      'model.list',
+      'model.campaign',
 
       'components.confirm-password',
       'components.lower-case-input',
@@ -48,6 +50,7 @@ angular.module('eventManager', [
       'components.stepTableGeneratorField',
       'components.mailerToolbar',
       'components.templateModal',
+      'components.listsModal',
 
     ])
     //routing config
@@ -69,7 +72,7 @@ angular.module('eventManager', [
             controller: "profileCtrl"
           })
           .state('passwordReset', {
-            url: "/reset",
+            url: "/reset:token",
             templateUrl: "templates/passwordReset/passwordReset.html",
             controller: "passwordResetCtrl"
           })
@@ -236,6 +239,12 @@ angular.module('eventManager', [
             controller: "mailerTemplateCtrl"
           })
 
+          .state('mailerList', {
+            url: "/mailer/lists/list/:id",
+            templateUrl: "templates/mailer/list/mailerList.html",
+            controller: "mailerListCtrl"
+          })
+
           .state('mailerReports', {
             url: "/mailer/reports/",
             templateUrl: "templates/mailer/reports/mailerReports.html",
@@ -245,6 +254,12 @@ angular.module('eventManager', [
           .state('mailer', {
             url: "/mailer",
             templateUrl: "templates/mailer/mailer.html"
+          })
+
+          .state('mailerCampaignAdd', {
+            url: "/mailer/campaigns/edit/:id",
+            templateUrl: "templates/mailer/campaignAdd/campaignAdd.html",
+            controller: "campaignAddCtrl"
           })
 
 
@@ -317,7 +332,6 @@ angular.module('eventManager', [
     .run(['$sessionStorage', '$localStorage', '$rootScope', '$state', '$stateParams', 'userModel',
       function($sessionStorage, $localStorage, $rootScope, $state, $stateParams, userModel) {
         //save state params for all states
-        console.log($stateParams);
         $rootScope.stateParams = $stateParams;
         //$sessionStorage.auth_key = '1234567890';
         //load user if user is logged
@@ -343,7 +357,6 @@ angular.module('eventManager', [
 
         $rootScope.isHeader = false;
         $rootScope.$on('$stateChangeSuccess', function() {
-          console.log('state', $state.current.name);
           $rootScope.isHeader = $state.current.name != 'login';
           $state.current.name === 'passwordReset' ? $rootScope.isHeader = false : false;
         });

@@ -12,13 +12,16 @@ angular.module('components.stepper', [])
 
         $scope.getStep = function() {
             stepModel.getStep($scope.stateParams.eventId,function(res) {
-                res.model.steps.push({ id: res.model.steps.length, name: 'Done', required: 1, check: false});
                 $scope.steps = res;
                 $scope.showme = true;
                 $scope.steps.model.step = res.model.step;
             });
         }
         $scope.getStep();
+
+        $scope.$on('getStep', function (event, data) {
+          getStep(); // Данные, которые нам прислали
+        });
 
         $scope.checkStep = function(data) {
                 $scope.tableTemplateStp = {

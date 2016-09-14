@@ -15,37 +15,59 @@
 	      <span ng-if="processing">Processing</span>
 	      </div>
 	    </md-toolbar>
-	    <md-table-container>
+	    <md-table-container class="table-container-fixed">
 	      <table md-table class="event-table">
 	        <thead md-head md-on-reorder="onReorderEvent">
 		        <tr md-row>
 
 		          <th class="table-name"
 		              md-column
-		              ng-repeat="label in attributeLabels track by $index">
+		              ng-repeat="label in attributeLabels | orderBy: 'order'"
+		              ng-if="label.hide !== 1 && label.fix === 1">
 		            <span>{{label.label}}</span>
 		          </th>
-
-		          <th>Edit</th>
-		          <th>Delete</th>
 
 		        </tr>
 	        </thead>
 	        <tbody md-body>
-		        <tr md-row ng-repeat="cell in index.model | orderBy: 'order'">
-		          <td md-cell class="cell" ng-repeat="label in attributeLabels">
+		        <tr md-row ng-repeat="cell in index.model | orderBy: order">
+		          <td md-cell class="cell" ng-repeat="label in attributeLabels | orderBy: 'order'" ng-if="label.hide !== 1 && label.fix === 1">
 		          	  <span class="cell-name" ng-dblclick="cell[label.label].edit = true;" ng-if="!cell[label.label].edit">{{cell[label.name]}}</span>
 		          	  <input type="text" class="cell-input"
 		          	  		 ng-if="cell[label.label].edit" 
 		          	  		 ng-model="cell[label.name]"
 		          	  		 ng-blur="storeInputChanges(cell, $index, label.label); cell[label.label].edit = false;">
-		          	  <md-icon ng-if="cell[label.label].edit" class="edit-field-icon" md-svg-src="edit"></md-icon>
+		          	  <md-icon ng-if="cell[label.label].edit" class="edit-field-icon md-raised" md-svg-src="done" ng-click="toreInputChanges(cell, $index, label.label); cell[label.label].edit = false;"></md-icon>
 		          </td>
-		          <td md-cell>
-			        <md-button class="md-fab-sm" aria-label="New item" ng-click="showUpdateNewFieldModal($event, cell)">
-			            <md-icon md-svg-src="edit"></md-icon>
-			            <md-tooltip>Edit</md-tooltip>
-			        </md-button>
+				</tr>
+			</tbody>
+	      </table>
+	    </md-table-container>
+
+	    <md-table-container class="table-contaienr-not-fixed">
+	      <table md-table class="event-table">
+	        <thead md-head md-on-reorder="onReorderEvent">
+		        <tr md-row>
+
+		          <th class="table-name "
+		              md-column
+		              ng-repeat="label in attributeLabels | orderBy: 'order'"
+		              ng-if="label.hide !== 1 && label.fix !== 1">
+		            <span>{{label.label}}</span>
+		          </th>
+		          <th md-column>Delete</th>
+
+		        </tr>
+	        </thead>
+	        <tbody md-body>
+		        <tr md-row ng-repeat="cell in index.model | orderBy: order">
+		          <td md-cell class="cell" ng-repeat="label in attributeLabels | orderBy: 'order'" ng-if="label.hide !== 1 && label.fix !== 1">
+		          	  <span class="cell-name" ng-dblclick="cell[label.label].edit = true;" ng-if="!cell[label.label].edit">{{cell[label.name]}}</span>
+		          	  <input type="text" class="cell-input"
+		          	  		 ng-if="cell[label.label].edit" 
+		          	  		 ng-model="cell[label.name]"
+		          	  		 ng-blur="storeInputChanges(cell, $index, label.label); cell[label.label].edit = false;">
+		          	  <md-icon ng-if="cell[label.label].edit" class="edit-field-icon md-raised" md-svg-src="done" ng-click="toreInputChanges(cell, $index, label.label); cell[label.label].edit = false;"></md-icon>
 		          </td>
 		          <td md-cell>
 			        <md-button class="md-fab-sm" aria-label="New item" ng-click="deleteField(cell)">

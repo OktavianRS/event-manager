@@ -7,21 +7,23 @@ angular.module('eventManager')
         $scope.loading = false;
         $scope.user = {};
 
-        userModel.getCurrent(function(data) {
-          $scope.user.username = data.username;
-          $scope.user.image_id = data.image_id;
-          $scope.user.first_name = data.first_name;
-          $scope.user.last_name = data.last_name;
-          $scope.user.email = data.email;
-        });
+        $scope.getCurrentUser =  function() {
+          userModel.getCurrent(function(data) {
+            $scope.user = data;
+            $scope.user.myImage = data.image;
+          });
+        }
+        $scope.getCurrentUser();
 
         $scope.update = function(user) {
           userModel.update(
-              user.username,
-              $scope.myCroppedImage,
-              user.first_name,
-              user.last_name,
-              user.email,
+              {
+                id: $scope.user.id,
+                first_name: $scope.user.first_name,
+                last_name: $scope.user.last_name,
+                email: $scope.user.email,
+                imageFile: $scope.myCroppedImage,
+              },
               function(data){
                 $scope.myImage = '';
                 $scope.loading = false;
@@ -31,6 +33,7 @@ angular.module('eventManager')
                 $scope.user.first_name = data.first_name;
                 $scope.user.last_name = data.last_name;
                 $scope.user.email = data.email;
+                $scope.getCurrentUser();
               }
           );
         };

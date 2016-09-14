@@ -7,9 +7,9 @@
 
   <md-subheader class="md-no-sticky">Templates</md-subheader>
      <md-button ng-if="changed.length" ng-click="deleteSelected()" class="md-raised md-primary delete-selected-button">Delete selected</md-button>
-   <md-list-item ng-if="Index.model.length" ui-sref="mailerTemplate({id: index.id})" ng-repeat="index in Index.model">
+   <md-list-item ng-if="Index.model.length" ng-repeat="index in Index.model">
     <md-checkbox ng-click="changeOne(index.id)" aria-label="Checkbox 1"></md-checkbox>
-    <h3>{{index.name}}</h3>
+    <h3><a ui-sref="mailerTemplate({id: index.id})">{{index.name}}</a></h3>
       <md-button aria-label="edit"
                  ng-click="showDialog($event, $index)"
                  class="md-icon-button md-secondary">
@@ -35,7 +35,7 @@
     </div>
   </div>
 </md-list>
-    <md-button class="md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
+    <md-button class="md-raised md-icon-button md-primary md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
         <md-icon md-svg-icon="add" ng-click="showDialog($event, 'create')"></md-icon>
     </md-button>
 </div>

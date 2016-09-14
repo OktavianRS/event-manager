@@ -1,0 +1,240 @@
+<div class="mailer container">
+  <div class="md-whiteframe-3dp">
+    <mailer-toolbar></mailer-toolbar>
+<div class="campaign-add">
+  <md-tabs md-dynamic-height
+           class="md-primary">
+    <md-tab>
+      <md-tab-label>
+        Setup
+        <md-icon md-svg-src="done"
+                 class="icon-done"
+                 ng-if="campaign.campaignName && campaign.fromName && campaign.subject && campaign.fromEmail && setupForm.email.$valid">
+        </md-icon>
+        <md-icon md-svg-src="error"
+                 class="icon-error"
+                 ng-if="!campaign.campaignName || !campaign.fromName || !campaign.subject || !campaign.fromEmail || setupForm.email.$invalid">
+        </md-icon>
+        <md-icon md-svg-src="warning"
+                 class="icon-warning"
+                 ng-if="campaign.fromEmail && setupForm.email.$valid && (!fromEmail || !fromEmail.verified)">
+        </md-icon>
+        <md-tooltip ng-if="!campaign.campaignName"
+                    md-direction="top">
+          Campaign name is empty
+        </md-tooltip>
+        <md-tooltip ng-if="!campaign.subject && campaign.campaignName"
+                    md-direction="top">
+          Email subject is empty
+        </md-tooltip>
+        <md-tooltip ng-if="!campaign.fromName && campaign.campaignName && campaign.subject"
+                    md-direction="top">
+          From name is empty
+        </md-tooltip>
+        <md-tooltip
+            ng-if="(setupForm.email.$invalid || !campaign.fromEmail) && campaign.fromName && campaign.campaignName && campaign.subject"
+            md-direction="top">
+          From email is empty or incorrect
+        </md-tooltip>
+      </md-tab-label>
+      <md-tab-body class="container">
+        <form name="setupForm"
+              autocomplete="off"
+              class="setup-form tab-padding"
+              layout="column"
+              flex="100"
+              flex-gt-sm="50">
+          <md-input-container>
+            <label>Campaign name</label>
+            <input name="campaignName"
+                   ng-model="campaign.campaignName"
+                   maxlength="100"
+                   required>
+            <div ng-messages="setupForm.campaignName.$error">
+              <div ng-message="required">This is required</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container>
+            <label>Email subject</label>
+            <input name="emailSubject"
+                   maxlength="150"
+                   md-maxlength="150"
+                   ng-model="campaign.subject">
+          </md-input-container>
+
+          <md-input-container>
+            <label>From name</label>
+            <input name="fromName"
+                   maxlength="100"
+                   md-maxlength="100"
+                   ng-model="campaign.fromName">
+          </md-input-container>
+
+        <md-input-container>
+          <label>From email address</label>
+          <md-select required ng-model="campaign.fromEmail" name="fromEmail">
+            <md-option ng-repeat="email in emails" ng-selected="email.name === fromEmail" ng-value="email">
+              {{email.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        </form>
+      </md-tab-body>
+    </md-tab>
+
+    <md-tab>
+      <md-tab-label>
+        List
+        <md-icon md-svg-src="done"
+                 class="icon-done"
+                 ng-if="campaign.listId">
+        </md-icon>
+        <md-icon md-svg-src="error"
+                 class="icon-error"
+                 ng-if="!campaign.listId || campaign.count == 0">
+        </md-icon>
+        <md-tooltip ng-if="!campaign.listId"
+                    md-direction="top">
+          List is not selected
+        </md-tooltip>
+        <md-tooltip ng-if="campaign.count == 0"
+                    md-direction="top">
+          Selected List is empty
+        </md-tooltip>
+      </md-tab-label>
+      </md-tab-label>
+      <md-tab-body>
+        <div ng-if="lists.length" class="tab-padding">
+
+          <md-radio-group ng-model="campaign.listId">
+            <div ng-repeat="item in lists"
+                 class="list-item"
+                 layout="column"
+                 ng-if="item.count !== '0'">
+              <div layout="row"
+                   layout-align="space-between center">
+                <div layout="row" flex="70">
+                  <md-radio-button ng-value="item.name"
+                                   class="md-primary"
+                                   ng-click="campaign.count=item.count">
+                    <div layout="column" class="overflow-title">
+                      <h3>{{item.name}}</h3>
+                      <div class="text">Created {{item.created_at}}</div>
+                    </div>
+                  </md-radio-button>
+                </div>
+
+                <div layout="column"
+                     show-gt-sm
+                     hide>
+                  <div class="title">Subscribers <b>{{item.count}}</b></div>
+                </div>
+
+              </div>
+              <md-divider></md-divider>
+            </div>
+          </md-radio-group>
+
+        </div>
+
+        <div class="no-data"
+             layout="column"
+             ng-if="!lists.length"
+             layout-align="center center">
+          <md-icon md-svg-src="data"></md-icon>
+          <div class="no-data-title">
+            You have no lists
+          </div>
+          <div>
+            <a ui-sref="lists">Add list</a> to get started.
+          </div>
+        </div>
+      </md-tab-body>
+    </md-tab>
+
+    <md-tab>
+      <md-tab-label>
+        Template
+        <md-icon md-svg-src="done"
+                 class="icon-done"
+                 ng-if="campaign.templateId">
+        </md-icon>
+        <md-icon md-svg-src="error"
+                 class="icon-error"
+                 ng-if="!campaign.templateId">
+        </md-icon>
+        <md-tooltip ng-if="!campaign.templateId"
+                    md-direction="top">
+          Template is not selected
+        </md-tooltip>
+      </md-tab-label>
+      <md-tab-body>
+        <div ng-if="templates.length" class="tab-padding">
+
+          <md-radio-group ng-model="campaign.templateId">
+            <div ng-repeat="item in templates"
+                 class="list-item"
+                 layout="column">
+              <div layout="row"
+                   layout-align="space-between center">
+                <div layout="row" flex="80">
+                  <md-radio-button ng-value="item.name"
+                                   class="md-primary">
+                    <div layout="column" class="overflow-title">
+                    <h3>{{item.name}}</h3>
+                      <div class="text">Created {{item.created_at}}</div>
+                    </div>
+                  </md-radio-button>
+                </div>
+              </div>
+              <md-divider></md-divider>
+            </div>
+          </md-radio-group>
+
+
+        </div>
+
+        <div class="no-data"
+             layout="column"
+             ng-if="!templates.length"
+             layout-align="center center">
+          <md-icon md-svg-src="data"></md-icon>
+          <div class="no-data-title">
+            You have no templates
+          </div>
+          <div>
+            <a ui-sref="templates">Add template</a> to get started.
+          </div>
+        </div>
+      </md-tab-body>
+    </md-tab>
+  </md-tabs>
+    <div class="page-header"
+       layout-gt-sm="row"
+       layout="column"
+       layout-align="space-between center">
+    <div layout="row"
+         layout-align="center center">
+      <md-button ui-sref="mailerCampaigns"
+                 class="md-raised md-primary">
+        Cancel
+      </md-button>
+      <md-button ng-click="save()"
+                 ng-show="campaign.listId && campaign.templateId"
+                 ng-disabled="setupForm.$invalid"
+                 class="md-raised md-primary">
+        Save
+      </md-button>
+      <md-button ng-click="send()"
+                 ng-if="modePage == 'edit'"
+                 ng-disabled="!(campaign.campaignName && campaign.fromName && campaign.subject && campaign.fromEmail && campaign.listId && campaign.templateId)"
+                 class="md-raised send-btn md-primary">
+        Send
+      </md-button>
+    </div>
+  </div>
+</div>
+</div>
+</div>

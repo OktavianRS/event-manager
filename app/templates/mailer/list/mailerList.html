@@ -1,0 +1,569 @@
+<div class="mailer container">
+  <div class="md-whiteframe-3dp">
+    <md-content>
+    <mailer-toolbar></mailer-toolbar>
+<div class="list container">
+  <div class="page-header"
+       layout="row"
+       layout-align="space-between center">
+    <div class="title">
+      {{list.name}}
+    </div>
+
+  </div>
+
+  <md-tabs md-dynamic-height
+           show-gt-sm
+           hide
+           md-selected="tabSelect"
+           md-border-bottom="true"
+           class="md-primary">
+    <md-tab label="Manage subscribers">
+      <div class="tab-title">
+        View subscribers
+      </div>
+
+      <div layout-gt-sm="row"
+           layout="column">
+        <div ng-if="subscribers.length">
+          <md-button class="md-raised md-primary"
+                     ng-click="export()">
+              Export list
+            </a>
+          </md-button>
+        </div>
+
+        <div ng-if="changed.length">
+          <md-button class="md-raised md-primary"
+                     ng-click="move()">
+            Move to list
+          </md-button>
+        </div>
+
+        <div ng-if="changed.length">
+          <md-button class="md-raised md-primary"
+                     ng-click="copy()">
+            Copy to list
+          </md-button>
+        </div>
+
+        <div ng-if="changed.length">
+          <md-button class="md-raised md-primary"
+                     ng-click="delete()">
+            Delete
+          </md-button>
+        </div>
+      </div>
+
+      <md-table-container ng-if="subscribers.length" class="manage_subs_table">
+        <table md-table>
+          <thead md-head md-on-reorder="onReorder">
+          <tr md-row>
+            <th md-column>
+              <md-checkbox ng-model="$parent.changeAllFlag"
+                           aria-label="change"
+                           class="md-primary"
+                           ng-change="changeAll()">
+              </md-checkbox>
+            </th>
+            <th md-column md-order-by="email"><span>Email</span></th>
+            <th md-column md-order-by="first_name"><span>First name</span></th>
+            <th md-column md-order-by="last_name"><span>Last name</span></th>
+            <th md-column md-order-by="created_at"><span>Date added</span></th>
+          </tr>
+          </thead>
+
+          <tbody md-body>
+          <tr md-row ng-repeat="item in subscribers">
+            <td md-cell>
+              <md-checkbox ng-model="item.changed"
+                           aria-label="change"
+                           class="md-primary"
+                           ng-change="changeOne(item.id);">
+              </md-checkbox>
+            </td>
+            <td md-cell>{{item.email}}</td>
+            <td md-cell>{{item.first_name}}</td>
+            <td md-cell>{{item.last_name}}</td>
+            <td md-cell>{{item.created_at}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+
+      <div class="no-data"
+           layout="column"
+           ng-if="!subscribers.length"
+           layout-align="center center">
+        <md-icon md-svg-src="data"></md-icon>
+        <div class="no-data-title">
+          You have no subscribers
+        </div>
+        <div>
+          <a href="" ng-click="selectedTab(1)">Add subscribers</a> or <a href="" ng-click="selectedTab(2)">Import
+          subscribers</a> to get started.
+        </div>
+      </div>
+    </md-tab>
+
+    <md-tab label="Add subscriber">
+      <div class="tab-title">
+        Add subscriber
+      </div>
+      <form name="addForm"
+            class="add-form"
+            ng-submit="save(addSubscriber)"
+            autocomplete="off"
+            layout="column">
+        <md-input-container>
+          <label>Email Address</label>
+          <input name="email"
+                 ng-model="addSubscriber.email"
+                 ng-pattern="/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/"
+                 lower-case-input
+                 required>
+          <div ng-messages="addForm.email.$error"
+               ng-show="addForm.email.$touched">
+            <div ng-message="pattern">Invalid email</div>
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex-auto>
+          <label>First name</label>
+          <input name="firstName"
+                 ng-model="addSubscriber.firstName"
+                 ng-pattern="/^([a-zA-Z\x20])*$/"
+                 maxlength="50"
+                 required>
+          <div ng-messages="addForm.firstName.$error"
+               ng-show="addForm.firstName.$touched">
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">First name must consist of letters</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex-auto>
+          <label>Last name</label>
+          <input name="lastName"
+                 ng-model="addSubscriber.lastName"
+                 ng-pattern="/^([a-zA-Z\x20])*$/"
+                 maxlength="50"
+                 required>
+          <div ng-messages="addForm.lastName.$error"
+               ng-show="addForm.lastName.$touched">
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">Last name must consist of letters</div>
+          </div>
+        </md-input-container>
+        <div layout="row">
+          <md-button class="md-raised md-primary"
+                     ng-disabled="addForm.$invalid"
+                     type="submit">
+            Save
+          </md-button>
+        </div>
+      </form>
+    </md-tab>
+
+    <md-tab label="Add lists">
+      <div class="tab-title"
+           layout="row"
+           layout-align="space-between center">
+        Add lists
+        <md-button ng-if="mergeChanged.length"
+                   class="md-raised md-primary"
+                   ng-click="merge()"
+                   style="position: absolute; right: 30px; top: 20px;">
+          Add lists
+        </md-button>
+      </div>
+
+     <md-list flex>
+        <md-list-item class="md-3-line" ng-repeat="item in lists">
+            <md-checkbox ng-change="changeMerge(item.id)"
+                         aria-label="change"
+                         ng-model="item.checked"
+                         class="md-primary"
+                         style="margin-bottom: 0;"
+                         ng-disabled="item.count === '0'">
+            </md-checkbox>
+          <div class="md-list-item-text" layout="column">
+            <h3 style="margin: 5px 0;">{{ item.name }}</h3>
+            <h6 style="margin: 5px 0;">Created {{ item.created_at }}</h6>
+          </div>
+          <span flex></span>
+          <h5>Subscribers: <b>{{ item.count }}</b></h5>
+           <md-divider ></md-divider>
+        </md-list-item>
+      </md-list>
+    </md-tab>
+
+    <md-tab label="Add subs from event">
+      <div class="tab-title"
+           layout="row"
+           layout-align="space-between center">
+        Add subs from event
+      </div>
+
+     <md-list flex>
+        <md-list-item class="md-3-line" ng-repeat="item in events">
+          <div class="md-list-item-text" layout="column" style="margin-left: 25px;">
+            <h3 style="margin: 5px 0;">{{ item.name }}</h3>
+          </div>
+          <span flex></span>
+          <md-button class="md-fab md-mini"
+                     aria-label="add subs"
+                     ng-disabled="item.count === 0"
+                     ng-click="addSubsFromEvent(item.id)"
+                     style="margin-top: 25px;">
+              <md-icon md-svg-src="add"></md-icon>
+              <md-tooltip>Add subs from {{item.name}} event</md-tooltip>
+          </md-button>
+           <md-divider ></md-divider>
+        </md-list-item>
+      </md-list>
+    </md-tab>
+
+
+
+    <md-tab label="Import list">
+      <div class="tab-title"
+           layout="row"
+           layout-align="space-between center">
+        Import list
+        <div>
+          <md-button class="md-raised md-primary"
+                     ng-if="!uploadFlag"
+                     ng-click="cancelImport()">
+            Cancel
+          </md-button>
+          <md-button class="md-raised md-primary"
+                     ng-if="!uploadFlag"
+                     ng-click="saveImport()">
+            Save
+          </md-button>
+        </div>
+      </div>
+
+      <div class="flow-box"
+           flow-init
+           ng-if="uploadFlag"
+           flow-file-success="$file.msg = $message"
+           flow-file-added="addedNewFile($file, $event, $flow )"
+           flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+           layout="column"
+           layout-fill>
+        <div class="drop-box"
+             flow-drop
+             flow-drop-enabled="true"
+             flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+             layout
+             layout-align="center center"
+             layout-fill>
+          <div class="inner-box"
+               layout="row"
+               layout-align="space-around center"
+               layout-fill>
+            <div flow-btn
+                 flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+                 layout
+                 layout-align="center center"
+                 layout-fill>
+              <md-icon md-svg-src="cloudUpload"></md-icon>
+            </div>
+
+            <div flow-btn layout="column"
+                 flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+                 layout-align="center center"
+                 layout-fill>
+              <div>Drag And Drop your .csv file here</div>
+              <div>or</div>
+              <strong>Click here</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <md-table-container ng-if="importSubscribers.length">
+        <table md-table>
+          <thead md-head>
+          <tr md-row>
+            <th md-column><span>Email</span></th>
+            <th md-column><span>First name</span></th>
+            <th md-column><span>Last name</span></th>
+            <th md-column></th>
+          </tr>
+          </thead>
+
+          <tbody md-body>
+          <tr md-row ng-repeat="item in importSubscribers">
+            <td md-cell>{{item.email}}</td>
+            <td md-cell>{{item.first_name}}</td>
+            <td md-cell>{{item.last_name}}</td>
+            <td md-cell>
+              <md-button class="md-raised md-primary md-icon-button"
+                         ng-click="removeImportSubscribers($index)">
+                <md-icon md-svg-src="close"></md-icon>
+              </md-button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+    </md-tab>
+  </md-tabs>
+
+  <md-tabs md-dynamic-height
+           hide-gt-sm
+           md-selected="tabSelectSm"
+           md-border-bottom="true"
+           class="md-primary">
+    <md-tab label="Manage subscribers">
+      <div class="tab-title">
+        View subscribers
+      </div>
+
+      <div layout-gt-sm="row"
+           layout="column">
+        <div ng-if="changed.length">
+          <md-button class="md-raised md-primary"
+                     ng-click="move()">
+            Move to list
+          </md-button>
+        </div>
+
+        <div ng-if="changed.length">
+          <md-button class="md-raised md-primary"
+                     ng-click="copy()">
+            Copy to list
+          </md-button>
+        </div>
+
+        <div ng-if="changed.length">
+          <md-button class="md-raised md-primary"
+                     ng-click="delete()">
+            Delete
+          </md-button>
+        </div>
+      </div>
+
+      <md-table-container ng-if="subscribers.length">
+        <table md-table>
+          <thead md-head md-on-reorder="onReorder">
+          <tr md-row>
+            <th md-column>
+              <md-checkbox ng-model="$parent.changeAllFlag"
+                           aria-label="change"
+                           class="md-primary"
+                           ng-change="changeAll()">
+              </md-checkbox>
+            </th>
+            <th md-column md-order-by="email"><span>Email</span></th>
+            <th md-column md-order-by="first_name"><span>First name</span></th>
+            <th md-column md-order-by="last_name"><span>Last name</span></th>
+            <th md-column md-order-by="created_at"><span>Date added</span></th>
+          </tr>
+          </thead>
+
+          <tbody md-body>
+          <tr md-row ng-repeat="item in subscribers">
+            <td md-cell>
+              <md-checkbox ng-model="item.changed"
+                           aria-label="change"
+                           class="md-primary"
+                           ng-change="changeOne(item.id);">
+              </md-checkbox>
+            </td>
+            <td md-cell>{{item.email}}</td>
+            <td md-cell>{{item.first_name}}</td>
+            <td md-cell>{{item.last_name}}</td>
+            <td md-cell>{{item.created_at}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="pageSetting.show"
+                           md-page="pageSetting.current"
+                           md-limit-options="[10,25,50]"
+                           md-total="{{pageSetting.total}}"
+                           md-on-paginate="onPaginate"
+                           md-page-select>
+      </md-table-pagination>
+
+      <div class="no-data"
+           layout="column"
+           ng-if="!subscribers.length"
+           layout-align="center center">
+        <md-icon md-svg-src="data"></md-icon>
+        <div class="no-data-title">
+          You have no subscribers
+        </div>
+        <div>
+          <a href="" ng-click="selectedTab(1)">Add subscribers</a> or <a href="" ng-click="selectedTab(2)">Import
+          subscribers</a> to get started.
+        </div>
+      </div>
+    </md-tab>
+
+    <md-tab label="Add subscriber">
+      <div class="tab-title">
+        Add subscriber
+      </div>
+      <form name="addForm"
+            class="add-form"
+            ng-submit="save(addSubscriber)"
+            autocomplete="off"
+            layout="column">
+        <md-input-container>
+          <label>Email Address</label>
+          <input name="email"
+                 ng-model="addSubscriber.email"
+                 ng-pattern="/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/"
+                 lower-case-input
+                 required>
+          <div ng-messages="addForm.email.$error"
+               ng-show="addForm.email.$touched">
+            <div ng-message="pattern">Invalid email</div>
+            <div ng-message="required">This is required</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex-auto>
+          <label>First name</label>
+          <input name="firstName"
+                 ng-model="addSubscriber.firstName"
+                 ng-pattern="/^([a-zA-Z\x20])*$/"
+                 maxlength="50"
+                 required>
+          <div ng-messages="addForm.firstName.$error"
+               ng-show="addForm.firstName.$touched">
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">First name must consist of letters</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container flex-auto>
+          <label>Last name</label>
+          <input name="lastName"
+                 ng-model="addSubscriber.lastName"
+                 ng-pattern="/^([a-zA-Z\x20])*$/"
+                 maxlength="50"
+                 required>
+          <div ng-messages="addForm.lastName.$error"
+               ng-show="addForm.lastName.$touched">
+            <div ng-message="required">This is required</div>
+            <div ng-message="pattern">Last name must consist of letters</div>
+          </div>
+        </md-input-container>
+        <div layout="row">
+          <md-button class="md-raised md-primary"
+                     ng-disabled="addForm.$invalid"
+                     type="submit">
+            Save
+          </md-button>
+        </div>
+      </form>
+    </md-tab>
+
+    <md-tab label="Add lists">
+      <div class="tab-title"
+           layout="row"
+           layout-align="space-between center">
+        Add lists
+        <md-button ng-if="mergeChanged.length"
+                   class="md-raised md-primary"
+                   ng-click="merge()">
+          Add lists
+        </md-button>
+      </div>
+      <md-input-container>
+        <label>Sort By</label>
+        <md-select ng-model="listSortBy"
+                   ng-change="changeSort(listSortBy)">
+          <md-option value="-created_at">Recently created first</md-option>
+          <md-option value="created_at">Recently created last</md-option>
+          <md-option value="-updated_at">Recently edited first</md-option>
+          <md-option value="updated_at">Recently edited last</md-option>
+          <md-option value="name">Name (A-Zz)</md-option>
+          <md-option value="-name">Name (Zz-A)</md-option>
+        </md-select>
+      </md-input-container>
+
+      <div ng-repeat="item in lists"
+           class="list-item"
+           layout="column">
+        <div layout="row"
+             layout-align="space-between center">
+          <div layout="row" flex="100" flex-gt-sm="70">
+            <md-checkbox ng-change="changeMerge(item.id)"
+                         aria-label="change"
+                         ng-model="item.checked"
+                         class="md-primary">
+            </md-checkbox>
+
+            <div layout="column" class="overflow-title">
+              <div class="title">{{item.name}}</div>
+              <div class="text">Created {{item.created_at}}</div>
+            </div>
+          </div>
+
+          <div layout="column"
+               show-gt-sm
+               hide>
+            <div class="title">{{item.count}}</div>
+            <div class="text">Subscribers</div>
+          </div>
+
+          <div></div>
+        </div>
+        <md-divider></md-divider>
+      </div>
+
+      <div class="pagination"
+           layout="row"
+           layout-align="space-between center">
+        <md-input-container>
+          <label>View</label>
+          <md-select ng-model="listSetting.show"
+                     ng-change="listSetting.current=1; getLists()">
+            <md-option value="10">10</md-option>
+            <md-option value="25">25</md-option>
+            <md-option value="50">50</md-option>
+          </md-select>
+        </md-input-container>
+
+        <div layout="row"
+             layout-align="space-between center">
+          {{((listSetting.current - 1) * listSetting.show + 1)
+          + ' - '
+          + (((listSetting.current * listSetting.show)>listSetting.total) ? listSetting.total : (listSetting.current *
+          listSetting.show))
+          + ' of ' + listSetting.total}}
+
+          <md-button ng-if="listSetting.current != 1"
+                     class="md-raised md-primary md-icon-button"
+                     aria-label="prev"
+                     ng-click="prev()">
+            <md-icon md-svg-src="arrowLeft"></md-icon>
+          </md-button>
+
+          <md-button ng-if="listSetting.current != listSetting.totalPage"
+                     aria-label="next"
+                     class="md-raised md-primary md-icon-button"
+                     ng-click="next('listSetting')">
+            <md-icon md-svg-src="arrowRight"></md-icon>
+          </md-button>
+        </div>
+      </div>
+    </md-tab>
+  </md-tabs>
+</div>
+      <md-button ui-sref="mailerLists"
+                 class="md-raised md-primary">
+        Cancel
+      </md-button>
+    </md-content>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="step-content-row">
+<div class="step-content-row" ng-controller="stepTableGenerator"> 
 <form name="tableForm"
   ng-submit="sendTableData('table')"
 >
@@ -29,7 +29,7 @@
  ng-click="steps.model.step = 2;"
  type="submit">Next step</md-button>
 
-<md-button ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-primary next-step-button" ng-click="addNewField()">
+<md-button ng-click="addNewField()" ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-primary next-step-button">
   <md-icon md-svg-src="add" style="color: greenyellow;" ></md-icon>
   <md-tooltip>Add field</md-tooltip>
 </md-button>

@@ -167,20 +167,10 @@ angular.module('model.user', [
          * @param {int} company - user company
          * @param {function} callback - request callback
          */
-        this.update = function(userId, firstName, lastName, position, email, image, role, company, callback) {
+        this.update = function(req, callback) {
           api.put(
               url.user.update,
-              {
-                id: userId,
-                first_name: firstName,
-                last_name: lastName,
-                position: position,
-                email: email,
-                imageFile: image,
-                role: role,
-                eventIds: [],
-                organization_id: company
-              },
+              req,
               function(data) {
                 toast('success', 'User Updated');
                 callback(data);
@@ -211,10 +201,21 @@ angular.module('model.user', [
               url.user.verifyEmail,
               req,
               function(res) {
-                toast('success', 'Password changed successfully!');
+                toast('success', 'Check your email');
                 callback(res);
               }
           );
+        }
+
+        this.changePassword = function(req, callback) {
+          api.post(
+            url.user.resetPassword,
+            req,
+            function(res) {
+              toast('success', 'Password changed');
+              callback(res);
+            }
+          )
         }
 
       }
