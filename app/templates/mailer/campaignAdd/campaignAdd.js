@@ -101,6 +101,8 @@ angular.module('eventManager')
           crudModel.Index('list', {},
               function(data) {
                 $scope.lists = data.model;
+            console.log($scope.lists);
+                
               }
           )
         };
