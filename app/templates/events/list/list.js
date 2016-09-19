@@ -17,6 +17,15 @@ angular.module('eventManager')
           }
         };
         
+        // fab button settings 
+      $scope.demo = {};
+
+      $scope.demo.isOpen = false;
+
+      $scope.demo.selectedMode = 'md-fling';
+
+      $scope.demo.selectedDirection = 'left';
+
         $scope.getEvents = function() {
           eventModel.getAll(
               $scope.eventSetting.order,

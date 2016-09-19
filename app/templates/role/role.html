@@ -1,0 +1,45 @@
+<div class="mailer container">
+  <div class="md-whiteframe-3dp">
+    <md-content>
+    <mailer-toolbar></mailer-toolbar>
+<div class="container">
+<md-list style="margin-bottom: 80px;" ng-cloak>
+
+  <md-subheader class="md-no-sticky">Roles</md-subheader>
+     <md-button ng-if="changed.length" ng-click="deleteSelected()" class="md-raised md-primary delete-selected-button">Delete selected</md-button>
+   <md-list-item ng-if="Index.model.length" ng-repeat="index in Index.model">
+    <md-checkbox ng-click="changeOne(index.id)" aria-label="Checkbox 1"></md-checkbox>
+    <h3><a ui-sref="mailerTemplate({id: index.id})">{{index.name}}</a></h3>
+      <md-button aria-label="edit"
+                 ng-click="showDialog($event, $index)"
+                 class="md-icon-button md-secondary">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </md-button>
+      <md-button aria-label="delete"
+                 ng-click="deleteItem(index)"
+                 class="md-icon-button md-secondary" >
+        <md-icon md-svg-icon="close"></md-icon>
+      </md-button>
+      <md-divider></md-divider>
+  </md-list-item>
+  <div class="no-data"
+       layout="column"
+       ng-if="!Index.model.length"
+       layout-align="center center">
+    <md-icon md-svg-src="data"></md-icon>
+    <div class="no-data-title">
+      You have no roles in list
+    </div>
+    <div>
+      <a href="" ng-click="showDialog($event, 'create')">Add role</a> to get started.
+    </div>
+  </div>
+</md-list>
+    <md-button class="md-raised md-icon-button md-primary md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
+        <md-icon md-svg-icon="add" ng-click="showDialog($event, 'create')"></md-icon>
+    </md-button>
+</div>
+
+    </md-content>
+  </div>
+</div>

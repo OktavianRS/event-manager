@@ -16,7 +16,7 @@ angular.module('eventManager')
           undo: false,
           refreshAfterCallback: true,
           options: {
-            'fl': 'First name and last name',
+            'fl': 'Email',
             'f': 'Only first name',
             'l': 'Only last name'
           },

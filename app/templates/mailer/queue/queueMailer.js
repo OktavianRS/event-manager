@@ -1,47 +1,36 @@
 angular.module('eventManager')
-    .controller('mailerReportsCtrl', ['$scope', 'crudModel', '$mdDialog',
+    .controller('queueMailerCtrl', ['$scope', 'crudModel', '$mdDialog',
       function($scope, crudModel, $mdDialog) {
-        $scope.url = 'report';
-        $scope.Chart = {};
-        $scope.labelsChart = [
-          "Sent",
-          "Queued",
-          "Failed",
-          'Clicked',
-          'Viewed',
-          'Unsubscribed'
-        ];
-        $scope.dataChart = [];
-        $scope.colorChart = [
-          '#9E9E9E',
-          '#FF9800',
-          '#F44336',
-          '#8BC34A',
-          '#00BCD4',
-          '#212121'
-        ];
+        $scope.url = 'queue';
+        $scope.changeAllFlag = false;
+        $scope.changed = [];
 
         $scope.getIndex = function() {
-            crudModel.Index($scope.url, {queue_id: $scope.stateParams.queueId}, function(data) {
-                data.model[0].send_time = moment(parseInt(data.model[0].send_time), 'X').format('MMMM DD, YYYY hh:mm a');
-                $scope.Index = data.model;
-                $scope.Chart.sent = {
-                  color: ['#009688'],
-                  labels: ["Sent"],
-                  data: [
-                    data.model[0].send,
-                  ]
-                };
+            crudModel.Index($scope.url, {}, function(data) {
+                data.model = data.model.map(function(v) {
+                  v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
+                  return v;
+                })
+                $scope.Index = data;
             });
         }
         $scope.getIndex();
 
-        $scope.getView = function() {
-          crudModel.Read($scope.url, {id: $scope.stateParams.queueId}, function(data) {
-            console.log(data);
-          })
+        $scope.deleteSelected = function() {
+            crudModel.Delete($scope.url, {id: $scope.changed}, function(data) {
+                $scope.changed = [];
+                $scope.getIndex();
+            });
         }
-        $scope.getView();
+
+        $scope.changeOne = function(id) {
+          var index = $scope.changed.indexOf(id);
+          if(index == -1) {
+            $scope.changed.push(id);
+          } else {
+            $scope.changed.splice(index, 1);
+          }
+        };
 
         $scope.deleteItem = function(item) {
             crudModel.Delete($scope.url, {id: item.id}, function(data) {
@@ -52,7 +41,7 @@ angular.module('eventManager')
         $scope.showDialog = function(ev, index) {
             $mdDialog.show({
               controller: DialogController,
-              templateUrl: 'components/mailer/emailsDialog.html',
+              templateUrl: 'components/mailer/templatesDialog.html',
               parent: angular.element(document.body),
               targetEvent: ev,
               clickOutsideToClose:true,
@@ -75,6 +64,7 @@ angular.module('eventManager')
         };
 
         function DialogController($scope, $mdDialog, data) {
+            $scope.data = data;
             $scope.hide = function() {
               $mdDialog.hide();
             };

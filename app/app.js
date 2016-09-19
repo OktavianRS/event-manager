@@ -13,6 +13,7 @@ angular.module('eventManager', [
       'froala',
       'ngAnimate',
       'angular-loading-bar',
+      'chart.js',
 
       'factory.url',
       'factory.toast',
@@ -162,6 +163,11 @@ angular.module('eventManager', [
             templateUrl: "templates/events/panelSearch/panelSearch.html",
             controller: "panelSearchCtrl"
           })
+          .state('role', {
+            url: '/event/:eventId/role',
+            templateUrl: "templates/role/role.html",
+            controller: 'roleCtrl'
+          })
 
           ////////Language
           .state('addLanguage', {
@@ -246,7 +252,7 @@ angular.module('eventManager', [
           })
 
           .state('mailerReports', {
-            url: "/mailer/reports/",
+            url: "/mailer/reports/:queueId",
             templateUrl: "templates/mailer/reports/mailerReports.html",
             controller: "mailerReportsCtrl"
           })
@@ -260,6 +266,12 @@ angular.module('eventManager', [
             url: "/mailer/campaigns/edit/:id",
             templateUrl: "templates/mailer/campaignAdd/campaignAdd.html",
             controller: "campaignAddCtrl"
+          })
+
+          .state('mailerQueue', {
+            url: '/mailer/queue',
+            templateUrl: 'templates/mailer/queue/queueMailer.html',
+            controller: 'queueMailerCtrl'
           })
 
 
@@ -312,6 +324,7 @@ angular.module('eventManager', [
           .icon('upload', 'images/icons/ic_file_upload_black_24px.svg')
           .icon('settings', 'images/icons/ic_settings_black_24px.svg')
           .icon('mail', 'images/icons/ic_mail_outline_white_24px.svg')
+          .icon('split', 'images/icons/split.svg')
 
           //mailer icons
 

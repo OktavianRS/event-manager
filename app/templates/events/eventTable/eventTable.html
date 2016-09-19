@@ -1,19 +1,62 @@
 <div class="event-table container">
 	<div class="md-whiteframe-3dp table-area">
-		<md-toolbar class="md-table-toolbar md-default">
+		<md-toolbar class="md-table-toolbar md-primary">
 	      <div class="md-toolbar-tools"
 	           layout="row"
 	           layout-align="space-between center">
-	        <span>Table
-	        <md-icon md-svg-src="settings" ng-if="attributeLabels && fieldSettings" style="cursor: pointer; width: 20px; margin-top: -5px;" ng-click="shewFieldSettings()"></md-icon>
-	        </span>
+	        <span class="table-title">FEFUFo</span>
 	      <span flex></span>
-	      <span>
-	      	<md-icon md-svg-src="error" style="cursor: pointer; width: 20px; margin-top: -5px;" ui-sref='mailer'></md-icon>
-	      </span>
-	      <md-progress-circular ng-if="processing" class="md-hue-2" md-diameter="40px"></md-progress-circular>
-	      <span ng-if="processing">Processing</span>
+	      <md-progress-circular ng-if="processing" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+	      <md-menu>
+	      	  <md-button aria-label="Table menu" class="md-icon-button" ng-click="menuCtrl.openMenu($mdOpenMenu, $event)">
+		        <md-icon md-menu-origin md-svg-icon="menu"></md-icon>
+		      </md-button>
+		      <md-menu-content width="4">
+		      	<md-menu-item ui-sref="panelSearch({eventId: stateParams.eventId})">
+		      		<md-button>
+		      			<md-icon md-svg-icon="search"></md-icon>
+		      			Quick search
+		      		</md-button>
+		      	</md-menu-item>
+		      	<md-menu-item ng-click="shewFieldSettings()">
+		      		<md-button>
+		      			<md-icon md-svg-icon="settings"></md-icon>
+		      			Fields settings
+		      		</md-button>
+		      	</md-menu-item>
+		      	<md-menu-item ui-sref='mailer'>
+		      		<md-button>
+		      			<md-icon md-svg-icon="mail"></md-icon>
+		      			Mailer
+		      		</md-button>
+		      	</md-menu-item>
+		      	<md-menu-item ui-sref='role({eventId: stateParams.eventId})'>
+		      		<md-button>
+		      			<md-icon md-svg-icon="user"></md-icon>
+		      			Roles
+		      		</md-button>
+		      	</md-menu-item>
+		      </md-menu-content>
+	      </md-menu>
 	      </div>
+	    </md-toolbar>
+	    <md-toolbar class="seccond-toolbar">
+	    <div class="md-toolbar-tools"
+	           layout="row"
+	           layout-align="space-between center">
+			<md-input-container class="md-block">
+				<label font-size: 15px;">Search</label>
+				<input ng-model="search">
+			</md-input-container>
+			<span flex></span>
+			<md-input-container>
+				<md-select ng-change="sortQuick(selectedItem)" ng-model="selectedItem" md-selected-text="getSelectedText()">
+				  <md-optgroup label="items">
+				    <md-option ng-value="item" ng-repeat="item in dropdownItems">{{item.name}}</md-option>
+				  </md-optgroup>
+				</md-select>
+			</md-input-container>
+		</div>
 	    </md-toolbar>
 	    <md-table-container class="table-container-fixed">
 	      <table md-table class="event-table">

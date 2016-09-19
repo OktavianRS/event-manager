@@ -1,13 +1,15 @@
 <div class="event-table container">
   <div class="md-whiteframe-3dp table-area">
-    <md-toolbar class="md-table-toolbar md-default">
+    <md-toolbar class="md-table-toolbar md-primary">
         <div class="md-toolbar-tools"
              layout="row"
              layout-align="space-between center">
           <span>Quick search</span>
           <span flex></span>
-          <md-progress-circular ng-if="processing" class="md-hue-2" md-diameter="40px"></md-progress-circular>
-          <span ng-if="processing">Processing</span>
+          <md-progress-circular ng-if="processing" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+          <md-button ui-sref="eventTable({eventId: stateParams.eventId})">
+            Back
+          </md-button>
         </div>
       </md-toolbar>
       <md-table-container>

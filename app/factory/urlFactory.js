@@ -2,12 +2,12 @@ angular.module('factory.url', [])
     .factory('url', [
       function() {
         //localhost dev
-        // var baseUrl = 'http://192.168.0.122/api/web/v1/';
-        // var baseMailerUrl = 'http://192.168.0.122/api/web/mailer/';
+        var baseUrl = 'http://192.168.0.118/api/web/v1/';
+        var baseMailerUrl = 'http://192.168.0.118/api/web/mailer/';
 
         //host dev
-        var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
-        var baseMailerUrl = 'http://event.vt-host.co.ua/backend/api/web/mailer/';
+        // var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
+        // var baseMailerUrl = 'http://event.vt-host.co.ua/backend/api/web/mailer/';
         return {
           baseUrl: baseUrl,
           baseMailerUrl: baseMailerUrl,

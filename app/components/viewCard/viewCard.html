@@ -18,7 +18,7 @@
             </div>
           </md-card-title-media>
         </md-card-title>
-        <md-dialog-content style="width: 600px; height: 400px; ">
+        <md-dialog-content style="width: 600px; height: 400px; " ng-if="coords">
           <div layout="row" ng-if="coords" class="map">
               <ui-gmap-google-map flex-auto
                                   center='map.center'

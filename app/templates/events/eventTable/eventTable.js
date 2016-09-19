@@ -1,5 +1,36 @@
 angular.module('eventManager')
     .controller('eventTableCtrl', ['$scope', 'panelModel', '$mdDialog', function($scope, panelModel, $mdDialog) {
+
+      // menu settings
+      $scope.menuCtrl = {};
+      $scope.menuCtrl.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+      };
+
+      $scope.getSelectedText = function() {
+        if ($scope.selectedItem !== undefined) {
+          return "Selected: " + $scope.selectedItem.name;
+        } else {
+          return "Quick search";
+        }
+      };
+
+      $scope.sortQuick = function(sort) {
+          $scope.processing = true;
+            panelModel.getIndex({_eventId: $scope.stateParams.eventId, search_id: sort.id},function(data) {
+                $scope.attributeLabels = data;
+                $scope.processing = false;
+            })
+      }
+
+      $scope.allByEvent = function() {
+          panelModel.allByEvent({event_id: $scope.stateParams.eventId},function(data) {
+                $scope.dropdownItems = data;
+            })
+        }
+        $scope.allByEvent();
+
         $scope.getAttributeLabels = function() {
           $scope.processing = true;
             panelModel.getAttributeLabels({_eventId: $scope.stateParams.eventId},function(data) {

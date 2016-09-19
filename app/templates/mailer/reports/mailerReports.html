@@ -2,30 +2,94 @@
   <div class="md-whiteframe-3dp">
     <md-content>
     <mailer-toolbar></mailer-toolbar>
-<div class="container">
-<md-list style="margin-bottom: 80px;" ng-cloak>
+<div class="report container">
+  <div class="page-header"
+       layout-gt-sm="row"
+       layout="column"
+       layout-align="space-between center">
+    <div layout="column" flex="70">
+      <div class="title">
+        <a ui-sref="campaignEdit({id: distribution.campaign.id})">{{distribution.campaign.name}}</a>
+      </div>
+      <div class="text">
+        <h3>Was sent: <span style="font-weight: normal;">{{Index.send_time}}</span></h3> 
+      </div>
+    </div>
 
-  <md-subheader class="md-no-sticky">Reports</md-subheader>
-   <md-list-item ng-repeat="index in Index.model">
-    <h3>{{index.name}}</h3>
-      <md-button aria-label="edit"
-                 ng-click="showDialog($event, $index)"
-                 class="md-icon-button md-secondary">
-        <md-icon md-svg-icon="edit"></md-icon>
+    <div layout="row">
+      <md-button ng-click="getIndex()"
+                 class="md-raised md-primary">
+        Refresh
       </md-button>
-      <md-button aria-label="delete"
-                 ng-click="deleteItem(index)"
-                 class="md-icon-button md-secondary" >
-        <md-icon md-svg-icon="close"></md-icon>
-      </md-button>
-  </md-list-item>
-</md-list>
 
-    <md-button class="md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
-        <md-icon md-svg-icon="add" ng-click="showDialog($event, 'create')"></md-icon>
-    </md-button>
+      <md-button ui-sref="mailerQueue"
+                 class="md-raised md-primary">
+        Back
+      </md-button>
+    </div>
+  </div>
+
+<div layout="row">
+      <div flex="50">
+        <canvas id="doughnut"
+                class="chart chart-doughnut"
+                chart-options="{animation: false}"
+                chart-colours="Chart.sent.color"
+                chart-data="Chart.sent.data"
+                chart-labels="Chart.sent.labels">
+        </canvas>
+      </div>
+      <div flex="50">
+        <div layout="column" class="legend">
+          <h5 >Clicked: {{Index.clicked}} %</h5>
+          <h5 >Queued: {{Index.queued}} %</h5>
+          <h5 >Sent: {{Index.send}} %</h5>
+          <h5 >Unsubscribed: {{Index.unsubscribed}} %</h5>
+          <h5 >Viewed: {{Index.viewed}} %</h5>
+        </div>
+      </div>
 </div>
+  <md-table-container style="margin-top: 30px;">
+    <table md-table>
+      <thead md-head md-on-reorder="onReorder">
+      <tr md-row>
+        <th md-column md-order-by="email"><span>Email</span></th>
+        <th md-column md-order-by="sent"><span>Sent</span></th>
+        <th md-column md-order-by="clicked"><span>Clicked</span></th>
+        <th md-column md-order-by="viewed"><span>Viewed</span></th>
+        <th md-column md-order-by="unsubscribed"><span>Unsubscribed</span></th>
+      </tr>
+      </thead>
 
+      <tbody md-body>
+      <tr md-row ng-repeat="item in Index">
+        <td md-cell>{{item.email}}</td>
+        <td md-cell>
+          <div ng-if="item.send && !item.queued" class="success">success</div>
+          <div ng-if="!item.send && !item.queued" class="failed">failed</div>
+          <div ng-if="!item.send && item.queued" class="queued">queued</div>
+        </td>
+        <td md-cell>
+          {{item.clicked}}
+        </td>
+        <td md-cell>
+          {{item.viewed}}
+        </td>
+        <td md-cell>
+          <div ng-if="item.unsubscribed" class="failed failed-icon">
+            Yes
+            <md-icon ng-click="openWhy(item.message)" md-svg-src="info"></md-icon>
+          </div>
+          <div ng-if="!item.unsubscribed" class="success">
+            No
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+
+    </div>
     </md-content>
   </div>
 </div>

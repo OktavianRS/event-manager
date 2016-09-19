@@ -5,6 +5,11 @@ angular.module('eventManager')
         $scope.header = 'Create new location';
         $scope.labelButton = 'create';
         $scope.coords = null;
+        $scope.show = false;
+
+        $scope.showMap = function() {
+          $scope.show = true;
+        }
 
         $scope.map = {
           center: {

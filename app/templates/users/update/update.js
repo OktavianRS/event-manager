@@ -34,16 +34,18 @@ angular.module('eventManager')
         $scope.saveUser = function(newUser){
           console.info('user', newUser);
           userModel.update(
-              newUser.id,
-              newUser.firstName,
-              newUser.lastName,
-              newUser.position,
-              newUser.email,
-              $scope.myCroppedImage,
-              newUser.role,
-              newUser.organizationId,
+          {
+              id: newUser.id,
+              first_name: newUser.firstName,
+              last_name: newUser.lastName,
+              position: newUser.position,
+              email: newUser.email,
+              imageFile: $scope.myCroppedImage,
+              role: newUser.role,
+              organization_id: newUser.organizationId
+            },
               function(data){
-                $state.go('oneUser', {userId: data.id});
+                $state.go('listUser', {userId: data.id});
               }
           )
         };

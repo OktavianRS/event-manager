@@ -1,8 +1,16 @@
+.angular-google-map {
+	height: 300px;
+	width: 100%;
+}
 .location-modal {
   md-input-container{
     .example{
       font-size: 14px;
       color: rgba(0, 0, 0, 0.6);
     }
+    .angular-google-map {
+		height: 300px;
+		width: 500px;
+  	}
   }
 }
