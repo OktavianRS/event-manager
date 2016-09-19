@@ -65,9 +65,9 @@
       <tr md-row ng-repeat="item in Index">
         <td md-cell>{{item.email}}</td>
         <td md-cell>
-          <div ng-if="item.send && !item.queued" class="success">success</div>
-          <div ng-if="!item.send && !item.queued" class="failed">failed</div>
-          <div ng-if="!item.send && item.queued" class="queued">queued</div>
+          <div ng-if="item.send === 2" class="success">success</div>
+          <div ng-if="item.send === 0" class="failed">failed</div>
+          <div ng-if="item.send === 1" class="queued">queued</div>
         </td>
         <td md-cell>
           {{item.clicked}}

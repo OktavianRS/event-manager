@@ -218,5 +218,25 @@ angular.module('model.user', [
           )
         }
 
+        this.unsubscribe = function(req) {
+          api.get(
+            url.user.unsubscribe,
+            req,
+            function(res) {
+              toast('success', 'Unsubscribed successfully');
+            }
+          )
+        }
+
+        this.checkUnsubscribe = function(req, callback) {
+          api.get(
+            url.user.checkUnsubscribe,
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
       }
     ]);

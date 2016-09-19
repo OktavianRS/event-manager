@@ -21,7 +21,9 @@ angular.module('factory.url', [])
             remove: baseUrl + 'user/delete',
             getRoleList: baseUrl + 'user/role',
             verifyEmail: baseMailerUrl + 'site/request-password-reset',
-            resetPassword: baseMailerUrl + 'site/reset-password'
+            resetPassword: baseMailerUrl + 'site/reset-password',
+            unsubscribe: baseMailerUrl + 'report/unsubscribe',
+            checkUnsubscribe: baseMailerUrl + 'report/check-unsubscribe'
           },
           company: {
             create: baseUrl + 'organization/create',

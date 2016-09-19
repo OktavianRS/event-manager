@@ -275,7 +275,7 @@ angular.module('eventManager', [
           })
 
           .state('unsubscribe', {
-            url: '/unsubscribe/:params',
+            url: '/unsubscribe',
             templateUrl: 'templates/unsubscribe/unsubscribe.html',
             controller: 'unsubscribeCtrl'
           })
@@ -362,11 +362,11 @@ angular.module('eventManager', [
           userModel.getCurrent(function() {
           });
         } else {
-          $state.go('login');
+            $state.go('login');
         }
 
         $rootScope.$on('$stateChangeStart', function(event, state, params) {
-          if(state.name === 'passwordReset'){
+          if(state.name === 'passwordReset' || state.name === 'unsubscribe'){
 
           } else if(!$sessionStorage.auth_key && state.name !== 'login') {
             event.preventDefault();
@@ -378,6 +378,7 @@ angular.module('eventManager', [
         $rootScope.$on('$stateChangeSuccess', function() {
           $rootScope.isHeader = $state.current.name != 'login';
           $state.current.name === 'passwordReset' ? $rootScope.isHeader = false : false;
+          $state.current.name === 'unsubscribe' ? $rootScope.isHeader = false : false;
         });
       }
     ]);

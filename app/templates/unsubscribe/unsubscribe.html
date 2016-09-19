@@ -1,0 +1,33 @@
+<div class="login"
+     layout="row"
+     layout-align="center center">
+  <div class="login-box md-whiteframe-5dp">
+      <form name="passwordRecovery"
+          autocomplete="off">
+      <div layout="row" layout-align="center center" class="header">
+        Unsubscribe
+      </div>
+
+  <md-content  layout-padding>
+
+
+<div ng-if="message.id">
+      <md-input-container>
+        <label>Message</label>
+        <textarea name="message" ng-model="unsubscribe.message" cols="30" rows="4"></textarea>
+      </md-input-container>
+
+      <md-button class="md-raised md-primary" 
+                 ng-disabled="passwordRecovery.$invalid"
+                 ng-click="unsubscribe()">
+        Unsubscribe
+      </md-button>
+</div>
+<div ng-if="!message.id">
+  <h1>Sorry you have no access</h1>
+</div>
+
+  </md-content>
+  </form>
+  </div>
+</div>
