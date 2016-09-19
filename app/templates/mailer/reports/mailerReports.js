@@ -1,6 +1,6 @@
 angular.module('eventManager')
-    .controller('mailerReportsCtrl', ['$scope', 'crudModel', '$mdDialog',
-      function($scope, crudModel, $mdDialog) {
+    .controller('mailerReportsCtrl', ['$scope', 'crudModel', '$mdDialog', 'mailerModel',
+      function($scope, crudModel, $mdDialog, mailerModel) {
         $scope.url = 'report';
         $scope.Chart = {};
         $scope.labelsChart = [
@@ -25,23 +25,26 @@ angular.module('eventManager')
             crudModel.Index($scope.url, {queue_id: $scope.stateParams.queueId}, function(data) {
                 data.model[0].send_time = moment(parseInt(data.model[0].send_time), 'X').format('MMMM DD, YYYY hh:mm a');
                 $scope.Index = data.model;
-                $scope.Chart.sent = {
-                  color: ['#009688'],
-                  labels: ["Sent"],
-                  data: [
-                    data.model[0].send,
-                  ]
-                };
             });
         }
         $scope.getIndex();
 
-        $scope.getView = function() {
-          crudModel.Read($scope.url, {id: $scope.stateParams.queueId}, function(data) {
-            console.log(data);
+
+
+        $scope.getDistribution = function() {
+          mailerModel.distribution({queue_id: $scope.stateParams.queueId}, function(data) {
+            $scope.Chart.sent = {
+              color: ['#009688', '#363641'],
+              labels: ["Sent", "Total"],
+              data: [
+                data.sent
+,                data.total
+              ]
+            };
+            $scope.distribution = data;
           })
         }
-        $scope.getView();
+        $scope.getDistribution();
 
         $scope.deleteItem = function(item) {
             crudModel.Delete($scope.url, {id: item.id}, function(data) {

@@ -274,6 +274,12 @@ angular.module('eventManager', [
             controller: 'queueMailerCtrl'
           })
 
+          .state('unsubscribe', {
+            url: '/unsubscribe/:params',
+            templateUrl: 'templates/unsubscribe/unsubscribe.html',
+            controller: 'unsubscribeCtrl'
+          })
+
 
       //rerouting
       $urlRouterProvider.otherwise('/login');
