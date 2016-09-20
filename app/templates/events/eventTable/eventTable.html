@@ -1,14 +1,33 @@
 <div class="event-table container">
-	<md-card>
+	<md-card class="table-area">
 
         <md-toolbar class="md-table-toolbar alternate" ng-if="!searchOpened" ng-hide="options.rowSelection && selected.length">
           <div class="md-toolbar-tools">
-            <span>Nutrition</span>
+            <span>Table</span>
             <div flex></div>
             <md-button class="md-icon-button" ng-click="toggleSearch()">
               <md-icon class="search-icon" md-svg-icon="search"></md-icon>
               <md-tooltip>Search</md-tooltip>
             </md-button>
+		      <md-menu>
+		      	  <md-button aria-label="filter" class="md-icon-button" ng-click="menuCtrl.openMenu($mdOpenMenu, $event)">
+			        <md-icon md-menu-origin md-svg-icon="filter" class="menu-icon"></md-icon>
+			        <md-tooltip>Filter</md-tooltip>
+			      </md-button>
+			      <md-menu-content width="4">
+			      	<md-menu-item ng-repeat="item in dropdownItems" ng-click="sortQuick(item)">
+			      		<md-button>
+			      			{{item.name}}
+			      		</md-button>
+			      	</md-menu-item>
+			      	<md-divider></md-divider>
+			      	<md-menu-item ng-click="refresh()">
+			      		<md-button>
+			      			Clear filters
+			      		</md-button>
+			      	</md-menu-item>
+			      </md-menu-content>
+		      </md-menu>
             <md-button class="md-icon-button" ng-click="refresh()">
               <md-icon class="refresh-icon" md-svg-icon="refresh"></md-icon>
               <md-tooltip>Refresh</md-tooltip>
@@ -56,7 +75,7 @@
           <div class="md-toolbar-tools">
             <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
           <span flex></span>
-            <md-button class="md-icon-button" ng-click="deleteSelected()">
+            <md-button class="md-icon-button" ng-click="deleteField()">
               <md-icon class="search-icon" md-svg-icon="delete"></md-icon>
             </md-button>
           </div>
@@ -66,7 +85,7 @@
           <div class="md-toolbar-tools">
             <md-icon class="search-icon black-icons" md-svg-icon="search"></md-icon>
 	        <md-input-container flex class="md-block md-default">
-	          <input placeholder="Type to search ..." ng-model="typeSearch">
+	          <input placeholder="Type and hit enter button " ng-model="typeSearch" ng-change="searchQuick(typeSearch)">
 	        </md-input-container>
             <md-button class="md-icon-button" md-no-float ng-click="toggleSearch()">
               <md-icon class="search-icon black-icons" md-svg-icon="close"></md-icon>
@@ -74,23 +93,55 @@
           </div>
         </md-toolbar>
 
-	<md-table-container>
-	  <table md-table md-row-select="options.rowSelection" multiple="{{options.multiSelect}}" ng-model="selected" md-progress="promise">
+<div class="table-container" layout="row">
+	<md-table-container class="table-container-fixed" flex="none" ng-if="fixExist">
+	  <table md-table md-row-select="fixExist" multiple="{{options.multiSelect}}" ng-model="selected" md-progress="promise">
 	    <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
 	      <tr md-row>
 	        <th md-column md-order-by="{{label.label}}" 
-	        	ng-repeat="label in attributeLabels">
+	        	ng-repeat="label in attributeLabels"
+	        	ng-if="!label.hide && label.fix"
+	        	style="padding: 0 24px;">
 	        	<span>{{label.label}}</span>
 	        </th>
 	      </tr>
 	    </thead>
 	    <tbody md-body>
-	      <tr md-row md-select="toDelete" md-on-select="logItem" ng-disabled="" ng-repeat="cell in index.model | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
-	        <td ng-repeat="label in attributeLabels" md-cell>{{cell[label.name]}}</td>
+	      <tr md-row md-select="cell.id" md-on-select="logItem" ng-disabled="" ng-repeat="cell in index.model">
+	        <td ng-repeat="label in attributeLabels"
+	        	md-cell
+	        	ng-if="!label.hide && label.fix"
+	        	ng-dblclick="editComment($event, cell, label)">
+	        	{{cell[label.name]}}
+	        </td>
 	      </tr>
 	    </tbody>
 	  </table>
 	</md-table-container>
+	<md-table-container class="table-contaienr-not-fixed" flex>
+	  <table md-table md-row-select="!fixExist" multiple="{{options.multiSelect}}" ng-model="selected" md-progress="promise">
+	    <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+	      <tr md-row>
+	        <th md-column md-order-by="{{label.label}}" 
+	        	ng-repeat="label in attributeLabels"
+	        	ng-if="!label.hide && !label.fix">
+	        	<span>{{label.label}}</span>
+	        </th>
+	      </tr>
+	    </thead>
+	    <tbody md-body>
+	      <tr md-row md-select="cell.id" md-on-select="logItem" ng-disabled="" ng-repeat="cell in index.model">
+	        <td ng-repeat="label in attributeLabels"
+	        	md-cell
+	        	ng-if="!label.hide && !label.fix"
+	        	ng-dblclick="editComment($event, cell, label)">
+	        	{{cell[label.name]}}
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</md-table-container>
+	</div>
 	<md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{index.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
 	</md-card>
     </md-card>

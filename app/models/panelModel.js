@@ -49,6 +49,7 @@ angular.module('model.panel', [
             url.panel.deleteField,
             req,
             function(res) {
+              res === 1 ? toast('success', 'Removed ' + res + ' item.') : toast('success', 'Removed ' + res + ' items.')
               callback(res);
             }
           )

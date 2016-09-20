@@ -1,5 +1,5 @@
 angular.module('eventManager')
-    .controller('eventTableCtrl', ['$scope', 'panelModel', '$mdDialog', '$timeout', '$q', function($scope, panelModel, $mdDialog, $timeout, $q) {
+    .controller('eventTableCtrl', ['$scope', 'panelModel', '$mdDialog', '$timeout', '$q', '$mdEditDialog', function($scope, panelModel, $mdDialog, $timeout, $q, $mdEditDialog) {
 
 /////////////////////
 // table configs
@@ -7,7 +7,7 @@ angular.module('eventManager')
   $scope.selected = [];
   $scope.limitOptions = [5, 10, 15];
   $scope.searchOpened = false;
-  $scope.toDelete = [];
+  $scope.typeSearch = '';
 
     $scope.query = {
       limit: 15,
@@ -15,6 +15,7 @@ angular.module('eventManager')
     };
 
   $scope.logPagination = function (page, limit) {
+    console.log($scope.selected);
     $scope.query = {
       limit: limit,
       page: page
@@ -27,15 +28,44 @@ angular.module('eventManager')
     multiSelect: true,
     autoSelect: true,
     decapitate: false,
-    largeEditDialog: false,
+    largeEditDialog: true,
     boundaryLinks: false,
     limitSelect: true,
     pageSelect: true
   };
 
+  $scope.editComment = function (event, cell, label) {
+    event.stopPropagation(); // in case autoselect is enabled
+    console.log(cell, label);
+    var editDialog = {
+      modelValue: cell[label.name],
+      placeholder: 'update value',
+      save: function (input) {
+        cell[label.name] = input.$viewValue;
+        $scope.storeInputChanges(cell, label.label);
+      },
+      targetEvent: event,
+      title: 'Update value',
+      validators: {
+        'md-maxlength': 40
+      }
+    };
+
+    var promise;
+    
+    if($scope.options.largeEditDialog) {
+      promise = $mdEditDialog.large(editDialog);
+    } else {
+      promise = $mdEditDialog.small(editDialog);
+    }
+    
+
+
+  }
 $scope.refresh = function() {
   $scope.getAttributeLabels();
   $scope.getFieldSettings();
+  $scope.getIndex();
 }
 
 $scope.deleteSelected = function() {
@@ -66,19 +96,25 @@ $scope.toggleSearch = function() {
       };
 
       $scope.sortQuick = function(sort) {
-          $scope.processing = true;
+            var deferred = $q.defer();
+            $scope.promise = deferred.promise;
             panelModel.getIndex({_eventId: $scope.stateParams.eventId, search_id: sort.id},function(data) {
                 $scope.index = data;
-                $scope.processing = false;
+                deferred.resolve();
             })
       }
 
       $scope.searchQuick = function(sort) {
-        $scope.processing = true;
+        var deferred = $q.defer();
+        $timeout(function() {
+        $scope.promise = deferred.promise;
+        console.log('sending');
             panelModel.getIndex({_eventId: $scope.stateParams.eventId, quick_search: sort},function(data) {
+              console.log('resolved');
                 $scope.index = data;
-                $scope.processing = false;
+                deferred.resolve();
             })
+        }, 2000);
       }
 
       $scope.allByEvent = function() {
@@ -89,10 +125,9 @@ $scope.toggleSearch = function() {
         $scope.allByEvent();
 
         $scope.getAttributeLabels = function() {
-          $scope.processing = true;
             panelModel.getAttributeLabels({_eventId: $scope.stateParams.eventId},function(data) {
-                $scope.attributeLabels = data;
-                $scope.processing = false;
+                $scope.attributeLabels = data.attributes;
+                $scope.fixExist = data.fix_exist;
             })
         }
         $scope.getAttributeLabels();
@@ -106,7 +141,7 @@ $scope.toggleSearch = function() {
         }
         $scope.getFieldSettings();
 
-        $scope.storeInputChanges = function(cell, index, label) {
+        $scope.storeInputChanges = function(cell, label) {
           $scope.processing = true;
             cell._eventId = $scope.stateParams.eventId; 
             panelModel.updateField(cell, function(data) {
@@ -119,23 +154,25 @@ $scope.toggleSearch = function() {
 /////////////////////////////////////////////
 
         $scope.getIndex = function() {
-            var deferred = $q.defer();
-            $scope.promise = deferred.promise;
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
             panelModel.getIndex({
               _eventId: $scope.stateParams.eventId,
               page: $scope.query.page-1,
               size: $scope.query.limit }, function(data) {
-                $scope.index = data;
-                deferred.resolve();
+              $scope.index = data;
+              deferred.resolve();
             })
         }
         $scope.getIndex();
 
-        $scope.deleteField = function(cell) {
-          $scope.processing = true;
-          panelModel.deleteField({_eventId: $scope.stateParams.eventId, id: cell.id}, function(data) {
-            $scope.getIndex();
-            $scope.processing = false;
+        $scope.deleteField = function() {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
+          panelModel.deleteField({_eventId: $scope.stateParams.eventId, id: $scope.selected}, function(data) {
+            $scope.refresh();
+            $scope.selected = [];
+            deferred.resolve();
           })
         }
 
@@ -252,7 +289,8 @@ $scope.toggleSearch = function() {
     .controller('openFieldSettingsCtrl', ['$scope', '$mdDialog', 'attributeLabels', 'fieldSettings', function($scope, $mdDialog, attributeLabels, fieldSettings) {
       $scope.attributeLabels = attributeLabels;
       $scope.fieldSettings = fieldSettings;
-
+      console.log(attributeLabels);
+      console.log(fieldSettings);
       $scope.dragndrop = {
         sort: true,
         animation: 150,

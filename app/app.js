@@ -302,6 +302,7 @@ angular.module('eventManager', [
           .icon('edit', 'images/icons/ic_edit.svg')
           .icon('error', 'images/icons/ic_error.svg')
           .icon('refresh', 'images/icons/refresh.svg')
+          .icon('filter', 'images/icons/filter.svg')
 
           .icon('file', 'images/icons/ic_file.svg')
           .icon('filePhoto', 'images/icons/ic_photo_file.svg')

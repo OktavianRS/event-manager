@@ -110,7 +110,7 @@
 		          	  <input type="text" class="cell-input"
 		          	  		 ng-if="cell[label.label].edit" 
 		          	  		 ng-model="cell[label.name]"
-		          	  		 ng-blur="storeInputChanges(cell, $index, label.label); cell[label.label].edit = false;">
+		          	  		 ng-blur="storeInputChanges(cell, label.label); cell[label.label].edit = false;">
 		          	  <md-icon ng-if="cell[label.label].edit" class="edit-field-icon md-raised" md-svg-src="done" ng-click="toreInputChanges(cell, $index, label.label); cell[label.label].edit = false;"></md-icon>
 		          </td>
 		          <td md-cell>
