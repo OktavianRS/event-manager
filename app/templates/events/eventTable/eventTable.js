@@ -1,5 +1,54 @@
 angular.module('eventManager')
-    .controller('eventTableCtrl', ['$scope', 'panelModel', '$mdDialog', function($scope, panelModel, $mdDialog) {
+    .controller('eventTableCtrl', ['$scope', 'panelModel', '$mdDialog', '$timeout', '$q', function($scope, panelModel, $mdDialog, $timeout, $q) {
+
+/////////////////////
+// table configs
+/////////////////////
+  $scope.selected = [];
+  $scope.limitOptions = [5, 10, 15];
+  $scope.searchOpened = false;
+  $scope.toDelete = [];
+
+    $scope.query = {
+      limit: 15,
+      page: 1
+    };
+
+  $scope.logPagination = function (page, limit) {
+    $scope.query = {
+      limit: limit,
+      page: page
+    };
+    $scope.getIndex();
+  }
+
+  $scope.options = {
+    rowSelection: true,
+    multiSelect: true,
+    autoSelect: true,
+    decapitate: false,
+    largeEditDialog: false,
+    boundaryLinks: false,
+    limitSelect: true,
+    pageSelect: true
+  };
+
+$scope.refresh = function() {
+  $scope.getAttributeLabels();
+  $scope.getFieldSettings();
+}
+
+$scope.deleteSelected = function() {
+  console.log($scope.toDelete);
+  console.log($scope.selected);
+}
+
+$scope.toggleSearch = function() {
+  $scope.searchOpened = !$scope.searchOpened;
+}
+
+
+      $scope.search = '';
 
       // menu settings
       $scope.menuCtrl = {};
@@ -19,7 +68,15 @@ angular.module('eventManager')
       $scope.sortQuick = function(sort) {
           $scope.processing = true;
             panelModel.getIndex({_eventId: $scope.stateParams.eventId, search_id: sort.id},function(data) {
-                $scope.attributeLabels = data;
+                $scope.index = data;
+                $scope.processing = false;
+            })
+      }
+
+      $scope.searchQuick = function(sort) {
+        $scope.processing = true;
+            panelModel.getIndex({_eventId: $scope.stateParams.eventId, quick_search: sort},function(data) {
+                $scope.index = data;
                 $scope.processing = false;
             })
       }
@@ -57,11 +114,19 @@ angular.module('eventManager')
             })
         }
 
+/////////////////////////////////////////////
+//////////////////////////////// data content
+/////////////////////////////////////////////
+
         $scope.getIndex = function() {
-          $scope.processing = true;
-            panelModel.getIndex({_eventId: $scope.stateParams.eventId}, function(data) {
+            var deferred = $q.defer();
+            $scope.promise = deferred.promise;
+            panelModel.getIndex({
+              _eventId: $scope.stateParams.eventId,
+              page: $scope.query.page-1,
+              size: $scope.query.limit }, function(data) {
                 $scope.index = data;
-                $scope.processing = false;
+                deferred.resolve();
             })
         }
         $scope.getIndex();

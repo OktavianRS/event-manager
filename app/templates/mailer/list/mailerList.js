@@ -46,12 +46,13 @@ angular.module('eventManager')
         $scope.importSubscribers = [];
 
         $scope.getEvents = function() {
-          eventModel.getAll(
+          eventModel.getAllForMailer(
               $scope.eventSetting.order,
               $scope.eventSetting.attr,
               $scope.eventSetting.current,
               $scope.eventSetting.show,
               $scope.eventSetting.search,
+              $scope.stateParams.id,
               function(data) {
                 $scope.events = data.model;
                 $scope.eventSetting.total = data.count;

@@ -2,8 +2,8 @@ angular.module('factory.url', [])
     .factory('url', [
       function() {
         //localhost dev
-        var baseUrl = 'http://192.168.0.118/api/web/v1/';
-        var baseMailerUrl = 'http://192.168.0.118/api/web/mailer/';
+        var baseUrl = 'http://192.168.0.131/api/web/v1/';
+        var baseMailerUrl = 'http://192.168.0.131/api/web/mailer/';
 
         //host dev
         // var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
@@ -101,7 +101,8 @@ angular.module('factory.url', [])
             merge: baseMailerUrl + 'subscriber/add-from-list',
             copySubscriber: baseMailerUrl + 'subscriber/copy-to-list',
             moveSubscriber: baseMailerUrl + 'subscriber/move-to-list',
-            addSubsFromEvent: baseMailerUrl + 'subscriber/add-from-event'
+            addSubsFromEvent: baseMailerUrl + 'subscriber/add-from-event',
+            getAllForMailer: baseMailerUrl + 'list/event-list'
           },
           campaign: {
             getAll: baseMailerUrl + 'campaign/all',

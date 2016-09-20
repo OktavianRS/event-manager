@@ -3,6 +3,23 @@
 		padding-top: 10px;
 		background: #fff;
 	}
+	.refresh-icon,
+	.menu-icon,
+	.search-icon {
+		fill: #fff;
+	}
+	.alternate {
+		padding-top: 7px;
+	}
+	.tollbar-item-selected {
+		background-color: rgb(56, 109, 104);
+	}
+	.tollbar-search {
+		background-color: #fff;
+	}
+	.black-icons {
+		fill: rgb(142, 140, 140);
+	}
 	.fixed-header {
 		float: left;
 		height: 56px;

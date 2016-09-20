@@ -218,12 +218,13 @@ angular.module('model.user', [
           )
         }
 
-        this.unsubscribe = function(req) {
+        this.unsubscribe = function(req, callback) {
           api.get(
             url.user.unsubscribe,
             req,
             function(res) {
-              toast('success', 'Unsubscribed successfully');
+              toast('success', res.error);
+              callback(res);
             }
           )
         }

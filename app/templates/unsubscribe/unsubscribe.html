@@ -4,14 +4,17 @@
   <div class="login-box md-whiteframe-5dp">
       <form name="passwordRecovery"
           autocomplete="off">
-      <div layout="row" layout-align="center center" class="header">
+      <div ng-if="!hideForm" layout="row" layout-align="center center" class="header">
         Unsubscribe
+      </div>
+      <div ng-if="hideForm" layout="row" layout-align="center center" class="header">
+       {{message}}
       </div>
 
   <md-content  layout-padding>
 
 
-<div ng-if="message.id">
+<div ng-if="!hideForm">
       <md-input-container>
         <label>Message</label>
         <textarea name="message" ng-model="unsubscribe.message" cols="30" rows="4"></textarea>
@@ -22,9 +25,6 @@
                  ng-click="unsubscribe()">
         Unsubscribe
       </md-button>
-</div>
-<div ng-if="!message.id">
-  <h1>Sorry you have no access</h1>
 </div>
 
   </md-content>

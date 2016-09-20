@@ -100,6 +100,11 @@ angular.module('eventManager')
         $scope.getLists = function() {
           crudModel.Index('list', {},
               function(data) {
+                data.model = data.model.map(function(v) {
+                  v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
+                  v.updated_at = moment(parseInt(v.updated_at), 'X').format('MMMM DD, YYYY hh:mm a');
+                  return v;
+                });
                 $scope.lists = data.model;
             console.log($scope.lists);
                 
@@ -111,6 +116,10 @@ angular.module('eventManager')
         $scope.getTemplates = function() {
           crudModel.Index('template', {},
               function(data) {
+                data.model = data.model.map(function(v) {
+                  v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
+                  return v;
+                });
                 $scope.templates = data.model;
               }
           )

@@ -19,13 +19,6 @@ angular.module('model.panel', [
         		url.panel.getIndex,
         		req,
         		function(res) {
-                res.model = res.model.map(function(v) {
-                  v.created_at ? v.created_at = moment(v.created_at, 'X').format('DD/MM/YYYY HH:mm') : false;
-                  v.created_by ? v.created_by = moment(v.created_by, 'X').format('DD/MM/YYYY HH:mm') : false;
-                  v.updated_at ? v.updated_at = moment(v.updated_at, 'X').format('DD/MM/YYYY HH:mm') : false;
-                  v.updated_by ? v.updated_by = moment(v.updated_by, 'X').format('DD/MM/YYYY HH:mm') : false;
-                  return v;
-                });
         			callback(res);
         		}
         	)

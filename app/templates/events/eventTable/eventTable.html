@@ -1,130 +1,97 @@
 <div class="event-table container">
-	<div class="md-whiteframe-3dp table-area">
-		<md-toolbar class="md-table-toolbar md-primary">
-	      <div class="md-toolbar-tools"
-	           layout="row"
-	           layout-align="space-between center">
-	        <span class="table-title">FEFUFo</span>
-	      <span flex></span>
-	      <md-progress-circular ng-if="processing" class="md-hue-2" md-diameter="20px"></md-progress-circular>
-	      <md-menu>
-	      	  <md-button aria-label="Table menu" class="md-icon-button" ng-click="menuCtrl.openMenu($mdOpenMenu, $event)">
-		        <md-icon md-menu-origin md-svg-icon="menu"></md-icon>
-		      </md-button>
-		      <md-menu-content width="4">
-		      	<md-menu-item ui-sref="panelSearch({eventId: stateParams.eventId})">
-		      		<md-button>
-		      			<md-icon md-svg-icon="search"></md-icon>
-		      			Quick search
-		      		</md-button>
-		      	</md-menu-item>
-		      	<md-menu-item ng-click="shewFieldSettings()">
-		      		<md-button>
-		      			<md-icon md-svg-icon="settings"></md-icon>
-		      			Fields settings
-		      		</md-button>
-		      	</md-menu-item>
-		      	<md-menu-item ui-sref='mailer'>
-		      		<md-button>
-		      			<md-icon md-svg-icon="mail"></md-icon>
-		      			Mailer
-		      		</md-button>
-		      	</md-menu-item>
-		      	<md-menu-item ui-sref='role({eventId: stateParams.eventId})'>
-		      		<md-button>
-		      			<md-icon md-svg-icon="user"></md-icon>
-		      			Roles
-		      		</md-button>
-		      	</md-menu-item>
-		      </md-menu-content>
-	      </md-menu>
-	      </div>
-	    </md-toolbar>
-	    <md-toolbar class="seccond-toolbar">
-	    <div class="md-toolbar-tools"
-	           layout="row"
-	           layout-align="space-between center">
-			<md-input-container class="md-block">
-				<label font-size: 15px;">Search</label>
-				<input ng-model="search">
-			</md-input-container>
-			<span flex></span>
-			<md-input-container>
-				<md-select ng-change="sortQuick(selectedItem)" ng-model="selectedItem" md-selected-text="getSelectedText()">
-				  <md-optgroup label="items">
-				    <md-option ng-value="item" ng-repeat="item in dropdownItems">{{item.name}}</md-option>
-				  </md-optgroup>
-				</md-select>
-			</md-input-container>
-		</div>
-	    </md-toolbar>
-	    <md-table-container class="table-container-fixed">
-	      <table md-table class="event-table">
-	        <thead md-head md-on-reorder="onReorderEvent">
-		        <tr md-row>
+	<md-card>
 
-		          <th class="table-name"
-		              md-column
-		              ng-repeat="label in attributeLabels | orderBy: 'order'"
-		              ng-if="label.hide !== 1 && label.fix === 1">
-		            <span>{{label.label}}</span>
-		          </th>
+        <md-toolbar class="md-table-toolbar alternate" ng-if="!searchOpened" ng-hide="options.rowSelection && selected.length">
+          <div class="md-toolbar-tools">
+            <span>Nutrition</span>
+            <div flex></div>
+            <md-button class="md-icon-button" ng-click="toggleSearch()">
+              <md-icon class="search-icon" md-svg-icon="search"></md-icon>
+              <md-tooltip>Search</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" ng-click="refresh()">
+              <md-icon class="refresh-icon" md-svg-icon="refresh"></md-icon>
+              <md-tooltip>Refresh</md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="New item" ng-click="showAddNewFieldModal()">
+              <md-icon class="refresh-icon" md-svg-icon="add"></md-icon>
+              <md-tooltip>Add new field</md-tooltip>
+            </md-button>
+		      <md-menu>
+		      	  <md-button aria-label="Table menu" class="md-icon-button" ng-click="menuCtrl.openMenu($mdOpenMenu, $event)">
+			        <md-icon md-menu-origin md-svg-icon="menu" class="menu-icon"></md-icon>
+			        <md-tooltip>Menu</md-tooltip>
+			      </md-button>
+			      <md-menu-content width="4">
+			      	<md-menu-item ui-sref="panelSearch({eventId: stateParams.eventId})">
+			      		<md-button>
+			      			<md-icon md-svg-icon="search"></md-icon>
+			      			Quick search
+			      		</md-button>
+			      	</md-menu-item>
+			      	<md-menu-item ng-click="shewFieldSettings()">
+			      		<md-button>
+			      			<md-icon md-svg-icon="settings"></md-icon>
+			      			Fields settings
+			      		</md-button>
+			      	</md-menu-item>
+			      	<md-menu-item ui-sref='mailer'>
+			      		<md-button>
+			      			<md-icon md-svg-icon="mail"></md-icon>
+			      			Mailer
+			      		</md-button>
+			      	</md-menu-item>
+			      	<md-menu-item ui-sref='role({eventId: stateParams.eventId})'>
+			      		<md-button>
+			      			<md-icon md-svg-icon="user"></md-icon>
+			      			Roles
+			      		</md-button>
+			      	</md-menu-item>
+			      </md-menu-content>
+		      </md-menu>
+          </div>
+        </md-toolbar>
 
-		        </tr>
-	        </thead>
-	        <tbody md-body>
-		        <tr md-row ng-repeat="cell in index.model | orderBy: order">
-		          <td md-cell class="cell" ng-repeat="label in attributeLabels | orderBy: 'order'" ng-if="label.hide !== 1 && label.fix === 1">
-		          	  <span class="cell-name" ng-dblclick="cell[label.label].edit = true;" ng-if="!cell[label.label].edit">{{cell[label.name]}}</span>
-		          	  <input type="text" class="cell-input"
-		          	  		 ng-if="cell[label.label].edit" 
-		          	  		 ng-model="cell[label.name]"
-		          	  		 ng-blur="storeInputChanges(cell, $index, label.label); cell[label.label].edit = false;">
-		          	  <md-icon ng-if="cell[label.label].edit" class="edit-field-icon md-raised" md-svg-src="done" ng-click="toreInputChanges(cell, $index, label.label); cell[label.label].edit = false;"></md-icon>
-		          </td>
-				</tr>
-			</tbody>
-	      </table>
-	    </md-table-container>
+        <md-toolbar class="md-table-toolbar alternate tollbar-item-selected" ng-show="options.rowSelection && selected.length && !searchOpened">
+          <div class="md-toolbar-tools">
+            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+          <span flex></span>
+            <md-button class="md-icon-button" ng-click="deleteSelected()">
+              <md-icon class="search-icon" md-svg-icon="delete"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
 
-	    <md-table-container class="table-contaienr-not-fixed">
-	      <table md-table class="event-table">
-	        <thead md-head md-on-reorder="onReorderEvent">
-		        <tr md-row>
+        <md-toolbar class="md-table-toolbar alternate tollbar-search" ng-show="searchOpened">
+          <div class="md-toolbar-tools">
+            <md-icon class="search-icon black-icons" md-svg-icon="search"></md-icon>
+	        <md-input-container flex class="md-block md-default">
+	          <input placeholder="Type to search ..." ng-model="typeSearch">
+	        </md-input-container>
+            <md-button class="md-icon-button" md-no-float ng-click="toggleSearch()">
+              <md-icon class="search-icon black-icons" md-svg-icon="close"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
 
-		          <th class="table-name "
-		              md-column
-		              ng-repeat="label in attributeLabels | orderBy: 'order'"
-		              ng-if="label.hide !== 1 && label.fix !== 1">
-		            <span>{{label.label}}</span>
-		          </th>
-		          <th md-column>Delete</th>
-
-		        </tr>
-	        </thead>
-	        <tbody md-body>
-		        <tr md-row ng-repeat="cell in index.model | orderBy: order">
-		          <td md-cell class="cell" ng-repeat="label in attributeLabels | orderBy: 'order'" ng-if="label.hide !== 1 && label.fix !== 1">
-		          	  <span class="cell-name" ng-dblclick="cell[label.label].edit = true;" ng-if="!cell[label.label].edit">{{cell[label.name]}}</span>
-		          	  <input type="text" class="cell-input"
-		          	  		 ng-if="cell[label.label].edit" 
-		          	  		 ng-model="cell[label.name]"
-		          	  		 ng-blur="storeInputChanges(cell, $index, label.label); cell[label.label].edit = false;">
-		          	  <md-icon ng-if="cell[label.label].edit" class="edit-field-icon md-raised" md-svg-src="done" ng-click="toreInputChanges(cell, $index, label.label); cell[label.label].edit = false;"></md-icon>
-		          </td>
-		          <td md-cell>
-			        <md-button class="md-fab-sm" aria-label="New item" ng-click="deleteField(cell)">
-			            <md-icon md-svg-src="delete"></md-icon>
-			            <md-tooltip>Delete</md-tooltip>
-			        </md-button>
-		          </td>
-				</tr>
-			</tbody>
-	      </table>
-	    </md-table-container>
-        <md-button class="md-fab-sm add-button" aria-label="New item" ng-click="showAddNewFieldModal()">
-            <md-icon md-svg-src="add"></md-icon>
-            <md-tooltip>Add new field</md-tooltip>
-        </md-button>
-	</div>
+	<md-table-container>
+	  <table md-table md-row-select="options.rowSelection" multiple="{{options.multiSelect}}" ng-model="selected" md-progress="promise">
+	    <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+	      <tr md-row>
+	        <th md-column md-order-by="{{label.label}}" 
+	        	ng-repeat="label in attributeLabels">
+	        	<span>{{label.label}}</span>
+	        </th>
+	      </tr>
+	    </thead>
+	    <tbody md-body>
+	      <tr md-row md-select="toDelete" md-on-select="logItem" ng-disabled="" ng-repeat="cell in index.model | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+	        <td ng-repeat="label in attributeLabels" md-cell>{{cell[label.name]}}</td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</md-table-container>
+	<md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{index.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+	</md-card>
+    </md-card>
 </div>
