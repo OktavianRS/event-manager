@@ -83,9 +83,9 @@
 
         <md-toolbar class="md-table-toolbar alternate tollbar-search" ng-show="searchOpened">
           <div class="md-toolbar-tools">
-            <md-icon class="search-icon black-icons" md-svg-icon="search"></md-icon>
+            <md-icon class="search-icon black-icons search-submit-button" ng-click="searchQuick(false, typeSearch)" md-svg-icon="search"></md-icon>
 	        <md-input-container flex class="md-block md-default">
-	          <input placeholder="Type and hit enter button " ng-model="typeSearch" ng-change="searchQuick(typeSearch)">
+	          <input placeholder="Type and hit enter button " ng-model="typeSearch" ng-keypress="searchQuick($event, typeSearch)">
 	        </md-input-container>
             <md-button class="md-icon-button" md-no-float ng-click="toggleSearch()">
               <md-icon class="search-icon black-icons" md-svg-icon="close"></md-icon>
@@ -99,7 +99,7 @@
 	    <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
 	      <tr md-row>
 	        <th md-column md-order-by="{{label.label}}" 
-	        	ng-repeat="label in attributeLabels"
+	        	ng-repeat="label in attributeLabels | orderBy: 'order'"
 	        	ng-if="!label.hide && label.fix"
 	        	style="padding: 0 24px;">
 	        	<span>{{label.label}}</span>
@@ -108,7 +108,7 @@
 	    </thead>
 	    <tbody md-body>
 	      <tr md-row md-select="cell.id" md-on-select="logItem" ng-disabled="" ng-repeat="cell in index.model">
-	        <td ng-repeat="label in attributeLabels"
+	        <td ng-repeat="label in attributeLabels | orderBy: 'order'"
 	        	md-cell
 	        	ng-if="!label.hide && label.fix"
 	        	ng-dblclick="editComment($event, cell, label)">
@@ -123,7 +123,7 @@
 	    <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
 	      <tr md-row>
 	        <th md-column md-order-by="{{label.label}}" 
-	        	ng-repeat="label in attributeLabels"
+	        	ng-repeat="label in attributeLabels | orderBy: 'order'"
 	        	ng-if="!label.hide && !label.fix">
 	        	<span>{{label.label}}</span>
 	        </th>
@@ -131,7 +131,7 @@
 	    </thead>
 	    <tbody md-body>
 	      <tr md-row md-select="cell.id" md-on-select="logItem" ng-disabled="" ng-repeat="cell in index.model">
-	        <td ng-repeat="label in attributeLabels"
+	        <td ng-repeat="label in attributeLabels | orderBy: 'order'"
 	        	md-cell
 	        	ng-if="!label.hide && !label.fix"
 	        	ng-dblclick="editComment($event, cell, label)">

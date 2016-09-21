@@ -10,13 +10,13 @@
 			<section>
 			  <md-subheader class="md-primary">Current events</md-subheader>
 			  <md-list layout-padding>
-			    <md-list-item class="md-3-line" ng-repeat="item in events" ng-click="null">
+			    <md-list-item class="md-3-line" ng-repeat="item in events" ng-click="null" ui-sref="oneEvent({eventId: item.id})">
 					<md-icon md-svg-icon="event-available" class="md-avatar"></md-icon>
 			        <div class="md-list-item-text">
-			          <h3>{{item.eventName}}</h3>
-			          <h4>{{item.eventSubName}}</h4>
+			          <h3>{{item.name}}</h3>
+			          <h4>{{item.date}}</h4>
 			          <p>
-			            {{item.eventDescription}}
+			            {{item.organization_id.name}}
 			          </p>
 			        </div>
 			    </md-list-item>
@@ -24,24 +24,4 @@
 			</section>
 		</md-content>
 	</div> <!-- left column -->
-
-	<div flex class="right-column">
-		<md-toolbar layout="row">
-			<div class="md-toolbar-tools">
-				<span>Notifications</span>
-			</div>
-		</md-toolbar>
-		<md-content class="event-items-container">
-			<md-list flex>
-				<md-list-item class="md-3-line" ng-repeat="item in events" ng-click="null">
-					<md-icon md-svg-icon="notifications" class="md-avatar"></md-icon>
-					<div class="md-list-item-text" layout="column">
-						<h3>{{item.eventName}}</h3>
-						<h4>{{item.eventSubName}}</h4>
-						<p>{{item.eventDescription}}</p>
-					</div>
-				</md-list-item>
-			</md-list>
-		</md-content>
-	</div><!-- right column -->
 </div>

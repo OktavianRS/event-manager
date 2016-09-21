@@ -9,7 +9,7 @@ angular.module('eventManager', [
       'uiGmapgoogle-maps',
       'materialCalendar',
       'md-steppers',
-      'ng-sortable',
+      'dndLists',
       'froala',
       'ngAnimate',
       'angular-loading-bar',

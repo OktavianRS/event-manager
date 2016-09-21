@@ -24,8 +24,10 @@
 
 <md-button ng-hide="steps.model.steps[0].check" class="md-raised next-step-button"
  ng-disabled="tableForm.$invalid"
+ style="position: fixed;bottom: 0px;right: 80px;"
  type="submit">Generate</md-button>
  <md-button ng-hide="!steps.model.steps[0].check" class="md-raised next-step-button"
+ style="position: fixed;bottom: 0px;right: 20px;"
  ng-click="steps.model.step = 2;"
  type="submit">Next step</md-button>
 

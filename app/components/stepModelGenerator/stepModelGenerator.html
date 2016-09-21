@@ -35,8 +35,8 @@
 	</md-input-container>
 	<md-button ng-hide="steps.model.steps[steps.model.step-1].check"
 	 class="md-raised next-step-button"
-	  ng-click="sendTableData('model')">Generate</md-button>
+	  ng-click="sendTableData('model')" style="position: fixed;bottom: 0px;right: 20px;">Generate</md-button>
 	<md-button ng-hide="!steps.model.steps[steps.model.step-1].check"
 	 class="md-raised next-step-button"
-	  ng-click="steps.model.step = 3;">Next step</md-button>
+	  ng-click="steps.model.step = 3;" style="position: fixed;bottom: 0px;right: 20px;">Next step</md-button>
 </div>

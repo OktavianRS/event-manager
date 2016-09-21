@@ -19,9 +19,9 @@
           <step-model-generator ng-if="steps.model.step === 2"></step-model-generator>
           <step-controller-generator ng-if="steps.model.step === 3"></step-controller-generator>
         <md-button class="md-fab md-mini md-primary roll-back-button" ng-click="rollBack()" ng-if="step.check && !steps.model.steps[steps.model.step].check">
-              <md-icon md-svg-src="back" style="color: greenyellow;" ></md-icon>
-              <md-tooltip>Roll back</md-tooltip>
-            </md-button>
+          <md-icon md-svg-src="back" style="color: greenyellow;" ></md-icon>
+          <md-tooltip>Roll back</md-tooltip>
+        </md-button>
         </md-content>
       </md-step>
     </md-steppers>

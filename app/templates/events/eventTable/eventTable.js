@@ -104,17 +104,24 @@ $scope.toggleSearch = function() {
             })
       }
 
-      $scope.searchQuick = function(sort) {
-        var deferred = $q.defer();
-        $timeout(function() {
-        $scope.promise = deferred.promise;
-        console.log('sending');
+      $scope.searchQuick = function(e, sort) {
+        if(e){
+          if(e.key === "Enter") {
+            var deferred = $q.defer();
+            $scope.promise = deferred.promise;
             panelModel.getIndex({_eventId: $scope.stateParams.eventId, quick_search: sort},function(data) {
-              console.log('resolved');
                 $scope.index = data;
                 deferred.resolve();
             })
-        }, 2000);
+          }
+        } else {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
+          panelModel.getIndex({_eventId: $scope.stateParams.eventId, quick_search: sort},function(data) {
+              $scope.index = data;
+              deferred.resolve();
+          })
+        }
       }
 
       $scope.allByEvent = function() {
@@ -289,27 +296,17 @@ $scope.toggleSearch = function() {
     .controller('openFieldSettingsCtrl', ['$scope', '$mdDialog', 'attributeLabels', 'fieldSettings', function($scope, $mdDialog, attributeLabels, fieldSettings) {
       $scope.attributeLabels = attributeLabels;
       $scope.fieldSettings = fieldSettings;
-      console.log(attributeLabels);
-      console.log(fieldSettings);
-      $scope.dragndrop = {
-        sort: true,
-        animation: 150,
-        scroll: true, // or HTMLElement
-        scrollSensitivity: 30, // px, how near the mouse must be to an edge to start scrolling.
-        scrollSpeed: 10,
-        store: {
-            get: function (sortable) {
-                var order = localStorage.getItem(sortable.options.group.name);
-                return order ? order.split('|') : [];
-            },
-            set: function (sortable) {
-              $scope.order = sortable.toArray();
-            }
-        },
-        onUpdate: function (evt) {
 
-        }
-      }
+      $scope.models = {
+            selected: null,
+            lists: fieldSettings
+        };
+
+      // Model to JSON for demo purpose
+      $scope.$watch('models', function(model) {
+          $scope.modelAsJson = angular.toJson(model, true);
+      }, true);
+
 
       $scope.hide = function() {
         $mdDialog.hide();
@@ -317,17 +314,11 @@ $scope.toggleSearch = function() {
       $scope.cancel = function() {
         $mdDialog.cancel();
       };
-      $scope.answer = function(answer) {
-        angular.forEach($scope.order, (value, key) => {
-          answer[Number(value)].order = key;
+      $scope.answer = function() {
+        angular.forEach($scope.fieldSettings, (value, key) => {
+          value.order = key;
         })
-        console.log(answer);
-        $mdDialog.hide(answer);
+        $mdDialog.hide($scope.fieldSettings);
       };
-
-
-      // tympanus solution for fixed colums (uses jquery)
-
-
 
     }])

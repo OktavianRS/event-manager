@@ -41,7 +41,7 @@ angular.module('eventManager')
           undo: false,
           refreshAfterCallback: true,
           callback: function() {
-            this.html.insert('<a href="' + url.baseMailerUrl + 'report/unsubscribe">unsubscribe</a>');
+            this.html.insert('<a name="unsubscribe" href="">unsubscribe</a>');
           }
         });
 
