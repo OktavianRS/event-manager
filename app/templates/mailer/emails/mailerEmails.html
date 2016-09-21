@@ -3,38 +3,67 @@
     <md-content>
     <mailer-toolbar></mailer-toolbar>
 <div class="container">
-<md-list style="margin-bottom: 80px;" ng-cloak>
 
-  <md-subheader class="md-no-sticky">User emails</md-subheader>
-   <md-button ng-if="changed.length" ng-click="deleteSelected()" class="md-raised md-primary delete-selected-button">Delete selected</md-button>
-   <md-list-item ng-if="Index.model.length" ng-repeat="index in Index.model">
-    <md-checkbox ng-click="changeOne(index.id)" aria-label="Checkbox 1"></md-checkbox>
-    <h3>{{index.name}}</h3>
-      <md-button aria-label="delete"
-                 ng-click="deleteItem(index)"
-                 class="md-icon-button md-secondary" >
-        <md-icon md-svg-icon="close"></md-icon>
-      </md-button>
-      <md-divider></md-divider>
-  </md-list-item>
-  <div class="no-data"
-       layout="column"
-       ng-if="!Index.model.length"
-       layout-align="center center">
-    <md-icon md-svg-src="data"></md-icon>
-    <div class="no-data-title">
-      You have no emails
-    </div>
-    <div>
-      <a href="" ng-click="showDialog($event, 'create')">Add template</a> to get started.
-    </div>
-  </div>
-</md-list>
 
-    <md-button class="md-raised md-icon-button md-primary md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
-        <md-icon md-svg-icon="add" ng-click="showDialog($event, 'create')"></md-icon>
-    </md-button>
-</div>
+        <md-toolbar class="md-table-toolbar md-default alternate tollbar-item-selected" ng-hide="options.rowSelection && selected.length && !searchOpened">
+          <div class="md-toolbar-tools">
+            <span>Emails</span>
+          <span flex></span>
+            <md-button class="md-icon-button" ng-click="showDialog($event, 'create')">
+              <md-icon class="search-icon" md-svg-icon="add" style="fill: #727272;"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+
+        <md-toolbar class="md-table-toolbar md-default alternate tollbar-item-selected" ng-show="options.rowSelection && selected.length && !searchOpened">
+          <div class="md-toolbar-tools">
+            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+          <span flex></span>
+            <md-button class="md-icon-button" ng-click="deleteSelected()">
+              <md-icon class="search-icon" md-svg-icon="delete" style="fill: #727272;"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+
+  <md-table-container class="table-contaienr-not-fixed" flex>
+    <table md-table md-row-select="options.rowSelection" multiple="{{options.multiSelect}}" ng-model="selected" md-progress="promise">
+      <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+        <tr md-row>
+          <th md-column md-order-by="">
+            <span>Email</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Actions</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row md-select="index.id" md-on-select="logItem" ng-disabled="" ng-repeat="index in Index.model" md-auto-select="options.autoSelect">
+          <td md-cell>
+            <span>{{index.name}}</span>
+          </td>
+          <td md-cell>
+            <md-button aria-label="view"
+                       ui-sref="mailerTemplate({id: index.id})"
+                       class="md-icon-button md-secondary">
+              <md-icon md-svg-icon="view"></md-icon>
+            </md-button>
+            <md-button aria-label="edit"
+                       ng-click="showDialog($event, $index)"
+                       class="md-icon-button md-secondary">
+              <md-icon md-svg-icon="edit"></md-icon>
+            </md-button>
+            <md-button aria-label="delete"
+                       ng-click="deleteItem(index)"
+                       class="md-icon-button md-secondary" >
+              <md-icon md-svg-icon="close"></md-icon>
+            </md-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{Index.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
 
     </md-content>
   </div>

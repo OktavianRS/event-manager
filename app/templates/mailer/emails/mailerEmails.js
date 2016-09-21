@@ -1,32 +1,57 @@
 angular.module('eventManager')
-    .controller('mailerEmailsCtrl', ['$scope', 'crudModel', '$mdDialog',
-      function($scope, crudModel, $mdDialog) {
+    .controller('mailerEmailsCtrl', ['$scope', 'crudModel', '$mdDialog', '$q',
+      function($scope, crudModel, $mdDialog, $q) {
         $scope.url = 'email';
         $scope.changeAllFlag = false;
-        $scope.changed = [];
+/// table configs
+
+    $scope.selected = [];
+    $scope.limitOptions = [5, 10, 15];
+
+    $scope.query = {
+        limit: 15,
+        page: 1
+    };
+
+    $scope.options = {
+        rowSelection: true,
+        multiSelect: true,
+        autoSelect: false,
+        decapitate: false,
+        largeEditDialog: true,
+        boundaryLinks: false,
+        limitSelect: true,
+        pageSelect: true
+    };
+
+    $scope.logPagination = function (page, limit) {
+        $scope.query = {
+          limit: limit,
+          page: page
+        };
+        $scope.getIndex();
+    }
 
         $scope.getIndex = function() {
-            crudModel.Index($scope.url, {}, function(data) {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promis
+            crudModel.Index($scope.url, {
+              page: $scope.query.page-1,
+              size: $scope.query.limit
+            }, function(data) {
                 $scope.Index = data;
+                $scope.Index = data;
+                deferred.resolve();
             });
         }
         $scope.getIndex();
 
         $scope.deleteSelected = function() {
-            crudModel.Delete($scope.url, {id: $scope.changed}, function(data) {
-                $scope.changed = [];
+            crudModel.Delete($scope.url, {id: $scope.selected}, function(data) {
+                $scope.selected = [];
                 $scope.getIndex();
             });
         }
-
-        $scope.changeOne = function(id) {
-          var index = $scope.changed.indexOf(id);
-          if(index == -1) {
-            $scope.changed.push(id);
-          } else {
-            $scope.changed.splice(index, 1);
-          }
-        };
 
         $scope.deleteItem = function(item) {
             crudModel.Delete($scope.url, {id: item.id}, function(data) {
