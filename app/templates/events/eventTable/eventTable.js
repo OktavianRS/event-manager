@@ -15,7 +15,6 @@ angular.module('eventManager')
     };
 
   $scope.logPagination = function (page, limit) {
-    console.log($scope.selected);
     $scope.query = {
       limit: limit,
       page: page

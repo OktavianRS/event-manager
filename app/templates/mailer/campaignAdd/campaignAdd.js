@@ -1,10 +1,39 @@
 angular.module('eventManager')
-    .controller('campaignAddCtrl', ['$scope', 'campaignModel', 'listModel', 'templateModel', 'userModel', 'crudModel', '$state', '$mdDialog',
-      function($scope, campaignModel, listModel, templateModel, userModel, crudModel, $state, $mdDialog) {
+    .controller('campaignAddCtrl', ['$scope', 'campaignModel', 'listModel', 'templateModel', 'userModel', 'crudModel', '$state', '$mdDialog', '$q',
+      function($scope, campaignModel, listModel, templateModel, userModel, crudModel, $state, $mdDialog, $q) {
         if(!$scope.stateParams.id) {
           $scope.modePage = "create";
         } else {
           $scope.modePage = "edit";
+        }
+
+        $scope.limitOptions = [5, 10, 15];
+        $scope.queryList = {
+            limit: 15,
+            page: 1
+        };
+        $scope.queryTemplate = {
+            limit: 15,
+            page: 1
+        };
+
+        $scope.options = {
+            rowSelection: true,
+            multiSelect: true,
+            autoSelect: false,
+            decapitate: false,
+            largeEditDialog: true,
+            boundaryLinks: false,
+            limitSelect: true,
+            pageSelect: true
+        };
+
+        $scope.logPagination = function (page, limit) {
+            $scope.query = {
+              limit: limit,
+              page: page
+            };
+            $scope.getIndex();
         }
 
         $scope.errorEmail = true;
@@ -98,7 +127,12 @@ angular.module('eventManager')
         };
 
         $scope.getLists = function() {
-          crudModel.Index('list', {},
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
+          crudModel.Index('list', {
+                page: $scope.queryList.page-1,
+                size: $scope.queryList.limit
+              },
               function(data) {
                 data.model = data.model.map(function(v) {
                   v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
@@ -106,21 +140,28 @@ angular.module('eventManager')
                   return v;
                 });
                 $scope.lists = data.model;
-            console.log($scope.lists);
-                
+                $scope.pagList = data;
+                deferred.resolve()
               }
           )
         };
         $scope.getLists();
 
         $scope.getTemplates = function() {
-          crudModel.Index('template', {},
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
+          crudModel.Index('template', {
+            page: $scope.queryTemplate.page-1,
+            size: $scope.queryTemplate.limit
+          },
               function(data) {
                 data.model = data.model.map(function(v) {
                   v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
                   return v;
                 });
                 $scope.templates = data.model;
+                $scope.pagTemplate = data;
+                deferred.resolve();
               }
           )
         };

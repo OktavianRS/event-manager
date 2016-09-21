@@ -1,37 +1,62 @@
 angular.module('eventManager')
-    .controller('mailerListsCtrl', ['$scope', 'crudModel', '$mdDialog', 'mailerModel',
-      function($scope, crudModel, $mdDialog, mailerModel) {
+    .controller('mailerListsCtrl', ['$scope', 'crudModel', '$mdDialog', 'mailerModel', '$q',
+      function($scope, crudModel, $mdDialog, mailerModel, $q) {
         $scope.url = 'list';
         $scope.changeAllFlag = false;
-        $scope.changed = [];
+
+/// table configs
+
+    $scope.selected = [];
+    $scope.limitOptions = [5, 10, 15];
+
+    $scope.query = {
+        limit: 15,
+        page: 1
+    };
+
+    $scope.options = {
+        rowSelection: true,
+        multiSelect: true,
+        autoSelect: false,
+        decapitate: false,
+        largeEditDialog: true,
+        boundaryLinks: false,
+        limitSelect: true,
+        pageSelect: true
+    };
+
+    $scope.logPagination = function (page, limit) {
+        $scope.query = {
+          limit: limit,
+          page: page
+        };
+        $scope.getIndex();
+    }
 
         $scope.getIndex = function() {
-            crudModel.Index($scope.url, {}, function(data) {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
+            crudModel.Index($scope.url, {
+              page: $scope.query.page-1,
+              size: $scope.query.limit
+            }, function(data) {
               data.model = data.model.map(function(v) {
                 v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
                 v.updated_at = moment(parseInt(v.updated_at), 'X').format('MMMM DD, YYYY hh:mm a');
                 return v;
               });
               $scope.Index = data;
+              deferred.resolve();
             });
         }
         $scope.getIndex();
 
         $scope.deleteSelected = function() {
-            crudModel.Delete($scope.url, {id: $scope.changed}, function(data) {
-                $scope.changed = [];
+            crudModel.Delete($scope.url, {id: $scope.selected}, function(data) {
+                $scope.selected = [];
                 $scope.getIndex();
             });
         }
-
-        $scope.changeOne = function(id) {
-          var index = $scope.changed.indexOf(id);
-          if(index == -1) {
-            $scope.changed.push(id);
-          } else {
-            $scope.changed.splice(index, 1);
-          }
-        };
 
         $scope.deleteItem = function(item) {
             crudModel.Delete($scope.url, {id: item.id}, function(data) {

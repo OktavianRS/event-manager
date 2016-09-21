@@ -108,6 +108,8 @@
       <md-tab-body>
         <div ng-if="lists.length" class="tab-padding">
 
+  <md-table-pagination md-limit="queryList.limit" md-limit-options="limitOptions" md-page="queryList.page" md-total="{{pagList.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+
           <md-radio-group ng-model="campaign.listId">
             <div ng-repeat="item in lists"
                  class="list-item"
@@ -173,6 +175,7 @@
       <md-tab-body>
         <div ng-if="templates.length" class="tab-padding">
 
+  <md-table-pagination md-limit="queryTemplate.limit" md-limit-options="limitOptions" md-page="queryTemplate.page" md-total="{{pagTemplate.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
           <md-radio-group ng-model="campaign.templateId">
             <div ng-repeat="item in templates"
                  class="list-item"
