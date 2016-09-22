@@ -5,16 +5,17 @@ angular.module('components.stepper', [])
         templateUrl: 'components/stepper/stepper.html'
       }
     }])
-    .controller('stepperCtrl', ['$scope', 'stepModel', function($scope, stepModel){
+    .controller('stepperCtrl', ['$scope', 'stepModel', '$q', '$timeout', function($scope, stepModel, $q, $timeout){
         $scope.table = [];
         $scope.grade = 1;
         $scope.showme = false;
+        $scope.selected = 0;
 
         $scope.getStep = function() {
             stepModel.getStep($scope.stateParams.eventId,function(res) {
                 $scope.steps = res;
                 $scope.showme = true;
-                $scope.steps.model.step = res.model.step+1;
+                $scope.selected = res.model.step;
             });
         }
         $scope.getStep();
@@ -48,8 +49,12 @@ angular.module('components.stepper', [])
         }
         $scope.getStepInfo({_eventId: $scope.stateParams.eventId});
 
-        $scope.navigateStep = function(order) {
-            $scope.steps.model.step = order;
+        $scope.navigateStep = function(direction) {
+            if (direction) {
+                $scope.selected = $scope.selected + 1;
+            } else {
+                $scope.selected = $scope.selected - 1;
+            }
         }
 
         $scope.rollBack = function() {

@@ -22,16 +22,14 @@
 
 </div><!-- fields -->
 
-<md-button ng-hide="steps.model.steps[0].check" class="md-raised next-step-button"
+<md-button ng-hide="steps.model.steps[0].check" class="md-raised next-step-button generate-button"
  ng-disabled="tableForm.$invalid"
- style="position: fixed;bottom: 0px;right: 80px;"
  type="submit">Generate</md-button>
- <md-button ng-hide="!steps.model.steps[0].check" class="md-raised next-step-button"
- style="position: fixed;bottom: 0px;right: 20px;"
+ <md-button ng-hide="!steps.model.steps[0].check" class="md-raised generate-button"
  ng-click="steps.model.step = 2;"
  type="submit">Next step</md-button>
 
-<md-button ng-click="addNewField()" ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-primary next-step-button">
+<md-button ng-click="addNewField()" ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-primary next-button">
   <md-icon md-svg-src="add" style="color: greenyellow;" ></md-icon>
   <md-tooltip>Add field</md-tooltip>
 </md-button>

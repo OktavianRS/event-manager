@@ -1,14 +1,16 @@
 angular.module('factory.url', [])
     .factory('url', [
       function() {
-        //localhost dev
-        var ip = 121;
-        var baseUrl = 'http://192.168.0.'+ip+'/api/web/v1/';
-        var baseMailerUrl = 'http://192.168.0.'+ip+'/api/web/mailer/';
 
-        //host dev
-        // var baseUrl = 'http://event.vt-host.co.ua/backend/api/web/v1/';
-        // var baseMailerUrl = 'http://event.vt-host.co.ua/backend/api/web/mailer/';
+        //dev
+        var domainConfig = 'http://192.168.0.121';
+        // var domainConfig = 'http://event.vt-host.co.ua/backend';
+
+
+        var baseUrl = domainConfig + '/api/web/v1/';
+        var baseMailerUrl = domainConfig + '/api/web/mailer/';
+
+
         return {
           baseUrl: baseUrl,
           baseMailerUrl: baseMailerUrl,

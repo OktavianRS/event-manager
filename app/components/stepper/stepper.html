@@ -1,29 +1,260 @@
 <div class="stepper" ng-controller="stepperCtrl">
   <md-card>
+
+
     <md-toolbar>
     <div class="md-toolbar-tools">
-      <img ng-src="{{steps.model.image}}" class="md-icon-button" style="margin-right: 10px;height: 30px; width: 30px;">
+      <img ng-src="{{steps.model.image}}"
+           class="md-icon-button event-avatar">
       <h2>{{steps.model.name}}</h2>
+      <span flex></span>
+        <md-button class="md-icon-button" aria-label="Done">
+          <md-icon md-svg-icon="backup"></md-icon>
+          <md-tooltip>Rollback current step</md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Done">
+          <md-icon md-svg-icon="done"></md-icon>
+          <md-tooltip>Generate</md-tooltip>
+        </md-button>
+      <div class="navigation-buttons">
+        <md-button class="md-icon-button"
+                   aria-label="Previous step"
+                   ng-disabled="selected === 0"
+                   ng-click="navigateStep(false)">
+          <md-icon md-svg-icon="arrowLeft"></md-icon>
+          <md-tooltip>Previous step</md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button"
+                   aria-label="Next step"
+                   ng-disabled="selected === 2"
+                   ng-click="navigateStep(true)">
+          <md-icon md-svg-icon="arrowRight"></md-icon>
+          <md-tooltip>Next step</md-tooltip>
+        </md-button>
+      </div>
     </div>
   </md-toolbar>
-    <md-steppers md-selected="steps.model.step" md-stretch-steppers="always">
-      <md-step label="start" ng-click="navigateStep(0)" md-complete="steps.model.steps[0].check" ng-disabled="steps.model.steps[0].check">
-        <md-conttent layout-padding>
-          <step-table-generator ng-if="steps.model.step === 0"></step-table-generator>
-        </md-conttent>
-      </md-step>
-      <md-step ng-repeat="step in steps.model.steps" label="{{step.name}}" ng-click="navigateStep(step.order)" md-complete="step.check"
-      ng-disabled="!steps.model.steps[$index-1].check && !step.check">
-        <md-content layout-padding>
-          <step-table-generator ng-if="steps.model.step === 1"></step-table-generator>
-          <step-model-generator ng-if="steps.model.step === 2"></step-model-generator>
-          <step-controller-generator ng-if="steps.model.step === 3"></step-controller-generator>
-        <md-button class="md-fab md-mini md-primary roll-back-button" ng-click="rollBack()" ng-if="step.check && !steps.model.steps[steps.model.step].check">
-          <md-icon md-svg-src="back" style="color: greenyellow;" ></md-icon>
-          <md-tooltip>Roll back</md-tooltip>
-        </md-button>
-        </md-content>
-      </md-step>
-    </md-steppers>
+
+<div ng-init="selected = 0">
+  <md-steppers md-selected="selected" md-stretch-steppers="always" md-dynamic-height>
+    <md-step label="Model"
+             md-complete="steps.model.steps[0].check">
+
+
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////table generator step -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+
+
+      <div class="step-content-row" ng-controller="stepTableGenerator"> 
+      <form name="tableForm"
+        ng-submit="sendTableData('table')"
+      >
+        <md-input-container class="md-block table-name-field">
+          <label>Table name</label>
+          <input
+           name="table"
+           required type="text"
+           ng-model="tableTemplateStp.data.table"
+           ng-pattern="/^([a-z])*$/"
+           ng-disabled="steps.model.steps[0].check">
+          <div ng-messages="tableForm.table.$error">
+            <div ng-message="required">This is required.</div>
+            <div ng-message="pattern">Table name must be a word without spaces and others symbols</div>
+          </div>
+        </md-input-container>
+
+      <div class="fields" ng-repeat="field in tableTemplateStp.data.fields">
+
+      <md-button ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-raised next-step-button" ng-click="deleteField($index)">
+        <md-icon md-svg-src="close"></md-icon>
+        <md-tooltip>Delete field</md-tooltip>
+      </md-button>
+      <div class="two-cols">
+
+      <md-input-container class="field-type-select " ng-click="get()">
+        <label>Field name</label>
+        <input name="field" ng-disabled="steps.model.steps[0].check" required type="text" ng-model="field.name" ng-change="uniquenessCheck( {{ tableForm.field }} )">
+        <div ng-messages="tableForm.field.$error">
+          <div ng-message="uniqueness">Fields must be unique</div>
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="pattern">Field name must be a word without spaces and others symbols</div>
+        </div>
+      </md-input-container>
+
+
+      <md-input-container class="field-type-select">
+      <label>Field type</label>
+      <md-select required ng-model="field.type.name" ng-disabled="steps.model.steps[0].check">
+        <md-option ng-repeat="type in tableTemplateStp.tableType" ng-selected="type.id === field.type.name.id" ng-value="{value: type.value, index: $index, id: type.id}">
+          {{type.name}}
+        </md-option>
+      </md-select>
+      </md-input-container>
+
+      <md-input-container
+        class="field-type-container"
+        ng-repeat="val in tableTemplateStp.tableType[field.type.name.index].params track by $index">
+        <label>Field type: {{ val }}</label>
+        <input type="text" ng-model="field.type.value[$index]" ng-disabled="steps.model.steps[0].check">
+      </md-input-container>
+      <hr>
+        <md-switch ng-model="field.params.notNull.checked"
+                   aria-label="tableTemplateStp.tableParams[0].name"
+                   ng-change="field.params.notNull.checked ? createProperty($index, 'notNull', []) : deleteProperty($index, 'notNull')"
+                   ng-disabled="steps.model.steps[0].check">
+          {{tableTemplateStp.tableParams[0].name}}
+        </md-switch>
+        <md-switch ng-model="field.params.unique.checked"
+                   aria-label="tableTemplateStp.tableParams[1].name"
+                   ng-change="field.params.unique.checked ? createProperty($index, 'unique', []) : deleteProperty($index, 'unique'" 
+                   ng-disabled="steps.model.steps[0].check">
+          {{tableTemplateStp.tableParams[1].name}}
+        </md-switch>
+        <md-switch ng-model="field.params.unsigned.checked"
+                   aria-label="tableTemplateStp.tableParams[2].name"
+                   ng-change="field.params.unsigned.checked ? createProperty($index, 'unsigned', []) : deleteProperty($index, 'unsigned')" 
+                   ng-disabled="steps.model.steps[0].check">
+          {{tableTemplateStp.tableParams[2].name}}
+        </md-switch>
+          <md-switch ng-model="field.params.comment.checked"
+                     aria-label="tableTemplateStp.tableParams[3].name"
+                     ng-change="field.params.comment.checked ? createProperty($index, 'comment', [string]) : deleteProperty($index, 'comment')"
+                     ng-disabled="steps.model.steps[0].check">
+          {{tableTemplateStp.tableParams[3].name}}
+        </md-switch>
+          <md-switch ng-model="field.params.defaultValue.checked" 
+                     aria-label="tableTemplateStp.tableParams[4].name"
+                     ng-change="field.params.defaultValue.checked ? createProperty($index, 'defaultValue', [string]) : deleteProperty($index, 'defaultValue')"
+                     ng-disabled="steps.model.steps[0].check">
+          {{tableTemplateStp.tableParams[4].name}}
+        </md-switch>
+
+      <md-input-container
+        class="field-params-container"
+       ng-if="field.params.comment.checked">
+        <label>Field parameter: comment</label>
+        <input required type="text" ng-model="field.params.comment.value[0]" ng-disabled="steps.model.steps[0].check">
+      </md-input-container>
+      <md-input-container
+        class="field-params-container"
+       ng-if="field.params.defaultValue.checked">
+        <label>Field parameter: default</label>
+        <input required type="text" ng-model="field.params.defaultValue.value[0]" ng-disabled="steps.model.steps[0].check">
+      </md-input-container>
+      </div>
+
+
+      </div><!-- fields -->
+
+      </form>
+      </div>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////// end of table generator step -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+
+    </md-step>
+    <md-step label="Step 2" 
+             md-complete="steps.model.steps[1].check"
+             ng-disabled="!steps.model.steps[0].check">
+
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////model generator step -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+
+      <md-content>
+        <div class="step-model-generator">
+          <md-input-container class="md-block">
+            <label>Namespace</label>
+            <input required type="text" ng-model="modelTemplateStp.data.ns" ng-disabled="steps.model.steps[1].check">
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Base class</label>
+            <input required type="text" ng-model="modelTemplateStp.data.baseClass" ng-disabled="steps.model.steps[1].check">
+          </md-input-container>
+          <md-input-container class="field-type-select">
+            <label>Generate Relations</label>
+            <md-select required ng-model="modelTemplateStp.data.generateRelations" ng-disabled="steps.model.steps[1].check" >
+              <md-option aria-label="{{rel.name}}" ng-repeat="rel in modelTemplateStp.modelTemplateStp.modelRelations" ng-value="rel.value">
+                {{rel.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-switch ng-model="modelTemplateStp.data.generateLabelsFromComments" aria-label="Switch 1" ng-disabled="steps.model.steps[1].check">
+            Generate Labels from DB Comments
+          </md-switch>
+          <md-switch ng-model="modelTemplateStp.data.enableI18N" aria-label="Switch 2" ng-disabled="steps.model.steps[1].check">
+            Enable I18N
+          </md-switch>
+          <md-input-container class="md-block" ng-if="modelTemplateStp.data.enableI18N">
+            <label>Message Category</label>
+            <input required type="text" ng-model="modelTemplateStp.data.messageCategory" ng-disabled="steps.model.steps[1].check">
+          </md-input-container>
+          <md-input-container class="field-type-select">
+            <label>Code Template</label>
+            <md-select required ng-model="modelTemplateStp.data.template" ng-disabled="steps.model.steps[1].check">
+              <md-option ng-repeat="rel in modelTemplateStp.modelTemplates" ng-value="rel.name">
+                {{rel.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+      </md-content>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////end of model generator step -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+
+    </md-step>
+    <md-step label="Step 3"
+             md-complete="steps.model.steps[2].check"
+             ng-disabled="!steps.model.steps[1].check">
+
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////controller generator step -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+
+      <md-content>
+        <div class="step-content-row">
+          <md-input-container class="md-block">
+            <label>Model Class</label>
+            <input required type="text" ng-model="controllerTemplateStp.data.modelClass" ng-disabled="steps.model.steps[2].check">
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Search Model Class</label>
+            <input required type="text" ng-model="controllerTemplateStp.data.searchModelClass" ng-disabled="steps.model.steps[2].check">
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Controller Class</label>
+            <input required type="text" ng-model="controllerTemplateStp.data.controllerClass" ng-disabled="steps.model.steps[2].check">
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Base Controller Class</label>
+            <input required type="text" ng-model="controllerTemplateStp.data.baseControllerClass" ng-disabled="steps.model.steps[2].check">
+          </md-input-container>
+
+        <md-input-container class="field-params-select"> 
+          <label>Code Template</label>
+          <md-select required ng-model="controllerTemplateStp.data.template" ng-disabled="steps.model.steps[2].check">
+            <md-option ng-repeat="type in controllerTemplateStp.controllerTemplates" ng-value="type.name">
+              {{type.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        </div>
+      </md-content>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////end of controller generator step -->
+<!-- ///////////////////////////////////////////////////////////////////////////////// -->
+
+    </md-step>
+  </md-steppers>
+</div>
+
+
+
   </md-card>
 </div>

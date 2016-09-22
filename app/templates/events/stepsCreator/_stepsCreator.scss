@@ -5,21 +5,35 @@
 }
 .generate-button {
 	position: fixed;
-	bottom: 0px;
-	right: 80px;
+	bottom: 30px;
+	right: 100px;
 }
 .next-button {
 	position: fixed;
-	bottom: 0px;
-	right: 20px;
+	bottom: 30px;
+	right: 50px;
+}
+.stepper {
+	.event-avatar {
+		margin-right: 10px;
+		height: 30px;
+		width: 30px;
+	}
 }
 .steps-creator {
+	.navigation-buttons {
+		border-left: 1px solid #ccc;
+		margin-left: 10px;
+	}
+	md-content {
+		background-color: #fff;
+	}
 	.next-step-button {
 		float: right;
 	}
 	md-card {
 		md-steppers {
-			min-height: 450px!important;
+			min-height: none!important;
 		}
 	}
 	.table-name-field {
