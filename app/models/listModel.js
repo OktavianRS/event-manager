@@ -100,12 +100,10 @@ angular.module('model.list', [])
          * @param {string} order - order sorting
          * @param {function} callback - request callback
          */
-        this.getOne = function(listId, callback) {
+        this.getOne = function(req, callback) {
           api.get(
               url.list.getOne,
-              {
-                list_id: listId,
-              },
+              req,
               function(data) {
                 callback(data);
               }

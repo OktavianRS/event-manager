@@ -56,7 +56,7 @@
       </div>
 
       <md-table-container ng-if="subscribers.length" class="manage_subs_table">
-        <table md-table>
+        <table md-table md-progress="promise">
           <thead md-head md-on-reorder="onReorder">
           <tr md-row>
             <th md-column>
@@ -74,7 +74,7 @@
           </thead>
 
           <tbody md-body>
-          <tr md-row ng-repeat="item in subscribers">
+          <tr md-row ng-repeat="item in subscribers" md-auto-select="true">
             <td md-cell>
               <md-checkbox ng-model="item.changed"
                            aria-label="change"
@@ -90,6 +90,7 @@
           </tbody>
         </table>
       </md-table-container>
+      <md-table-pagination md-limit="querySubs.limit" md-limit-options="limitOptions" md-page="querySubs.page" md-total="{{subs.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPaginationSubs"></md-table-pagination>
 
 
       <div class="no-data"
@@ -180,24 +181,49 @@
         </md-button>
       </div>
 
-     <md-list flex>
-        <md-list-item class="md-3-line" ng-repeat="item in lists">
-            <md-checkbox ng-change="changeMerge(item.id)"
-                         aria-label="change"
-                         ng-model="item.checked"
-                         class="md-primary"
-                         style="margin-bottom: 0;"
-                         ng-disabled="item.count === '0'">
-            </md-checkbox>
-          <div class="md-list-item-text" layout="column">
-            <h3 style="margin: 5px 0;">{{ item.name }}</h3>
-            <h6 style="margin: 5px 0;">Created {{ item.created_at }}</h6>
-          </div>
-          <span flex></span>
-          <h5>Subscribers: <b>{{ item.count }}</b></h5>
-           <md-divider ></md-divider>
-        </md-list-item>
-      </md-list>
+  <md-table-container class="table-contaienr-not-fixed" flex>
+    <table md-table md-row-select="options.rowSelection" multiple="{{options.multiSelect}}" ng-model="mergeChanged" md-progress="promise">
+      <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+        <tr md-row>
+          <th md-column md-order-by="">
+            <span>Name</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Created At</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Updated At</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Subscribers</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-if="!lists.length" md-on-select="logItem" ng-disabled="true" md-auto-select="false">
+          <td md-cell>
+            You have no Lists
+          </td>
+        </tr>
+        <tr md-row md-select="index.id" md-on-select="logItem" ng-disabled="index.count === '0'" ng-repeat="index in lists" md-auto-select="true">
+          <td md-cell>
+            <span>{{index.name}}</span>
+          </td>
+          <td md-cell>
+            <span>{{index.created_at}}</span>
+          </td>
+          <td md-cell>
+            <span>{{index.updated_at}}</span>
+          </td>
+          <td md-cell>
+            <span>{{index.count}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-table-pagination md-limit="queryList.limit" md-limit-options="limitOptions" md-page="queryList.page" md-total="{{listPag.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPaginationList"></md-table-pagination>
+
     </md-tab>
 
     <md-tab label="Add subs from event">
@@ -207,23 +233,60 @@
         Add subs from event
       </div>
 
-     <md-list flex>
-        <md-list-item class="md-3-line" ng-repeat="item in events">
-          <div class="md-list-item-text" layout="column" style="margin-left: 25px;">
-            <h3 style="margin: 5px 0;">{{ item.name }}</h3>
-          </div>
-          <span flex></span>
-          <md-button class="md-fab md-mini"
-                     aria-label="add subs"
-                     ng-disabled="item.count === 0"
-                     ng-click="addSubsFromEvent(item.id)"
-                     style="margin-top: 25px;">
-              <md-icon md-svg-src="add"></md-icon>
-              <md-tooltip>Add subs from {{item.name}} event</md-tooltip>
-          </md-button>
-           <md-divider ></md-divider>
-        </md-list-item>
-      </md-list>
+  <md-table-container class="table-contaienr-not-fixed" flex>
+    <table md-table md-row-select="false" multiple="false" md-progress="promise">
+      <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+        <tr md-row>
+          <th md-column md-order-by="">
+            <span>Image</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Name</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Organization name</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Date</span>
+          </th>
+          <th md-column md-order-by="">
+            <span>Actions</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-if="!events.length" md-on-select="logItem" ng-disabled="true" md-auto-select="false">
+          <td md-cell>
+            You have no Events
+          </td>
+        </tr>
+        <tr md-row md-select="index.id" md-on-select="logItem" ng-disabled="" ng-repeat="index in events" md-auto-select="options.autoSelect">
+          <td md-cell>
+            <img ng-src="{{index.image}}" style="height: 30px; border-radius: 50%;" class="md-avatar" alt="image" />
+          </td>
+          <td md-cell>
+            <span>{{index.name}}</span>
+          </td>
+          <td md-cell>
+            <span>{{index.organization_id.name}}</span>
+          </td>
+          <td md-cell>
+            <span>{{index.date}}</span>
+          </td>
+          <td md-cell>
+            <md-button aria-label="add"
+                       ng-disabled="index.count === '0' || index.permission"
+                       ng-click="addSubsFromEvent(item.id)"
+                       class="md-icon-button md-secondary" >
+              <md-icon md-svg-icon="add"></md-icon>
+            </md-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-table-pagination md-limit="queryEvent.limit" md-limit-options="limitOptions" md-page="queryEvent.page" md-total="{{eventSetting.total}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPaginationEvent"></md-table-pagination>
+
     </md-tab>
 
 

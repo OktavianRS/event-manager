@@ -14,7 +14,7 @@ angular.module('components.stepper', [])
             stepModel.getStep($scope.stateParams.eventId,function(res) {
                 $scope.steps = res;
                 $scope.showme = true;
-                $scope.steps.model.step = res.model.step;
+                $scope.steps.model.step = res.model.step+1;
             });
         }
         $scope.getStep();

@@ -46,6 +46,11 @@
         </tr>
       </thead>
       <tbody md-body>
+        <tr md-row ng-if="!Index.model.length" md-on-select="logItem" ng-disabled="true" md-auto-select="false">
+          <td md-cell>
+            You have no Campaigns
+          </td>
+        </tr>
         <tr md-row md-select="index.id" md-on-select="logItem" ng-disabled="" ng-repeat="index in Index.model" md-auto-select="options.autoSelect">
           <td md-cell>
             <span>{{index.name}}</span>

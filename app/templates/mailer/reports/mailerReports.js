@@ -1,6 +1,6 @@
 angular.module('eventManager')
-    .controller('mailerReportsCtrl', ['$scope', 'crudModel', '$mdDialog', 'mailerModel',
-      function($scope, crudModel, $mdDialog, mailerModel) {
+    .controller('mailerReportsCtrl', ['$scope', 'crudModel', '$mdDialog', 'mailerModel', '$q',
+      function($scope, crudModel, $mdDialog, mailerModel, $q) {
         $scope.url = 'report';
         $scope.Chart = {};
         $scope.labelsChart = [
@@ -21,10 +21,49 @@ angular.module('eventManager')
           '#212121'
         ];
 
+/// table configs
+
+    $scope.selected = [];
+    $scope.limitOptions = [5, 10, 15];
+
+    $scope.query = {
+        limit: 15,
+        page: 1
+    };
+
+    $scope.options = {
+        rowSelection: true,
+        multiSelect: true,
+        autoSelect: false,
+        decapitate: false,
+        largeEditDialog: true,
+        boundaryLinks: false,
+        limitSelect: true,
+        pageSelect: true
+    };
+
+    $scope.logPagination = function (page, limit) {
+        $scope.query = {
+          limit: limit,
+          page: page
+        };
+        $scope.getIndex();
+    }
+
+// end of table configs
+
         $scope.getIndex = function() {
-            crudModel.Index($scope.url, {queue_id: $scope.stateParams.queueId}, function(data) {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
+            crudModel.Index($scope.url, {
+              queue_id: $scope.stateParams.queueId,
+              page: $scope.query.page-1,
+              size: $scope.query.limit 
+            }, function(data) {
                 data.model[0].send_time = moment(parseInt(data.model[0].send_time), 'X').format('MMMM DD, YYYY hh:mm a');
                 $scope.Index = data.model;
+                $scope.index = data;
+                deferred.resolve();
             });
         }
         $scope.getIndex();

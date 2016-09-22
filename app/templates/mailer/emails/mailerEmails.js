@@ -34,7 +34,7 @@ angular.module('eventManager')
 
         $scope.getIndex = function() {
           var deferred = $q.defer();
-          $scope.promise = deferred.promis
+          $scope.promise = deferred.promise;
             crudModel.Index($scope.url, {
               page: $scope.query.page-1,
               size: $scope.query.limit

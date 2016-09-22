@@ -1,10 +1,9 @@
 angular.module('eventManager')
-    .controller('mailerListCtrl', ['$scope', 'listModel', '$mdDialog', 'toast', '$stateParams', 'crudModel', 'eventModel',
-      function($scope, listModel, $mdDialog, toast, $stateParams, crudModel, eventModel) {
+    .controller('mailerListCtrl', ['$scope', 'listModel', '$mdDialog', 'toast', '$stateParams', 'crudModel', 'eventModel', '$q',
+      function($scope, listModel, $mdDialog, toast, $stateParams, crudModel, eventModel, $q) {
         $scope.tabSelect = 0;
         $scope.tabSelectSm = 0;
         $scope.changed = [];
-        $scope.mergeChanged = [];
         $scope.changeAllFlag = false;
         $scope.uploadFlag = true;
         $scope.targetEvevnt_id = '';
@@ -22,6 +21,70 @@ angular.module('eventManager')
             date: ''
           }
         };
+
+    $scope.limitOptions = [5, 10, 15];
+
+
+// Pagination configs for subs
+    $scope.querySubs = {
+        limit: 15,
+        page: 1
+    };
+
+    $scope.options = {
+        rowSelection: true,
+        multiSelect: true,
+        autoSelect: false,
+        decapitate: false,
+        largeEditDialog: true,
+        boundaryLinks: false,
+        limitSelect: true,
+        pageSelect: true
+    };
+
+    $scope.logPaginationSubs = function (page, limit) {
+        $scope.querySubs = {
+          limit: limit,
+          page: page
+        };
+        $scope.getList();
+    }
+
+/// end of subs configs
+
+// list pagination configs
+    $scope.mergeChanged = [];
+
+    $scope.logPaginationList = function (page, limit) {
+        $scope.queryList = {
+          limit: limit,
+          page: page
+        };
+        $scope.getIndex();
+    }
+
+    $scope.queryList = {
+        limit: 15,
+        page: 1
+    };
+
+    // end of list configs
+
+    // Event pagination configs
+    $scope.logPaginationEvent = function (page, limit) {
+        $scope.queryEvent = {
+          limit: limit,
+          page: page
+        };
+        $scope.getEvents();
+    }
+
+    $scope.queryEvent = {
+        limit: 15,
+        page: 1
+    };
+
+    // end of Event configs
 
         $scope.listSortBy = '-created_at';
         $scope.listSetting = {
@@ -46,24 +109,36 @@ angular.module('eventManager')
         $scope.importSubscribers = [];
 
         $scope.getEvents = function() {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
           eventModel.getAllForMailer(
-              $scope.eventSetting.order,
-              $scope.eventSetting.attr,
-              $scope.eventSetting.current,
-              $scope.eventSetting.show,
-              $scope.eventSetting.search,
-              $scope.stateParams.id,
+              {
+                list_id: $scope.stateParams.id,
+                page: $scope.queryEvent.page-1,
+                size: $scope.queryEvent.limit
+              },
               function(data) {
+                data.model = data.model.map(function(v) {
+                  v.date = moment(parseInt(v.date), 'X').format('MMMM DD, YYYY hh:mm a');
+                  return v;
+                });
                 $scope.events = data.model;
                 $scope.eventSetting.total = data.count;
+                deferred.resolve();
               }
           );
         };
         $scope.getEvents();
 
         $scope.getList = function() {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
           listModel.getOne(
-              $scope.stateParams.id,
+              {
+                list_id: $scope.stateParams.id,
+                page: $scope.querySubs.page-1,
+                size: $scope.querySubs.limit
+              },
               function(data) {
                 data.model = data.model.map(function(v) {
                   v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
@@ -72,19 +147,29 @@ angular.module('eventManager')
                 });
                 $scope.list = data.model;
                 $scope.subscribers = data.model;
+                $scope.subs = data;
+                deferred.resolve();
               }
           );
         };
         $scope.getList();
 
         $scope.getIndex = function() {
-            crudModel.Index('list', {withoutList: $scope.stateParams.id}, function(data) {
+          var deferred = $q.defer();
+          $scope.promise = deferred.promise;
+            crudModel.Index('list', {
+              withoutList: $scope.stateParams.id,
+              page: $scope.queryList.page-1,
+              size: $scope.queryList.limit
+            }, function(data) {
               data.model = data.model.map(function(v) {
                 v.created_at = moment(parseInt(v.created_at), 'X').format('MMMM DD, YYYY hh:mm a');
                 v.updated_at = moment(parseInt(v.updated_at), 'X').format('MMMM DD, YYYY hh:mm a');
                 return v;
               });
               $scope.lists = data.model;
+              $scope.listPag = data;
+              deferred.resolve();
             });
         }
         $scope.getIndex();

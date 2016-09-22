@@ -52,20 +52,10 @@ angular.module('model.event', [])
           )
         };
 
-        this.getAllForMailer = function(order, attr, currentPage, pageSize, search, id, callback) {
-          var sort = {};
-          sort[attr] = order;
+        this.getAllForMailer = function(req, callback) {
           api.get(
               url.list.getAllForMailer,
-              {
-                sort: sort,
-                page: currentPage - 1,
-                size: pageSize,
-                name: search.name,
-                organization_id: search.company,
-                date: '',
-                list_id: id
-              },
+              req,
               function(data) {
                 data.model = data.model.map(function(v) {
                   v.date = moment(v.date, 'X').format('DD/MM/YYYY HH:mm');
