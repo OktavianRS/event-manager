@@ -1,0 +1,23 @@
+.import-table {
+  height: 400px;
+  .flow-box {
+    .drop-box {
+      padding: 16px;
+      background-color: $box;
+      height: 215px;
+      .inner-box {
+        border: 2px dashed grey;
+        border-radius: 10px;
+        background-color: #f7f7f7;
+        md-icon {
+          margin: 0;
+          height: 150px;
+          width: 150px;
+        }
+        .md-button {
+          z-index: 99;
+        }
+      }
+    }
+  }
+}

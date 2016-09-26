@@ -43,8 +43,12 @@
 	.step-model-generator {
 		padding: 0 50px;
 	}
+	.notExpanded {
+		height: 70px;
+	}
 	.fields {
-		margin: 0px 100px 10px;
+		transition: all .3s;
+		margin: 0px 100px 20px;
 		border: 1px solid #ccc;
 		-webkit-box-shadow: 4px 9px 18px -5px rgba(0,0,0,0.4);
 		-moz-box-shadow: 4px 9px 18px -5px rgba(0,0,0,0.4);

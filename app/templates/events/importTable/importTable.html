@@ -1,0 +1,50 @@
+<div class="import-table container">
+	<md-card class="table-area">
+	 <md-toolbar class="md-table-toolbar alternate">
+		 <div class="md-toolbar-tools">
+		 	<span>Import table</span>
+		 	<span flex></span>
+            <md-button class="md-button" ui-sref="eventTable({eventId: stateParams.eventId})">
+            	Back
+            </md-button>
+		 </div>
+	 </md-toolbar>
+      <div class="flow-box"
+           flow-init
+           flow-file-success="$file.msg = $message"
+           flow-file-added="addedNewFile($file, $event, $flow )"
+           flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+           layout="column"
+           layout-fill>
+        <div class="drop-box"
+             flow-drop
+             flow-drop-enabled="true"
+             flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+             layout
+             layout-align="center center"
+             layout-fill>
+          <div class="inner-box"
+               layout="row"
+               layout-align="space-around center"
+               layout-fill>
+            <div flow-btn
+                 flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+                 layout
+                 layout-align="center center"
+                 layout-fill>
+              <md-icon md-svg-src="cloudUpload"></md-icon>
+            </div>
+
+            <div flow-btn layout="column"
+                 flow-attrs="{accept:'.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'}"
+                 layout-align="center center"
+                 layout-fill>
+              <div>Drag And Drop your .csv file here</div>
+              <div>or</div>
+              <strong>Click here</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+	</md-card>
+</div>

@@ -1,18 +1,24 @@
 <div class="stepper" ng-controller="stepperCtrl">
   <md-card>
 
-
-    <md-toolbar>
+  
+    <md-toolbar class="sticky">
     <div class="md-toolbar-tools">
       <img ng-src="{{steps.model.image}}"
            class="md-icon-button event-avatar">
       <h2>{{steps.model.name}}</h2>
       <span flex></span>
-        <md-button class="md-icon-button" aria-label="Done">
+        <md-button class="md-icon-button" 
+                   aria-label="Rollback"
+                   ng-disabled="!steps.model.steps[selected].check"
+                   ng-click="rollBack()">
           <md-icon md-svg-icon="backup"></md-icon>
           <md-tooltip>Rollback current step</md-tooltip>
         </md-button>
-        <md-button class="md-icon-button" aria-label="Done">
+        <md-button class="md-icon-button" 
+                   aria-label="Done"
+                   ng-disabled="steps.model.steps[selected].check"
+                   ng-click="sendTableData(selected)">
           <md-icon md-svg-icon="done"></md-icon>
           <md-tooltip>Generate</md-tooltip>
         </md-button>
@@ -47,107 +53,74 @@
 
 
       <div class="step-content-row" ng-controller="stepTableGenerator"> 
-      <form name="tableForm"
-        ng-submit="sendTableData('table')"
-      >
-        <md-input-container class="md-block table-name-field">
-          <label>Table name</label>
-          <input
-           name="table"
-           required type="text"
-           ng-model="tableTemplateStp.data.table"
-           ng-pattern="/^([a-z])*$/"
-           ng-disabled="steps.model.steps[0].check">
-          <div ng-messages="tableForm.table.$error">
-            <div ng-message="required">This is required.</div>
-            <div ng-message="pattern">Table name must be a word without spaces and others symbols</div>
-          </div>
-        </md-input-container>
 
-      <div class="fields" ng-repeat="field in tableTemplateStp.data.fields">
+        <md-table-container>
+          <table md-table
+                 md-progress="promise">
+            <thead md-head>
+              <tr md-row>
+                <th md-column><span>Field name</span></th>
+                <th md-column><span>Field type</span></th>
+                <th md-column><span>Field type params</span></th>
+                <th md-column><span>Field type params</span></th>
+                <th md-column><span>Not null</span></th>
+                <th md-column><span>Unique</span></th>
+                <th md-column><span>Unsigned</span></th>
+                <th md-column><span>Comment</span></th>
+                <th md-column><span>Default</span></th>
+                <th md-column><span>Comment value</span></th>
+                <th md-column><span>Default value</span></th>
+                <th md-column><span>Actions</span></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row ng-repeat="field in tableTemplateStp.data.fields">
+                <td md-cell ng-click="editField($event)"
+                    ng-class="{'md-placeholder': !field.name}">
+                  {{field.name || 'Add field name'}}
+                </td>
+                <td md-cell>{{field.type.name.value}}</td>
 
-      <md-button ng-hide="steps.model.steps[0].check" class="md-fab md-mini md-raised next-step-button" ng-click="deleteField($index)">
-        <md-icon md-svg-src="close"></md-icon>
-        <md-tooltip>Delete field</md-tooltip>
-      </md-button>
-      <div class="two-cols">
+                <td md-cell ng-click="editField($event, 'field.type.value[0]', $index)"
+                    ng-class="{'md-placeholder': !field.type.value[0]}">
+                  {{field.type.value[0] || 'Add field type'}}
+                </td>
+                <td md-cell>{{field.type.value[0]}}</td>
 
-      <md-input-container class="field-type-select " ng-click="get()">
-        <label>Field name</label>
-        <input name="field" ng-disabled="steps.model.steps[0].check" required type="text" ng-model="field.name" ng-change="uniquenessCheck( {{ tableForm.field }} )">
-        <div ng-messages="tableForm.field.$error">
-          <div ng-message="uniqueness">Fields must be unique</div>
-          <div ng-message="required">This field is required.</div>
-          <div ng-message="pattern">Field name must be a word without spaces and others symbols</div>
-        </div>
-      </md-input-container>
+                <td md-cell ng-if="field.type.value[1]">{{field.type.value[1]}}</td>
 
+                <td md-cell>
+                  <md-switch ng-model="field.params.notNull.checked"
+                             aria-label="Not null"/>
+                </td>
 
-      <md-input-container class="field-type-select">
-      <label>Field type</label>
-      <md-select required ng-model="field.type.name" ng-disabled="steps.model.steps[0].check">
-        <md-option ng-repeat="type in tableTemplateStp.tableType" ng-selected="type.id === field.type.name.id" ng-value="{value: type.value, index: $index, id: type.id}">
-          {{type.name}}
-        </md-option>
-      </md-select>
-      </md-input-container>
+                <td md-cell>
+                  <md-switch ng-model="field.params.unique.checked"
+                             aria-label="Unique"/>
+                </td>
 
-      <md-input-container
-        class="field-type-container"
-        ng-repeat="val in tableTemplateStp.tableType[field.type.name.index].params track by $index">
-        <label>Field type: {{ val }}</label>
-        <input type="text" ng-model="field.type.value[$index]" ng-disabled="steps.model.steps[0].check">
-      </md-input-container>
-      <hr>
-        <md-switch ng-model="field.params.notNull.checked"
-                   aria-label="tableTemplateStp.tableParams[0].name"
-                   ng-change="field.params.notNull.checked ? createProperty($index, 'notNull', []) : deleteProperty($index, 'notNull')"
-                   ng-disabled="steps.model.steps[0].check">
-          {{tableTemplateStp.tableParams[0].name}}
-        </md-switch>
-        <md-switch ng-model="field.params.unique.checked"
-                   aria-label="tableTemplateStp.tableParams[1].name"
-                   ng-change="field.params.unique.checked ? createProperty($index, 'unique', []) : deleteProperty($index, 'unique'" 
-                   ng-disabled="steps.model.steps[0].check">
-          {{tableTemplateStp.tableParams[1].name}}
-        </md-switch>
-        <md-switch ng-model="field.params.unsigned.checked"
-                   aria-label="tableTemplateStp.tableParams[2].name"
-                   ng-change="field.params.unsigned.checked ? createProperty($index, 'unsigned', []) : deleteProperty($index, 'unsigned')" 
-                   ng-disabled="steps.model.steps[0].check">
-          {{tableTemplateStp.tableParams[2].name}}
-        </md-switch>
-          <md-switch ng-model="field.params.comment.checked"
-                     aria-label="tableTemplateStp.tableParams[3].name"
-                     ng-change="field.params.comment.checked ? createProperty($index, 'comment', [string]) : deleteProperty($index, 'comment')"
-                     ng-disabled="steps.model.steps[0].check">
-          {{tableTemplateStp.tableParams[3].name}}
-        </md-switch>
-          <md-switch ng-model="field.params.defaultValue.checked" 
-                     aria-label="tableTemplateStp.tableParams[4].name"
-                     ng-change="field.params.defaultValue.checked ? createProperty($index, 'defaultValue', [string]) : deleteProperty($index, 'defaultValue')"
-                     ng-disabled="steps.model.steps[0].check">
-          {{tableTemplateStp.tableParams[4].name}}
-        </md-switch>
+                <td md-cell>
+                  <md-switch ng-model="field.params.unsigned.checked"
+                             aria-label="Unsigned"/>
+                </td>
 
-      <md-input-container
-        class="field-params-container"
-       ng-if="field.params.comment.checked">
-        <label>Field parameter: comment</label>
-        <input required type="text" ng-model="field.params.comment.value[0]" ng-disabled="steps.model.steps[0].check">
-      </md-input-container>
-      <md-input-container
-        class="field-params-container"
-       ng-if="field.params.defaultValue.checked">
-        <label>Field parameter: default</label>
-        <input required type="text" ng-model="field.params.defaultValue.value[0]" ng-disabled="steps.model.steps[0].check">
-      </md-input-container>
-      </div>
+                <td md-cell>
+                  <md-switch ng-model="field.params.comment.checked"
+                             aria-label="Comment"/>
+                </td>
 
+                <td md-cell>
+                  <md-switch ng-model="field.params.defaultValue.checked"
+                             aria-label="Default value"/>
+                </td>
 
-      </div><!-- fields -->
-
-      </form>
+                <td md-cell>{{field.params.comment.value[0]}}</td>
+                <td md-cell>{{field.params.defaultValue.value[0]}}</td>
+                <td md-cell>{{field.params.defaultValue.value[0]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </md-table-container>
       </div>
 
 <!-- //////////////////////////////////////////////////////////////////////////////////// -->

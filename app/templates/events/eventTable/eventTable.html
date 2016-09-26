@@ -66,6 +66,18 @@
 			      			Roles
 			      		</md-button>
 			      	</md-menu-item>
+			      	<md-menu-item ng-click="export()">
+			      		<md-button>
+			      			<md-icon md-svg-icon="import_export"></md-icon>
+			      			Export table
+			      		</md-button>
+			      	</md-menu-item>
+			      	<md-menu-item ui-sref="importTable({eventId: stateParams.eventId})">
+			      		<md-button>
+			      			<md-icon md-svg-icon="import_export"></md-icon>
+			      			Import table
+			      		</md-button>
+			      	</md-menu-item>
 			      </md-menu-content>
 		      </md-menu>
           </div>

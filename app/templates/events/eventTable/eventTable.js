@@ -61,6 +61,13 @@ angular.module('eventManager')
 
 
   }
+
+  $scope.export = function() {
+    panelModel.export($scope.stateParams.eventId, function(data) {
+      document.location.href = data;
+    });
+  };
+
 $scope.refresh = function() {
   $scope.getAttributeLabels();
   $scope.getFieldSettings();

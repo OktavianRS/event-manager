@@ -168,6 +168,11 @@ angular.module('eventManager', [
             templateUrl: "templates/role/role.html",
             controller: 'roleCtrl'
           })
+          .state('importTable', {
+            url: '/event/:eventId/import',
+            templateUrl: "templates/events/importTable/importTable.html",
+            controller: 'importTableCtrl'
+          })
 
           ////////Language
           .state('addLanguage', {
@@ -304,11 +309,14 @@ angular.module('eventManager', [
           .icon('refresh', 'images/icons/refresh.svg')
           .icon('filter', 'images/icons/filter.svg')
           .icon('backup', 'images/icons/backup.svg')
+          .icon('expandLess', 'images/icons/expand_less.svg')
+          .icon('expandMore', 'images/icons/expand_more.svg')
 
           .icon('file', 'images/icons/ic_file.svg')
           .icon('filePhoto', 'images/icons/ic_photo_file.svg')
           .icon('filePDF', 'images/icons/ic_pdf_file.svg')
           .icon('fileMusic', 'images/icons/ic_music_file.svg')
+          .icon('import_export', 'images/icons/import_export.svg')
 
           .icon('info', 'images/icons/ic_info.svg')
           .icon('list', 'images/icons/ic_view_list.svg')

@@ -5,11 +5,12 @@ angular.module('components.stepper', [])
         templateUrl: 'components/stepper/stepper.html'
       }
     }])
-    .controller('stepperCtrl', ['$scope', 'stepModel', '$q', '$timeout', function($scope, stepModel, $q, $timeout){
+    .controller('stepperCtrl', ['$scope', 'stepModel', '$q', '$timeout', '$mdEditDialog', function($scope, stepModel, $q, $timeout, $mdEditDialog) {
         $scope.table = [];
         $scope.grade = 1;
         $scope.showme = false;
         $scope.selected = 0;
+        $scope.fullSize = false;
 
         $scope.getStep = function() {
             stepModel.getStep($scope.stateParams.eventId,function(res) {
@@ -21,7 +22,7 @@ angular.module('components.stepper', [])
         $scope.getStep();
 
         $scope.$on('getStep', function (event, data) {
-          getStep(); // Данные, которые нам прислали
+          getStep(); 
         });
 
         $scope.checkStep = function(data) {
@@ -59,34 +60,34 @@ angular.module('components.stepper', [])
 
         $scope.rollBack = function() {
             $scope.showme = false;
-            stepModel.rollBack({_eventId: $scope.stateParams.eventId, step: $scope.steps.model.step}, function(res) {
-                $scope.steps.model.steps[$scope.steps.model.step-1].check = false;
-                $scope.steps.model.step -= 1;
+            stepModel.rollBack({
+                _eventId: $scope.stateParams.eventId,
+                step: $scope.steps.model.step
+            }, function(res) {
+                $scope.getStep();
             })
         }
 
         $scope.sendTableData = function(config) {
             $scope.showme = false;
-            if(config === 'table') {
+            if(config === 0) {
                 var dataToSend = {
                     _eventId: $scope.stateParams.eventId,
                     TableGenerator: { tables: [$scope.tableTemplateStp.data] }
                 }
-            } if(config === 'model') {
+            } if(config === 1) {
                 var dataToSend = {
                     _eventId: $scope.stateParams.eventId,
                     ModelGenerator: $scope.modelTemplateStp.data
                 }
-            } if(config === 'controller') {
+            } if(config === 2) {
                 var dataToSend = {
                     _eventId: $scope.stateParams.eventId,
                     CrudGenerator: $scope.controllerTemplateStp.data
                 }
             }
             stepModel.sendTableData(dataToSend, function(res) {
-                config === 'model' ? $scope.getStepInfo({_eventId: $scope.stateParams.eventId}) : false;
-                config === 'table' ? $scope.steps.model.steps[$scope.steps.model.step].check = true : $scope.steps.model.steps[$scope.steps.model.step-1].check = true;
-                $scope.steps.model.step += 1;
+                $scope.getStep();
             });
         }
 
@@ -118,6 +119,35 @@ angular.module('components.stepper', [])
         $scope.deleteField = function(index) {
             $scope.datas.fields.splice(index, 1);
         }
+
+  $scope.editField = function (event, item) {
+    event.stopPropagation(); // in case autoselect is enabled
+
+    var editDialog = {
+      modelValue: item,
+      placeholder: 'New value',
+      save: function (input) {
+        item = input.$modelValue;
+      },
+      targetEvent: event,
+      title: 'New value',
+      validators: {
+        'md-maxlength': 50
+      }
+    };
+    
+    var promise;
+    
+      promise = $mdEditDialog.large(editDialog);
+    
+    promise.then(function (ctrl) {
+      var input = ctrl.getInput();
+      
+      input.$viewChangeListeners.push(function () {
+        input.$setValidity('test', input.$modelValue !== 'test');
+      });
+    });
+  };
 
         //////////////////////
         //# Model generator funcs

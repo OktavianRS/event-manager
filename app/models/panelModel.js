@@ -115,6 +115,28 @@ angular.module('model.panel', [
           )
         }
 
+        this.export = function(eventId, callback) {
+          api.get(
+              url.panel.export,
+              {
+                _eventId: eventId
+              },
+              function(data) {
+                callback(data);
+              }
+          )
+        };
+
+        this.import = function(fd, callback) {
+          api.file(
+              url.panel.import,
+              fd,
+              function(data) {
+                callback(data);
+              }
+          )
+        };
+
         this.allByEvent = function(req, callback) {
           api.get(
             url.panel.allByEvent,

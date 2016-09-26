@@ -3,7 +3,7 @@ angular.module('factory.url', [])
       function() {
 
         //dev
-        var domainConfig = 'http://192.168.0.121';
+        var domainConfig = 'http://192.168.0.118';
         // var domainConfig = 'http://event.vt-host.co.ua/backend';
 
 
@@ -86,7 +86,9 @@ angular.module('factory.url', [])
             deleteSearch: baseUrl + 'panel-search/delete',
             allByEvent: baseUrl + 'panel-search/all-by-event',
             getFieldSettings: baseUrl + 'field-setting/index',
-            updateFieldSettings: baseUrl + 'field-setting/update'
+            updateFieldSettings: baseUrl + 'field-setting/update',
+            export: baseUrl + 'panel/export',
+            import: baseUrl + 'panel/import'
           },
           template: {
             recipientInsert: baseMailerUrl + 'template/recipient-insert',
