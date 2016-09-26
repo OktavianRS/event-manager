@@ -9,11 +9,39 @@ angular.module('eventManager')
           }
           var fd = new FormData();
           fd.append('file', file.file);
-          fd.append('_eventId', $scope.stateParams.eventId);
-          panelModel.import(fd, function(data) {
+          panelModel.import({
+            file: fd,
+            _eventId: $scope.stateParams.eventId
+          }, function(data) {
             $scope.importSubscribers = data;
             flow.files = [];
             $scope.uploadFlag = false;
           });
         };
+
+        $scope.Chart = {};
+        $scope.labelsChart = [
+          "Sent",
+          "Queued",
+          "Failed",
+        ];
+        $scope.dataChart = [];
+        $scope.colorChart = [
+          '#9E9E9E',
+          '#FF9800',
+          '#F44336',
+          '#8BC34A',
+          '#00BCD4',
+          '#212121'
+        ];
+
+            $scope.Chart.sent = {
+              color: ['#009688', '#363641'],
+              labels: ["Sent", "Total"],
+              data: [
+                data.sent
+,                data.total
+              ]
+            };
+
       }])

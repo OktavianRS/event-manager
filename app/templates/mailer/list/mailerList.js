@@ -22,6 +22,19 @@ angular.module('eventManager')
           }
         };
 
+        $scope.Chart = {};
+        $scope.labelsChart = [
+          "Created",
+          "Updated",
+          "Error"
+        ];
+        $scope.dataChart = [];
+        $scope.colorChart = [
+          '#FF9800',
+          '#8BC34A',
+          '#00BCD4',
+        ];
+
     $scope.limitOptions = [5, 10, 15];
 
 
@@ -263,8 +276,18 @@ angular.module('eventManager')
           fd.append('list_id', $scope.stateParams.id);
           listModel.import(fd, function(data) {
             $scope.importSubscribers = data;
+            $scope.Chart.sent = {
+              color: ['#009688', '#363641'],
+              labels: ["Created", "Updated", "Error"],
+              data: [
+                data.create,
+                data.update,
+                data.error
+              ]
+            };
             flow.files = [];
             $scope.uploadFlag = false;
+            $scope.getList();
           });
         };
 

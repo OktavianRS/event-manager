@@ -348,33 +348,24 @@
           </div>
         </div>
       </div>
-
-      <md-table-container ng-if="importSubscribers.length">
-        <table md-table>
-          <thead md-head>
-          <tr md-row>
-            <th md-column><span>Email</span></th>
-            <th md-column><span>First name</span></th>
-            <th md-column><span>Last name</span></th>
-            <th md-column></th>
-          </tr>
-          </thead>
-
-          <tbody md-body>
-          <tr md-row ng-repeat="item in importSubscribers">
-            <td md-cell>{{item.email}}</td>
-            <td md-cell>{{item.first_name}}</td>
-            <td md-cell>{{item.last_name}}</td>
-            <td md-cell>
-              <md-button class="md-raised md-primary md-icon-button"
-                         ng-click="removeImportSubscribers($index)">
-                <md-icon md-svg-src="close"></md-icon>
-              </md-button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </md-table-container>
+    <div layout="row" ng-if="Chart.sent.data">
+      <div flex="50">
+        <canvas id="doughnut"
+                class="chart chart-doughnut"
+                chart-options="{animation: true}"
+                chart-colours="Chart.sent.color"
+                chart-data="Chart.sent.data"
+                chart-labels="Chart.sent.labels">
+        </canvas>
+      </div>
+      <div flex="50">
+        <div layout="column">
+          <h4 flex>Created: {{importSubscribers.create}}</h4>
+          <h4 flex>Updated: {{importSubscribers.update}}</h4>
+          <h4 flex>Error: {{importSubscribers.error}}</h4>
+        </div>
+      </div>
+    </div>
     </md-tab>
   </md-tabs>
 

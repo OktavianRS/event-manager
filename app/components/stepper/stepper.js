@@ -120,14 +120,16 @@ angular.module('components.stepper', [])
             $scope.datas.fields.splice(index, 1);
         }
 
-  $scope.editField = function (event, item) {
+  $scope.editField = function (event, item, attr, index, params) {
+    console.info(arguments);
     event.stopPropagation(); // in case autoselect is enabled
 
     var editDialog = {
-      modelValue: item,
+      modelValue: (params)?item[attr][params.name][params.value]:item[attr]
+      ,
       placeholder: 'New value',
       save: function (input) {
-        item = input.$modelValue;
+        (params)?item[attr][params.name][params.value] = input.$modelValue:item[attr] = input.$modelValue;
       },
       targetEvent: event,
       title: 'New value',

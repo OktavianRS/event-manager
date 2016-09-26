@@ -62,7 +62,7 @@
                 <th md-column><span>Field name</span></th>
                 <th md-column><span>Field type</span></th>
                 <th md-column><span>Field type params</span></th>
-                <th md-column><span>Field type params</span></th>
+                <th md-column><span>Field type params 2</span></th>
                 <th md-column><span>Not null</span></th>
                 <th md-column><span>Unique</span></th>
                 <th md-column><span>Unsigned</span></th>
@@ -75,19 +75,40 @@
             </thead>
             <tbody md-body>
               <tr md-row ng-repeat="field in tableTemplateStp.data.fields">
-                <td md-cell ng-click="editField($event)"
+                <td md-cell ng-click="editField($event, field,'name', $index)"
                     ng-class="{'md-placeholder': !field.name}">
                   {{field.name || 'Add field name'}}
                 </td>
-                <td md-cell>{{field.type.name.value}}</td>
 
-                <td md-cell ng-click="editField($event, 'field.type.value[0]', $index)"
-                    ng-class="{'md-placeholder': !field.type.value[0]}">
-                  {{field.type.value[0] || 'Add field type'}}
+                <td md-cell>
+                  <md-select required ng-model="field.type.name" ng-disabled="steps.model.steps[0].check" placeholder="Select type">
+                    <md-option ng-repeat="type in tableTemplateStp.tableType" ng-selected="type.id === field.type.name.id" ng-value="{value: type.value, index: $index, id: type.id}">
+                      {{type.name}}
+                    </md-option>
+                  </md-select>
                 </td>
-                <td md-cell>{{field.type.value[0]}}</td>
 
-                <td md-cell ng-if="field.type.value[1]">{{field.type.value[1]}}</td>
+                <td md-cell ng-hide="tableTemplateStp.tableType[field.type.name.index].params.length === 0" ng-click="editField($event, field, 'type', $index,{name:'value',value:0})">
+                  <span ng-repeat="val in tableTemplateStp.tableType[field.type.name.index].params">
+                    Field type {{ val }}: {{field.type.value[0]}}
+                    {{tableTemplateStp.tableType[field.type.name.index].params}}
+                  </span>
+                </td>
+
+                <td md-cell ng-show="tableTemplateStp.tableType[field.type.name.index].params.length === 0">
+                  No first parameter
+                </td>
+
+                <td md-cell ng-show="tableTemplateStp.tableType[field.type.name.index].params.length === 2" ng-click="editField($event, field, 'type', $index,{name:'value',value:1})">
+                  <span ng-repeat="val in tableTemplateStp.tableType[field.type.name.index].params">
+                    Field type {{ val }}: {{field.type.value[1]}}
+                  </span>
+                </td>
+
+
+                <td md-cell ng-hide="tableTemplateStp.tableType[field.type.name.index].params.length === 2" >
+                  No second parameter
+                </td>
 
                 <td md-cell>
                   <md-switch ng-model="field.params.notNull.checked"
