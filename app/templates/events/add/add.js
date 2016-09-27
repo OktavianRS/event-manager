@@ -10,7 +10,8 @@ angular.module('eventManager')
         $scope.locations = [];
         $scope.languages = [];
         $scope.companies = [];
-        event.date = moment().format('DD/MM/YYYY');
+        $scope.event = {};
+        $scope.event.date = moment().format('DD/MM/YYYY');
 
         companyModel.getAllList(function(data) {
           $scope.companies = data;

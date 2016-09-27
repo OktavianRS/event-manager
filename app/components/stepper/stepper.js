@@ -95,7 +95,7 @@ angular.module('components.stepper', [])
         //# Table generator funcs
         //////////////////////
 
-                $scope.datas = [];
+        $scope.datas = [];
         $scope.datas.fields = [{}];
 
         // Interaction with View
@@ -208,21 +208,21 @@ angular.module('components.stepper', [])
             $scope.editField(editDialog)
         }
 
-  $scope.editField = function (config) {
-    config.targetEvent.stopPropagation(); // in case autoselect is enabled
+        $scope.editField = function (config) {
+          config.targetEvent.stopPropagation(); // in case autoselect is enabled
 
-    var promise;
-    
-      promise = $mdEditDialog.large(config);
-    
-    promise.then(function (ctrl) {
-      var input = ctrl.getInput();
-      
-      input.$viewChangeListeners.push(function () {
-        input.$setValidity('test', input.$modelValue !== 'test');
-      });
-    });
-  };
+          var promise;
+          
+            promise = $mdEditDialog.large(config);
+          
+          promise.then(function (ctrl) {
+            var input = ctrl.getInput();
+            
+            input.$viewChangeListeners.push(function () {
+              input.$setValidity('test', input.$modelValue !== 'test');
+            });
+          });
+        };
 
         //////////////////////
         //# Model generator funcs

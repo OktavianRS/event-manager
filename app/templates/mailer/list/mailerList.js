@@ -35,6 +35,16 @@ angular.module('eventManager')
           '#00BCD4',
         ];
 
+            $scope.Chart.sent = {
+              color: ['#009688', '#363641', '#8BC34A'],
+              labels: ["Created", "Updated", "Error"],
+              data: [
+                0,
+                0,
+                0
+              ]
+            };
+
     $scope.limitOptions = [5, 10, 15];
 
 
@@ -277,7 +287,7 @@ angular.module('eventManager')
           listModel.import(fd, function(data) {
             $scope.importSubscribers = data;
             $scope.Chart.sent = {
-              color: ['#009688', '#363641'],
+              color: ['#009688', '#363641', '#8BC34A'],
               labels: ["Created", "Updated", "Error"],
               data: [
                 data.create,
@@ -309,6 +319,7 @@ angular.module('eventManager')
         $scope.cancelImport = function(){
           $scope.importSubscribers = [];
           $scope.uploadFlag = true;
+          $scope.Chart.sent.data = [];
         };
 
         $scope.removeImportSubscribers = function(index){

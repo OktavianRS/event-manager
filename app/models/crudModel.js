@@ -47,4 +47,41 @@ angular.module('model.crud', [])
         	)
         }
 
+        this.IndexV = function(readUrl, req, callback) {
+          api.get(
+            url.baseUrl + readUrl + '/index',
+            req,
+            function(res) {
+              callback(res);
+            }
+          )
+        }
+
+        this.CreateV = function(readUrl, req, callback) {
+          api.post(
+          url.baseUrl + readUrl + '/create',
+          req,
+          function(res) {
+            callback(res);
+          })
+        }
+
+        this.UpdateV = function(readUrl, req, callback) {
+          api.put(
+          url.baseUrl + readUrl + '/update',
+          req,
+          function(res) {
+            callback(res);
+          })
+        }
+
+        this.DeleteV = function(readUrl, req, callback) {
+          api.delete(
+          url.baseUrl + readUrl + '/delete',
+          req,
+          function(res) {
+            callback(res);
+          })
+        }
+
       }])

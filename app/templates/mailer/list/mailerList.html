@@ -348,22 +348,22 @@
           </div>
         </div>
       </div>
-    <div layout="row" ng-if="Chart.sent.data">
-      <div flex="50">
-        <canvas id="doughnut"
-                class="chart chart-doughnut"
-                chart-options="{animation: true}"
-                chart-colours="Chart.sent.color"
-                chart-data="Chart.sent.data"
-                chart-labels="Chart.sent.labels">
-        </canvas>
-      </div>
+    <div layout="row" class="container" ng-if="!uploadFlag">
       <div flex="50">
         <div layout="column">
           <h4 flex>Created: {{importSubscribers.create}}</h4>
           <h4 flex>Updated: {{importSubscribers.update}}</h4>
           <h4 flex>Error: {{importSubscribers.error}}</h4>
         </div>
+      </div>
+      <div flex="50">
+        <canvas id="doughnut"
+                class="chart chart-doughnut"
+                chart-options="{animation: false}"
+                chart-colours="Chart.sent.color"
+                chart-data="Chart.sent.data"
+                chart-labels="Chart.sent.labels">
+        </canvas>
       </div>
     </div>
     </md-tab>

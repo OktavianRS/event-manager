@@ -37,7 +37,6 @@ angular.module('factory.request', [
 
           return $http(config).then(
               function(response) {
-                console.info('response', url, response);
                 if(response.data.error) {
                   toast('error', response.data.error);
                 } else if(successCallback) {
@@ -85,7 +84,6 @@ angular.module('factory.request', [
 
           return $http.post(url, data, config).then(
               function(response) {
-                console.info('response', url, response);
                 if(response.data.error) {
                   toast('error', response.data.error);
                 } else if(successCallback) {

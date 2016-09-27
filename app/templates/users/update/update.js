@@ -45,6 +45,7 @@ angular.module('eventManager')
               organization_id: newUser.organizationId
             },
               function(data){
+                userModel.getCurrent(function() {});
                 $state.go('listUser', {userId: data.id});
               }
           )

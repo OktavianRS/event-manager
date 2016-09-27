@@ -35,21 +35,21 @@ angular.module('eventManager')
         };
         $scope.getUsers();
 
-        $scope.showUserInfo = function(ev, userId) {
-          userModel.getOne(userId, function(data) {
-            $mdDialog.show({
-              controller: DialogController,
-              templateUrl: 'components/viewCard/viewCard.html',
-              parent: angular.element(document.body),
-              targetEvent: ev,
-              clickOutsideToClose:true,
-              fullscreen: false,
-              locals: {
-                userInfo: data.model
-              }
-            });
-          });
-        }
+        // $scope.showUserInfo = function(ev, userId) {
+        //   userModel.getOne(userId, function(data) {
+        //     $mdDialog.show({
+        //       controller: DialogController,
+        //       templateUrl: 'components/viewCard/viewCard.html',
+        //       parent: angular.element(document.body),
+        //       targetEvent: ev,
+        //       clickOutsideToClose:true,
+        //       fullscreen: false,
+        //       locals: {
+        //         userInfo: data.model
+        //       }
+        //     });
+        //   });
+        // }
 
         function DialogController($scope, $mdDialog, userInfo) {
           $scope.data = userInfo;

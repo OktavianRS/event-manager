@@ -1,45 +1,50 @@
 <div class="mailer container">
   <div class="md-whiteframe-3dp">
     <md-content>
-    <mailer-toolbar></mailer-toolbar>
-<div class="container">
-<md-list style="margin-bottom: 80px;" ng-cloak>
 
-  <md-subheader class="md-no-sticky">Roles</md-subheader>
-     <md-button ng-if="changed.length" ng-click="deleteSelected()" class="md-raised md-primary delete-selected-button">Delete selected</md-button>
-   <md-list-item ng-if="Index.model.length" ng-repeat="index in Index.model">
-    <md-checkbox ng-click="changeOne(index.id)" aria-label="Checkbox 1"></md-checkbox>
-    <h3><a ui-sref="mailerTemplate({id: index.id})">{{index.name}}</a></h3>
-      <md-button aria-label="edit"
-                 ng-click="showDialog($event, $index)"
-                 class="md-icon-button md-secondary">
-        <md-icon md-svg-icon="edit"></md-icon>
-      </md-button>
-      <md-button aria-label="delete"
-                 ng-click="deleteItem(index)"
-                 class="md-icon-button md-secondary" >
-        <md-icon md-svg-icon="close"></md-icon>
-      </md-button>
-      <md-divider></md-divider>
-  </md-list-item>
-  <div class="no-data"
-       layout="column"
-       ng-if="!Index.model.length"
-       layout-align="center center">
-    <md-icon md-svg-src="data"></md-icon>
-    <div class="no-data-title">
-      You have no roles in list
-    </div>
-    <div>
-      <a href="" ng-click="showDialog($event, 'create')">Add role</a> to get started.
-    </div>
-  </div>
-</md-list>
-    <md-button class="md-raised md-icon-button md-primary md-fab md-mini md-fab-bottom-right" aria-label="Nuevo">
-        <md-icon md-svg-icon="add" ng-click="showDialog($event, 'create')"></md-icon>
-    </md-button>
-</div>
+        <md-toolbar class="md-table-toolbar alternate" style="background-color: rgb(56, 109, 104);" ng-show="selected.length">
+          <div class="md-toolbar-tools">
+            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+          <span flex></span>
+            <md-button class="md-icon-button" ng-click="deleteSelected()">
+              <md-icon class="search-icon" md-svg-icon="delete"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
 
+        <md-toolbar class="md-table-toolbar alternate tollbar-item-selected" ng-hide="selected.length">
+          <div class="md-toolbar-tools">
+            <span>Roles</span>
+          <span flex></span>
+            <md-button class="md-icon-button md-primary"
+                       aria-label="ok"
+                       ng-click="addRole($event)">
+              <md-icon md-svg-src="add"></md-icon>
+              <md-tooltip md-direction="bottom">
+                Add role
+              </md-tooltip>
+            </md-button>
+            <md-button class="md-button" ui-sref="eventTable({eventId: stateParams.eventId})">
+              Back
+            </md-button>
+          </div>
+        </md-toolbar>
+
+<md-table-container>
+  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+      <tr md-row>
+        <th md-column><span>Name</span></th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="role.id" md-select-id="name" ng-repeat="role in Index.model">
+        <td md-cell ng-click="editField($event, $index)">{{role.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+  <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{Index.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
     </md-content>
   </div>
 </div>
