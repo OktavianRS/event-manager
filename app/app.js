@@ -14,6 +14,7 @@ angular.module('eventManager', [
       'ngAnimate',
       'angular-loading-bar',
       'chart.js',
+      'mdPickers',
 
       'factory.url',
       'factory.toast',
@@ -342,6 +343,8 @@ angular.module('eventManager', [
           .icon('settings', 'images/icons/ic_settings_black_24px.svg')
           .icon('mail', 'images/icons/ic_mail_outline_white_24px.svg')
           .icon('split', 'images/icons/split.svg')
+          .icon('date', 'images/icons/date.svg')
+          .icon('time', 'images/icons/time.svg')
 
           //mailer icons
 

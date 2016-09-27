@@ -1,6 +1,6 @@
 angular.module('eventManager')
-    .controller('addEventCtrl', ['$scope', 'eventModel', 'companyModel', 'locationModel', 'languageModel', '$state', '$mdDialog',
-      function($scope, eventModel, companyModel, locationModel, languageModel, $state, $mdDialog) {
+    .controller('addEventCtrl', ['$scope', 'eventModel', 'companyModel', 'locationModel', 'languageModel', '$state', '$mdDialog', '$mdpDatePicker', '$mdpTimePicker',
+      function($scope, eventModel, companyModel, locationModel, languageModel, $state, $mdDialog, $mdpDatePicker, $mdpTimePicker) {
         console.info('addEventCtrl');
         $scope.myImage = '';
         $scope.myCroppedImage = '';
@@ -10,18 +10,36 @@ angular.module('eventManager')
         $scope.locations = [];
         $scope.languages = [];
         $scope.companies = [];
-        $scope.event = {};
-        $scope.event.date = moment().format('DD/MM/YYYY');
+        $scope.currentDate = new Date();
+        $scope.currentTime = new Date();
 
         companyModel.getAllList(function(data) {
           $scope.companies = data;
         });
 
+        $scope.showDatePicker = function(ev) {
+          $mdpDatePicker($scope.currentDate, {
+            targetEvent: ev
+          }).then(function(selectedDate) {
+            $scope.currentDate = selectedDate;
+          });;
+        };
+
+        $scope.showTimePicker = function(ev) {
+          $mdpTimePicker($scope.currentTime, {
+            targetEvent: ev
+          }).then(function(selectedDate) {
+            $scope.currentTime = selectedDate;
+          });;
+        }
+
         $scope.saveEvent = function(event) {
-          $scope.date = moment.utc(event.date).format('DD/MM/YYYY')
+          var date = moment($scope.currentDate).format("DD/MM/YYYY");
+          var time = moment($scope.currentTime).format("HH:mm");
+          console.log(date + ' ' + time);
           eventModel.create(
               event.eventName,
-              moment($scope.date + ' ' + event.time, 'DD/MM/YYYY HH:mm', true).format('X'),
+              moment(date + ' ' + time, 'DD/MM/YYYY HH:mm', true).format('X'),
               event.company,
               $scope.languages.map(function(v){
                 return v.id;

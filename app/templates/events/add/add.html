@@ -54,7 +54,7 @@
           layout-align="start stretch">
 
       <div layout="row">
-        <md-input-container flex-auto>
+        <md-input-container flex="50">
           <label>Event name</label>
           <input name="eventName"
                  ng-model="event.eventName"
@@ -65,10 +65,8 @@
             <div ng-message="required">This is required</div>
           </div>
         </md-input-container>
-      </div>
 
-      <div layout="row">
-        <md-input-container flex-auto>
+        <md-input-container flex="50">
           <label>Company</label>
           <md-select name="company"
                      ng-model="event.company"
@@ -81,21 +79,16 @@
       </div>
 
       <div layout="row" layout-align="space-between center">
-          <md-datepicker ng-model="event.date" required md-placeholder="Enter date"
-      md-open-on-focus></md-datepicker>
-
-        <md-input-container flex="45">
-          <label>Time</label>
-          <input name="time"
-                 ng-model="event.time"
-                 valid-date="'time'"
-                 maxlength="45"
-                 required>
-          <div ng-messages="addEventForm.time.$error">
-            <div ng-message="required">This is required</div>
-            <div ng-message="date">Invalid time. Must be HH:mm ex.:00:00</div>
-          </div>
-        </md-input-container>
+        <md-button class="md-icon-button md-raised md-primary" ng-click="showDatePicker($event)">
+          <md-icon md-svg-src="date"></md-icon>
+          <md-tooltip>Choose date of event</md-tooltip>
+        </md-button>
+        <span flex>{{ currentDate | date:'shortDate' }}</span>
+        <md-button class="md-icon-button md-raised md-primary" ng-click="showTimePicker($event)">
+          <md-icon md-svg-src="time"></md-icon>
+          <md-tooltip>Choose time of event</md-tooltip>
+        </md-button>
+        <span flex>{{ currentTime | date:'HH:mm' }}</span>
       </div>
 
       <div layout="row"
@@ -125,23 +118,7 @@
             add
           </md-button>
         </div>
-      </div>
-      <div class="list-box" ng-if="languages.length">
-        <div class="title">Languages</div>
-        <div class="one-item"
-             layout="row"
-             layout-align="space-between center"
-             ng-repeat="item in languages">
-          <div class="text">{{item.name}}</div>
-          <md-button class="md-raised md-warn md-icon-button"
-                     ng-click="deleteLanguage($index)">
-            <md-icon md-svg-src="close"></md-icon>
-          </md-button>
-        </div>
-      </div>
 
-      <div layout="row"
-           layout-align="start center">
         <md-autocomplete
             flex-auto
             md-input-name="eventPlace"
@@ -177,6 +154,19 @@
           <div class="text">{{item.name}}</div>
           <md-button class="md-raised md-warn md-icon-button"
                      ng-click="deleteLocation($index)">
+            <md-icon md-svg-src="close"></md-icon>
+          </md-button>
+        </div>
+      </div>
+      <div class="list-box" ng-if="languages.length" style="margin-top: 20px;">
+        <div class="title">Languages</div>
+        <div class="one-item"
+             layout="row"
+             layout-align="space-between center"
+             ng-repeat="item in languages">
+          <div class="text">{{item.name}}</div>
+          <md-button class="md-raised md-warn md-icon-button"
+                     ng-click="deleteLanguage($index)">
             <md-icon md-svg-src="close"></md-icon>
           </md-button>
         </div>
