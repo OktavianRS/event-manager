@@ -51,6 +51,19 @@
 <!-- //////////////////////////////////////table generator step -->
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
 
+  <md-input-container class="md-block table-name-field">
+    <label>Table name</label>
+    <input
+     name="table"
+     required type="text"
+     ng-model="tableTemplateStp.data.table"
+     ng-pattern="/^([a-z])*$/"
+     ng-disabled="steps.model.steps[0].check">
+    <div ng-messages="tableForm.table.$error">
+      <div ng-message="required">This is required.</div>
+      <div ng-message="pattern">Table name must be a word without spaces and others symbols</div>
+    </div>
+  </md-input-container>
 
       <div class="step-content-row" ng-controller="stepTableGenerator"> 
 
@@ -75,7 +88,7 @@
             </thead>
             <tbody md-body>
               <tr md-row ng-repeat="field in tableTemplateStp.data.fields">
-                <td md-cell ng-click="editField($event, field,'name', $index)"
+                <td md-cell ng-click="steps.model.steps[0].check ? false : editFieldName($event, $index)"
                     ng-class="{'md-placeholder': !field.name}">
                   {{field.name || 'Add field name'}}
                 </td>
@@ -88,56 +101,77 @@
                   </md-select>
                 </td>
 
-                <td md-cell ng-hide="tableTemplateStp.tableType[field.type.name.index].params.length === 0" ng-click="editField($event, field, 'type', $index,{name:'value',value:0})">
+                <td md-cell ng-hide="tableTemplateStp.tableType[field.type.name.index].params.length === 0" 
+                    ng-click="steps.model.steps[0].check ? false : editFieldParamOne($event, $index)"
+                    ng-class="{'md-placeholder': !field.type.value[0]}">
                   <span ng-repeat="val in tableTemplateStp.tableType[field.type.name.index].params">
-                    Field type {{ val }}: {{field.type.value[0]}}
-                    {{tableTemplateStp.tableType[field.type.name.index].params}}
+                    {{field.type.value[0] || 'Add first parameter'}}
                   </span>
                 </td>
-
-                <td md-cell ng-show="tableTemplateStp.tableType[field.type.name.index].params.length === 0">
+                <td md-cell ng-show="tableTemplateStp.tableType[field.type.name.index].params.length === 0" class="md-placeholder">
                   No first parameter
                 </td>
 
-                <td md-cell ng-show="tableTemplateStp.tableType[field.type.name.index].params.length === 2" ng-click="editField($event, field, 'type', $index,{name:'value',value:1})">
+                <td md-cell 
+                    ng-show="tableTemplateStp.tableType[field.type.name.index].params.length === 2"
+                    ng-click="steps.model.steps[0].check ? false : editFieldParamTwo($event, $index)" ng-class="{'md-placeholder': !field.type.value[1]}">
                   <span ng-repeat="val in tableTemplateStp.tableType[field.type.name.index].params">
-                    Field type {{ val }}: {{field.type.value[1]}}
+                    {{field.type.value[1] || 'Add second parameter'}}
                   </span>
                 </td>
-
-
-                <td md-cell ng-hide="tableTemplateStp.tableType[field.type.name.index].params.length === 2" >
+                <td md-cell ng-hide="tableTemplateStp.tableType[field.type.name.index].params.length === 2" class="md-placeholder">
                   No second parameter
                 </td>
 
                 <td md-cell>
                   <md-switch ng-model="field.params.notNull.checked"
-                             aria-label="Not null"/>
+                             aria-label="Not null"
+                             ng-disabled="steps.model.steps[0].check"/>
                 </td>
 
                 <td md-cell>
                   <md-switch ng-model="field.params.unique.checked"
-                             aria-label="Unique"/>
+                             aria-label="Unique"
+                             ng-disabled="steps.model.steps[0].check"/>
                 </td>
 
                 <td md-cell>
                   <md-switch ng-model="field.params.unsigned.checked"
-                             aria-label="Unsigned"/>
+                             aria-label="Unsigned"
+                             ng-disabled="steps.model.steps[0].check"/>
                 </td>
 
                 <td md-cell>
                   <md-switch ng-model="field.params.comment.checked"
-                             aria-label="Comment"/>
+                             aria-label="Comment"
+                             ng-disabled="steps.model.steps[0].check"/>
                 </td>
 
                 <td md-cell>
                   <md-switch ng-model="field.params.defaultValue.checked"
-                             aria-label="Default value"/>
+                             aria-label="Default value"
+                             ng-disabled="steps.model.steps[0].check"/>
                 </td>
 
-                <td md-cell>{{field.params.comment.value[0]}}</td>
-                <td md-cell>{{field.params.defaultValue.value[0]}}</td>
-                <td md-cell>{{field.params.defaultValue.value[0]}}</td>
+                <td md-cell
+                    ng-click="steps.model.steps[0].check ? false : editComment($event, $index)"
+                    ng-class="{'md-placeholder': !field.params.comment.value[0]}"
+                    ng-if="field.params.comment.checked">
+                  {{ field.params.comment.value[0] || 'Add new comment'}}
+                </td>
+                <td md-cell ng-if="!field.params.comment.checked" class="md-placeholder">
+                  Comment not enabled
+                </td>
+
+                <td md-cell
+                    ng-click="steps.model.steps[0].check ? false : editDefaultValue($event, $index)"
+                    ng-class="{'md-placeholder': !field.params.defaultValue.value[0]}"
+                    ng-if="field.params.defaultValue.checked">
+                  {{ field.params.defaultValue.value[0] || 'Add default value'}}
+                </td>
+                <td md-cell ng-if="!field.params.defaultValue.checked" class="md-placeholder">
+                  Default value not enabled
+                </td>
               </tr>
             </tbody>
           </table>
@@ -210,7 +244,7 @@
 <!-- ///////////////////////////////////////////////////////////////////////////////// -->
 
       <md-content>
-        <div class="step-content-row">
+        <div class="step-model-generator">
           <md-input-container class="md-block">
             <label>Model Class</label>
             <input required type="text" ng-model="controllerTemplateStp.data.modelClass" ng-disabled="steps.model.steps[2].check">

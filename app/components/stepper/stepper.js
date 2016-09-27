@@ -120,27 +120,100 @@ angular.module('components.stepper', [])
             $scope.datas.fields.splice(index, 1);
         }
 
-  $scope.editField = function (event, item, attr, index, params) {
-    console.info(arguments);
-    event.stopPropagation(); // in case autoselect is enabled
+        $scope.editFieldName = function(event, index) {
+            var editDialog = {
+              modelValue: $scope.tableTemplateStp.data.fields[index].name,
+              placeholder: 'New value',
+              save: function (input) {
+                    $scope.tableTemplateStp.data.fields[index].name = input.$modelValue;
+              },
+              targetEvent: event,
+              title: 'New value',
+              validators: {
+                'md-maxlength': 50
+              }
+            };
+            $scope.editField(editDialog)
+        }
 
-    var editDialog = {
-      modelValue: (params)?item[attr][params.name][params.value]:item[attr]
-      ,
-      placeholder: 'New value',
-      save: function (input) {
-        (params)?item[attr][params.name][params.value] = input.$modelValue:item[attr] = input.$modelValue;
-      },
-      targetEvent: event,
-      title: 'New value',
-      validators: {
-        'md-maxlength': 50
-      }
-    };
-    
+        $scope.editFieldParamOne = function(event, index) {
+            var editDialog = {
+              modelValue: $scope.tableTemplateStp.data.fields[index].type.value[0],
+              placeholder: 'New value',
+              save: function (input) {
+                    $scope.tableTemplateStp.data.fields[index].type.value[0] = input.$modelValue;
+              },
+              targetEvent: event,
+              title: 'New value',
+              validators: {
+                'md-maxlength': 50
+              }
+            };
+            $scope.editField(editDialog)
+        }
+
+        $scope.editFieldParamTwo = function(event, index) {
+            var editDialog = {
+              modelValue: $scope.tableTemplateStp.data.fields[index].type.value[1],
+              placeholder: 'New value',
+              save: function (input) {
+                    $scope.tableTemplateStp.data.fields[index].type.value[1] = input.$modelValue;
+              },
+              targetEvent: event,
+              title: 'New value',
+              validators: {
+                'md-maxlength': 50
+              }
+            };
+            $scope.editField(editDialog)
+        }
+
+        $scope.editComment = function(event, index) {
+            if(!$scope.tableTemplateStp.data.fields[index].params.comment.value) {
+                $scope.tableTemplateStp.data.fields[index].params.comment.value = [];
+                $scope.tableTemplateStp.data.fields[index].params.comment.value[0] = '';
+            }
+            var editDialog = {
+              modelValue: $scope.tableTemplateStp.data.fields[index].params.comment.value[0],
+              placeholder: 'New value',
+              save: function (input) {
+                    $scope.tableTemplateStp.data.fields[index].params.comment.value[0] = input.$modelValue;
+              },
+              targetEvent: event,
+              title: 'New value',
+              validators: {
+                'md-maxlength': 50
+              }
+            };
+            $scope.editField(editDialog)
+        }
+
+        $scope.editDefaultValue = function(event, index) {
+            if(!$scope.tableTemplateStp.data.fields[index].params.defaultValue.value) {
+                $scope.tableTemplateStp.data.fields[index].params.defaultValue.value = [];
+                $scope.tableTemplateStp.data.fields[index].params.defaultValue.value[0] = '';
+            }
+            var editDialog = {
+              modelValue: $scope.tableTemplateStp.data.fields[index].params.defaultValue.value[0],
+              placeholder: 'New value',
+              save: function (input) {
+                    $scope.tableTemplateStp.data.fields[index].params.defaultValue.value[0] = input.$modelValue;
+              },
+              targetEvent: event,
+              title: 'New value',
+              validators: {
+                'md-maxlength': 50
+              }
+            };
+            $scope.editField(editDialog)
+        }
+
+  $scope.editField = function (config) {
+    config.targetEvent.stopPropagation(); // in case autoselect is enabled
+
     var promise;
     
-      promise = $mdEditDialog.large(editDialog);
+      promise = $mdEditDialog.large(config);
     
     promise.then(function (ctrl) {
       var input = ctrl.getInput();

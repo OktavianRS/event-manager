@@ -9,10 +9,8 @@ angular.module('eventManager')
           }
           var fd = new FormData();
           fd.append('file', file.file);
-          panelModel.import({
-            file: fd,
-            _eventId: $scope.stateParams.eventId
-          }, function(data) {
+          fd.append('_eventId', $scope.stateParams.eventId);
+          panelModel.import(fd, function(data) {
             $scope.importSubscribers = data;
             flow.files = [];
             $scope.uploadFlag = false;
@@ -34,14 +32,5 @@ angular.module('eventManager')
           '#00BCD4',
           '#212121'
         ];
-
-            $scope.Chart.sent = {
-              color: ['#009688', '#363641'],
-              labels: ["Sent", "Total"],
-              data: [
-                data.sent
-,                data.total
-              ]
-            };
 
       }])

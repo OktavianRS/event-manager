@@ -3,7 +3,7 @@ angular.module('factory.url', [])
       function() {
 
         //dev
-        var domainConfig = 'http://192.168.0.118';
+        var domainConfig = 'http://192.168.0.109';
         // var domainConfig = 'http://event.vt-host.co.ua/backend';
 
 
