@@ -275,7 +275,7 @@
           </td>
           <td md-cell>
             <md-button aria-label="add"
-                       ng-disabled="index.count === '0' || index.permission"
+                       ng-disabled="index.count === 0 || !index.permission"
                        ng-click="addSubsFromEvent(item.id)"
                        class="md-icon-button md-secondary" >
               <md-icon md-svg-icon="add"></md-icon>
