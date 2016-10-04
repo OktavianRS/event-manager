@@ -120,6 +120,10 @@ angular.module('factory.url', [])
             geAllReports: baseMailerUrl + 'campaign/get-distributions',
             deleteReports: baseMailerUrl + 'campaign/delete-distributions',
             getOneReports: baseMailerUrl + 'campaign/distribution'
+          },
+          role: {
+            setRole: baseUrl + 'role/set-role-step',
+            getRole: baseUrl + 'role/get-role-step'
           }
         }
       }

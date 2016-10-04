@@ -1,6 +1,6 @@
 angular.module('eventManager')
-    .controller('updateEventCtrl', ['$scope', 'eventModel', 'companyModel', 'locationModel', 'languageModel', '$state', '$mdDialog',
-      function($scope, eventModel, companyModel, locationModel, languageModel, $state, $mdDialog) {
+    .controller('updateEventCtrl', ['$scope', 'eventModel', 'companyModel', 'locationModel', 'languageModel', '$state', '$mdDialog', '$mdpDatePicker', '$mdpTimePicker',
+      function($scope, eventModel, companyModel, locationModel, languageModel, $state, $mdDialog, $mdpDatePicker, $mdpTimePicker) {
         console.info('updateEventCtrl');
         $scope.myImage = '';
         $scope.myCroppedImage = '';
@@ -11,6 +11,8 @@ angular.module('eventManager')
         $scope.locations = [];
         $scope.languages = [];
         $scope.companies = [];
+        $scope.currentDate = new Date();
+        $scope.currentTime = new Date();
 
         eventModel.getOne($scope.stateParams.eventId, function(data){
           $scope.event.id = data.model.id;
@@ -46,6 +48,22 @@ angular.module('eventManager')
               }
           )
         };
+
+        $scope.showDatePicker = function(ev) {
+          $mdpDatePicker($scope.currentDate, {
+            targetEvent: ev
+          }).then(function(selectedDate) {
+            $scope.currentDate = selectedDate;
+          });;
+        };
+
+        $scope.showTimePicker = function(ev) {
+          $mdpTimePicker($scope.currentTime, {
+            targetEvent: ev
+          }).then(function(selectedDate) {
+            $scope.currentTime = selectedDate;
+          });;
+        }
 
         $scope.createLocation = function(text, ev, el) {
           $mdDialog.show({

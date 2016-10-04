@@ -35,11 +35,17 @@
     <thead md-head md-order="query.order" md-on-reorder="getDesserts">
       <tr md-row>
         <th md-column><span>Name</span></th>
+        <th md-column><span>Actions</span></th>
       </tr>
     </thead>
     <tbody md-body>
       <tr md-row md-select="role.id" md-select-id="name" ng-repeat="role in Index.model">
         <td md-cell ng-click="editField($event, $index)">{{role.name}}</td>
+        <td md-cell>
+              <md-button ng-click="goFormBuilder()">
+                <md-icon md-svg-src="view"></md-icon>
+              </md-button>
+            </td>
       </tr>
     </tbody>
   </table>

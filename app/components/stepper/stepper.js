@@ -73,16 +73,19 @@ angular.module('components.stepper', [])
             if(config === 0) {
                 var dataToSend = {
                     _eventId: $scope.stateParams.eventId,
+                    step: 1,
                     TableGenerator: { tables: [$scope.tableTemplateStp.data] }
                 }
             } if(config === 1) {
                 var dataToSend = {
                     _eventId: $scope.stateParams.eventId,
+                    step: 2,
                     ModelGenerator: $scope.modelTemplateStp.data
                 }
             } if(config === 2) {
                 var dataToSend = {
                     _eventId: $scope.stateParams.eventId,
+                    step: 3,
                     CrudGenerator: $scope.controllerTemplateStp.data
                 }
             }

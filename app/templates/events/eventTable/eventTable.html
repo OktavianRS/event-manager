@@ -108,7 +108,7 @@
 <div class="table-container" layout="row">
 	<md-table-container class="table-container-fixed" flex="none" ng-if="fixExist">
 	  <table md-table md-row-select="fixExist" multiple="{{options.multiSelect}}" ng-model="selected" md-progress="promise">
-	    <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+	    <thead ng-if="!options.decapitate" md-head>
 	      <tr md-row>
 	        <th md-column md-order-by="{{label.label}}" 
 	        	ng-repeat="label in attributeLabels | orderBy: 'order'"
@@ -132,7 +132,7 @@
 	</md-table-container>
 	<md-table-container class="table-contaienr-not-fixed" flex>
 	  <table md-table md-row-select="!fixExist" multiple="{{options.multiSelect}}" ng-model="selected" md-progress="promise">
-	    <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+	    <thead ng-if="!options.decapitate" md-head>
 	      <tr md-row>
 	        <th md-column md-order-by="{{label.label}}" 
 	        	ng-repeat="label in attributeLabels | orderBy: 'order'"

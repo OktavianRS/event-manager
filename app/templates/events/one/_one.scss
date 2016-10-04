@@ -1,7 +1,141 @@
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
 .event-one {
+  .comment-container {
+    align-items: center;
+    padding: 10px 40px;
+    background-color: #f7f7f7;
+    border: 2px solid transparent;
+    .comment-form {
+      align-items: center;
+      width: 100%;
+    }
+  }
+  .image-container {
+    position: relative;
+  }
+  .newAttachBox div .image-container img,
+  .image-container {
+    width: 80px;
+    height: auto;
+  }
+  .send_button {
+    height: 30px;
+  }
+  .cancel-attachment {
+    cursor: pointer;
+    position: absolute;
+    background: #fff;
+    border-radius: 4px;
+    top: 0;
+    right: 0;
+  }
+  .comment {
+    fill: #cccccc!important;
+  }
+  .event-toolbar {
+    background-color: #56565e;
+  }
   .head-title{
     font-weight: bold;
     font-size: 22px;
+  }
+  .comment-attachment-one {
+    margin-top: 10px;
+    img {
+      border-radius: 10px;
+    }
+  }
+  .contact-item {
+    width: 33%;
+    float: left;
+  }
+  .attachment-in-comment {
+    border-left: 1px solid #ccc;
+    padding-left: 30px;
+  }
+  .attachButton {
+    transform: rotate(-90deg);
+  }
+  .event-image {
+    max-height: 300px;
+    height: 100%;
+  }
+  .padding-top-sm {
+    padding-top: 20px;
+  }
+  .padding-align {
+    overflow: auto;
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 1px solid #fff;
+  }
+  .info-text {
+    font-size: 22px;
+    color: #fff;
+  }
+  .md-block {
+    display: block;
+    margin-top: 20px;
+    md-icon {
+      fill: #fff;
+    }
+  }
+  .organization-title {
+    font-size: 23px;
+    color: #fff;
+  }
+  .location-language {
+    font-size: 23px;
+    color: #fff;
+  }
+  .languages {
+    border-left: 1px solid #fff;
+    .language {
+      font-size: 20px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      margin: 6px;
+      text-align: center;
+      border-radius: 3px;
+      display: block;
+      color: #fff;
+    }
+    md-icon {
+      fill: #fff;
+    }
+  }
+  .event-status {
+    color: #fff;
+    font-weight: lighter;
+  }
+  .s80 {
+    width: 60px;
+    height: 60px; 
+    margin-top: -24px;
+  }
+  .s40 {
+    margin-top: -10px;
+    width: 40px;
+    height: 40px; 
+  }
+  .date,
+  .time {
+    font-size: 45px;
+    color: #fff;
+    font-weight: lighter;
   }
   md-content {
     background-color: #fff;
@@ -9,6 +143,7 @@
 
   .image-box {
     text-align: center;
+    border-radius: 4px;
     img {
       width: 60%;
 
@@ -198,4 +333,21 @@
 }
 html {
   overflow: hidden !important;
+}
+@media (max-width: 1400px) {
+  .event-one .date, .event-one .time {
+      font-size: 28px; 
+  }
+  .event-one .location-language{
+    font-size: 20px;
+  }
+  .event-one .organization-title {
+    font-size: 20px;
+  }
+  .event-one .info-text {
+    font-size: 20px;
+  }
+  .event-one .comment-attachment-one {
+    max-height: 14%;
+  }
 }

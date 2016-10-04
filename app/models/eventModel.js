@@ -14,6 +14,8 @@ angular.module('model.event', [])
               },
               function(data) {
                 data.model.dateUnix = data.model.date;
+                data.model.eventDate = moment(data.model.date, 'X').format('DD/MM/YYYY');
+                data.model.eventTime = moment(data.model.date, 'X').format('HH:mm');
                 data.model.date = moment(data.model.date, 'X').format('DD/MM/YYYY HH:mm');
                 callback(data);
               }

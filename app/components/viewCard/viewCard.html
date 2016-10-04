@@ -1,6 +1,11 @@
       <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch style="max-width:800px;max-height:810px; ">
         <md-card-title>
-          <md-card-title-text>
+          <md-card-title-media style="margin-top: 18px; margin-right: 10px; border-radius: 4px;">
+            <div class="md-media-lg card-media" ng-if="data.image">
+              <img ng-src="{{data.image}}" class="md-card-image">
+            </div>
+          </md-card-title-media>
+          <md-card-title-text]>
             <!-- <span class="md-headline">User information</span> -->
             <p ng-if="data.email"><b>Email: </b>{{data.email}}</p>
             <p ng-if="data.role.name"><b>Role: </b>{{data.role.name}}</p>
@@ -12,11 +17,6 @@
             <p ng-if="data.phone"><b>Phone: </b>{{data.phone}}</p>
             <p ng-if="data.code"><b>Code: </b>{{data.code}}</p>
           </md-card-title-text>
-          <md-card-title-media>
-            <div class="md-media-lg card-media" ng-if="data.image">
-              <img ng-src="{{data.image}}" class="md-card-image">
-            </div>
-          </md-card-title-media>
         </md-card-title>
         <md-dialog-content style="width: 600px; height: 400px; " ng-if="coords">
           <div layout="row" ng-if="coords" class="map">

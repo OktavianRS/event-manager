@@ -270,7 +270,11 @@ angular.module('eventManager')
 
         $scope.export = function() {
           listModel.export($scope.stateParams.id, function(data) {
-            document.location.href = data;
+            if(data) {
+              document.location.href = data;
+            } else {
+              toast('error', 'Cant export this list');
+            }
           });
         };
 

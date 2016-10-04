@@ -18,14 +18,20 @@ angular.module('eventManager')
         $scope.comments = [];
         $scope.attachments = [];
 
-        eventModel.getOne($scope.stateParams.eventId, function(data) {
-          $scope.event = data.model;
-          $scope.uploadAllUrl = url.event.uploadAllAttach + '?access-token=' + $sessionStorage.auth_key + '&obj_id=' + $scope.stateParams.eventId + '&type=all&obj_type=event_attachment';
-        });
+        $scope.getEvent = function() {
+          eventModel.getOne($scope.stateParams.eventId, function(data) {
+            $scope.event = data.model;
+            $scope.uploadAllUrl = url.event.uploadAllAttach + '?access-token=' + $sessionStorage.auth_key + '&obj_id=' + $scope.stateParams.eventId + '&type=all&obj_type=event_attachment';
+          });
+        }
+        $scope.getEvent();
 
-        eventModel.getComments($scope.stateParams.eventId, function(data) {
-          $scope.comments = data.model;
-        });
+        $scope.getComments = function() {
+          eventModel.getComments($scope.stateParams.eventId, function(data) {
+            $scope.comments = data.model;
+          });
+        }
+        $scope.getComments();
 
         var getAttach = function() {
           eventModel.getAttachments($scope.stateParams.eventId, $scope.configAttachments.currentPage, function(data) {
@@ -38,7 +44,7 @@ angular.module('eventManager')
         $scope.showBottomListAtachment = function(item) {
           $scope.currentItem = item;
           $mdBottomSheet.show({
-            templateUrl: 'components/bottomListAtachment/bottomListAtachment.html',
+            templateUrl: `components/bottomListAtachment/bottomListAtachment.html`,
             controller: 'bottomListAtachmentCtrl',
             locals: {
               currentItem: item,
@@ -104,6 +110,8 @@ angular.module('eventManager')
                 flow.files = [];
                 $scope.addFlag = false;
                 getAttach();
+                $scope.getEvent();
+                $scope.getComments();
               }
           )
         };
@@ -117,12 +125,16 @@ angular.module('eventManager')
         $scope.removeOneAttach = function() {
           eventModel.deleteOneAttach($scope.currentItem.id, function(data) {
             getAttach();
+            $scope.getEvent();
+            $scope.getComments();
           });
         }
 
         $scope.uploadAttach = function(attachmentId) {
           eventModel.uploadAttach(attachmentId, function(data) {
             console.info('upload', data);
+            $scope.getEvent();
+            $scope.getComments();
           })
         };
 
@@ -150,7 +162,8 @@ angular.module('eventManager')
 
         $scope.deleteOneAttachment = function() {
           eventModel($scope.currentItem.id, function(data) {
-
+            $scope.getEvent();
+            $scope.getComments();
           })
         }
 

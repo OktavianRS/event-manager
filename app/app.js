@@ -32,6 +32,7 @@ angular.module('eventManager', [
       'model.template',
       'model.list',
       'model.campaign',
+      'model.role',
 
       'components.confirm-password',
       'components.lower-case-input',
@@ -168,6 +169,11 @@ angular.module('eventManager', [
             url: '/event/:eventId/role',
             templateUrl: "templates/role/role.html",
             controller: 'roleCtrl'
+          })
+          .state('formGenerator', {
+            url: '/event/:eventId/role/:roleId',
+            templateUrl: 'templates/role/formGenerator/formGenerator.html',
+            controller: 'formGeneratorCtrl'
           })
           .state('importTable', {
             url: '/event/:eventId/import',
@@ -345,6 +351,10 @@ angular.module('eventManager', [
           .icon('split', 'images/icons/split.svg')
           .icon('date', 'images/icons/date.svg')
           .icon('time', 'images/icons/time.svg')
+          .icon('location-city', 'images/icons/location.svg')
+          .icon('phone', 'images/icons/iphone.svg')
+          .icon('comment', 'images/icons/comment.svg')
+          .icon('replyAll', 'images/icons/reply_all.svg')
 
           //mailer icons
 
