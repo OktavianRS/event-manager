@@ -57,13 +57,6 @@ angular.module('eventManager')
             });
         }
 
-        $scope.getRecipientInsert = function() {
-          templateModel.recipientInsert({}, function(data) {
-            $scope.recipient = data;
-          });
-        }
-        $scope.getRecipientInsert();
-
         $scope.deleteItem = function(item) {
             crudModel.Delete($scope.url, {id: item.id}, function(data) {
                 $scope.getIndex();
