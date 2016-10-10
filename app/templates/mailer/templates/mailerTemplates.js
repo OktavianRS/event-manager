@@ -73,7 +73,7 @@ angular.module('eventManager')
               fullscreen: true,
               locals: {
                 data: $scope.Index.model[index]
-              }
+              } 
             })
             .then(function(answer) {
               answer.id ? 

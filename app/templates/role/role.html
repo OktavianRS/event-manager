@@ -42,7 +42,7 @@
       <tr md-row md-select="role.id" md-select-id="name" ng-repeat="role in Index.model">
         <td md-cell ng-click="editField($event, $index)">{{role.name}}</td>
         <td md-cell>
-              <md-button ng-click="goFormBuilder()">
+              <md-button ui-sref="formGenerator({eventId: stateParams.eventId, roleId: role.id})">
                 <md-icon md-svg-src="view"></md-icon>
               </md-button>
             </td>

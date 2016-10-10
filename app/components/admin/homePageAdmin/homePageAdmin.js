@@ -5,8 +5,9 @@ angular.module('components.homeAdmin', [])
         templateUrl: 'components/admin/homePageAdmin/homePageAdmin.html'
       }
     }])
-    .controller('homeAdminCtrl', ['$scope', 'companyModel', 'eventModel', function($scope, companyModel, eventModel){
+    .controller('homeAdminCtrl', ['$scope', 'companyModel', 'eventModel', '$location', function($scope, companyModel, eventModel, $location){
 
+        $scope.href = 'http://localhost:2000?myParam=paramValue';
         $scope.events = [];
 
         $scope.eventSetting = {

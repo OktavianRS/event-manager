@@ -15,6 +15,7 @@ angular.module('eventManager', [
       'angular-loading-bar',
       'chart.js',
       'mdPickers',
+      'angular-sortable-view',
 
       'factory.url',
       'factory.toast',
@@ -54,6 +55,21 @@ angular.module('eventManager', [
       'components.mailerToolbar',
       'components.templateModal',
       'components.listsModal',
+
+      'components.checkboxesItem',
+      'components.checkboxesView',
+      'components.formItem',
+      'components.formItemsContainer',
+      'components.formView',
+      'components.inputItem',
+      'components.inputView',
+      'components.matrixItem',
+      'components.matrixView',
+      'components.radioButtonItem',
+      'components.radioButtonView',
+      'components.textareaItem',
+      'components.textareaView',
+
 
     ])
     //routing config
@@ -173,7 +189,7 @@ angular.module('eventManager', [
           .state('formGenerator', {
             url: '/event/:eventId/role/:roleId',
             templateUrl: 'templates/role/formGenerator/formGenerator.html',
-            controller: 'formGeneratorCtrl'
+            controller: 'formGenerator'
           })
           .state('importTable', {
             url: '/event/:eventId/import',
@@ -360,6 +376,7 @@ angular.module('eventManager', [
 
     }])
     //theme config
+    .service('Utils', Utils)
     .config(['$mdThemingProvider', function($mdThemingProvider) {
       $mdThemingProvider.theme('default')
         .primaryPalette('teal')
@@ -406,3 +423,17 @@ angular.module('eventManager', [
         });
       }
     ]);
+
+    function Utils() {}
+
+    Utils.prototype.extend = function(dest, src) {
+      Object.keys(src).forEach(function(key) {
+        if(!dest.hasOwnProperty(key)) {
+          dest[key] = src[key];
+        } else if(typeof src[key] === 'object') {
+          this.extend(dest[key], src[key]);
+        }
+      }.bind(this));
+
+      return dest;
+    };

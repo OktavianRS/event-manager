@@ -174,10 +174,10 @@ $scope.toggleSearch = function() {
               page: $scope.query.page-1,
               size: $scope.query.limit }, function(data) {
               data.model.map(function(v) {
-                v.created_at ? v.created_at = moment(v.created_at, 'X').format('DD/MM/YYYY') : false;z
-                v.updated_at ? v.updated_at = moment(v.updated_at, 'X').format('DD/MM/YYYY') : false;z
-                v.created_by ? v.created_by = moment(v.created_by, 'X').format('DD/MM/YYYY') : false;z
-                v.updated_by ? v.updated_by = moment(v.updated_by, 'X').format('DD/MM/YYYY') : false;z
+                v.created_at ? v.created_at = moment(v.created_at, 'X').format('DD/MM/YYYY') : false;
+                v.updated_at ? v.updated_at = moment(v.updated_at, 'X').format('DD/MM/YYYY') : false;
+                v.created_by ? v.created_by = moment(v.created_by, 'X').format('DD/MM/YYYY') : false;
+                v.updated_by ? v.updated_by = moment(v.updated_by, 'X').format('DD/MM/YYYY') : false;
               })
               $scope.index = data;
               deferred.resolve();

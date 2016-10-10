@@ -1,6 +1,7 @@
 angular.module('eventManager')
     .controller('roleCtrl', ['$scope', 'crudModel', '$mdDialog', '$mdEditDialog',
       function($scope, crudModel, $mdDialog, $mdEditDialog) {
+
         $scope.url = 'role';
         $scope.changeAllFlag = false;
         $scope.query = {

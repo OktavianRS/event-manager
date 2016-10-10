@@ -1,37 +1,50 @@
-angular.module('eventManager')
-    .controller('formGeneratorCtrl', ['$scope', 'roleModel',
-      function($scope, roleModel) {
+(function (angular) {
+  'use strict';
 
-        $scope.json = [
-          {
-            "id":"textbox",
-            "component":"textInput",
-            "editable":false,"index":0,
-            "label":"Name",
-            "description":"Your name",
-            "placeholder":"Your name",
-            "options":[],
-            "required":true,
-            "validation":"/.*/"
-          }
-        ];
+  angular
+    .module('eventManager')
+    .controller('formGenerator', ['roleModel', '$scope', MainController]);
 
-        $scope.setRole = function() {
-          roleModel.setRole({id: $scope.stateParams.roleId, json: {name: 'My awesome json'}}, function(data) {
+  var vm;
+  /** @ngInject */
+  function MainController(roleModel, $scope) {
+    vm = this;
+    vm.form = {
+      items: []
+    };
+    vm.roleModel = roleModel;
+    vm.stateParams = $scope.stateParams;
+  }
 
-          })
-        }
+  MainController.prototype.addItem = function (type) {
+    this.form.items.push({
+      type: type
+    });
+  };
 
-        // $scope.setRole();
+  MainController.prototype.done = function () {
+      this.roleModel.setRole({id: this.stateParams.roleId, json: this.form}, function(data) {
+    })
+  };
 
-        $scope.getRole = function() {
-          roleModel.getRole({id: $scope.stateParams.roleId}, function(data) {
-            if(data) {
-              $scope.json = data;
-            }
-          })
-        }
-        $scope.getRole();
+  MainController.prototype.delete = function(item, index) {
+    vm.form.items.splice(index, 1);
+  };
 
-      }
-    ]);
+  MainController.prototype.up = function(item, index) {
+    if(index !== 0) {
+      var prevItem = vm.form.items[index - 1];
+      vm.form.items[index] = prevItem;
+      vm.form.items[index - 1] = item;
+    }
+  };
+
+  MainController.prototype.down = function(item, index) {
+    if(index !== vm.form.items.length - 1) {
+      var nextItem = vm.form.items[index + 1];
+      vm.form.items[index] = nextItem;
+      vm.form.items[index + 1] = item;
+    }
+  };
+
+})(angular);
