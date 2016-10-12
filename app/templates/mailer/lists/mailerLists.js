@@ -71,13 +71,13 @@ angular.module('eventManager')
               parent: angular.element(document.body),
               targetEvent: ev,
               clickOutsideToClose:true,
+              bindToController: false,
               fullscreen: true,
               locals: {
                 data: $scope.Index.model[index]
               }
             })
             .then(function(answer) {
-              console.log(answer);
               answer.id ? 
               crudModel.Update($scope.url, {id: answer.id, name: answer.name, user_id: answer.user_id}, function(data) {
                 $scope.getIndex();
@@ -85,19 +85,22 @@ angular.module('eventManager')
               crudModel.Create($scope.url, {name: answer.name}, function(data) {
                 $scope.getIndex();
               })
-            }, function() {
+            }, function(data) {
+              $scope.Index.model[index] = data;
               $scope.status = 'You cancelled the dialog.';
             });
         };
 
         function DialogController($scope, $mdDialog, data) {
+            const initialState = Object.assign({}, data);
+            console.log(data);
             $scope.data = data;
             $scope.hide = function() {
               $mdDialog.hide();
             };
 
             $scope.cancel = function() {
-              $mdDialog.cancel();
+              $mdDialog.cancel(initialState);
             };
 
             $scope.answer = function(answer) {
