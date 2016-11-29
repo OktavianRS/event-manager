@@ -1,8 +1,8 @@
 angular.module('eventManager')
-    .controller('roleCtrl', ['$scope', 'crudModel', '$mdDialog', '$mdEditDialog',
+    .controller('stepCtrl', ['$scope', 'crudModel', '$mdDialog', '$mdEditDialog',
       function($scope, crudModel, $mdDialog, $mdEditDialog) {
 
-        $scope.url = 'role';
+        $scope.url = 'step';
         $scope.changeAllFlag = false;
         $scope.query = {
           limit: 15,
@@ -60,13 +60,13 @@ angular.module('eventManager')
         $scope.addRole = function(ev) {
           // Appending dialog to document.body to cover sidenav in docs app
           var confirm = $mdDialog.prompt()
-            .title('Create a new Role')
+            .title('Create a new Step')
             .textContent('')
-            .placeholder('Role name')
-            .ariaLabel('Role name')
+            .placeholder('Step name')
+            .ariaLabel('Step name')
             .initialValue('')
             .targetEvent(ev)
-            .ok('Create')
+            .ok('Create!')
             .cancel('Cancel');
 
           $mdDialog.show(confirm)

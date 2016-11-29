@@ -4,7 +4,8 @@ angular.module('factory.url', [])
 
         //dev
         // var domainConfig = 'http://192.168.0.109';
-        var domainConfig = 'http://event.vt-host.co.ua/backend';
+        // var domainConfig = 'http://event.vt-host.co.ua/backend';
+        var domainConfig = 'http://28302e37.ngrok.io';
 
 
         var baseUrl = domainConfig + '/api/web/v1/';
@@ -122,9 +123,14 @@ angular.module('factory.url', [])
             getOneReports: baseMailerUrl + 'campaign/distribution'
           },
           role: {
-            setRole: baseUrl + 'role/set-role-step',
-            getRole: baseUrl + 'role/get-role-step'
-          }
+            setRole: baseUrl + 'step/set-role-step',
+            getRole: baseUrl + 'step/get-role-step'
+          },
+          roleStep: {
+            create: baseUrl + 'step/create',
+            getAll: baseUrl + 'step/index',
+            getCurrent: baseUrl + 'role-step/index',
+          },
         }
       }
     ]);

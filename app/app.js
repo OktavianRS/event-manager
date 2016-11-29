@@ -69,6 +69,8 @@ angular.module('eventManager', [
       'components.radioButtonView',
       'components.textareaItem',
       'components.textareaView',
+      'components.submitItem',
+      'components.submitView',
 
 
     ])
@@ -185,6 +187,11 @@ angular.module('eventManager', [
             url: '/event/:eventId/role',
             templateUrl: "templates/role/role.html",
             controller: 'roleCtrl'
+          })
+          .state('roleStep', {
+            url: '/event/role/step',
+            templateUrl: "templates/step/step.html",
+            controller: 'stepCtrl'
           })
           .state('formGenerator', {
             url: '/event/:eventId/role/:roleId',

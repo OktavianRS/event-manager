@@ -1,9 +1,5 @@
 <div class="sortable-container" layout="column" sv-root sv-part="RadioButton.item.options">
 
-  <md-switch ng-model="RadioButton.item.config.direction" ng-true-value="'horizontal'" ng-false-value="'vertical'">
-    Layout direction ({{RadioButton.item.config.direction == 'horizontal' ? 'Horizontal' : 'Vertical'}})
-  </md-switch>
-
   <div class="option-item" layout="row" ng-repeat="option in RadioButton.item.options track by $index" sv-element>
 
     <md-button class="md-button handle" md-no-ink aria-label="reorder option item" sv-handle>

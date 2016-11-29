@@ -42,7 +42,8 @@
       multipleChoices: '<radio-button-item item="FormItem.item"></radio-button-item>',
       matrix: '<matrix-item item="FormItem.item"></matrix-item>',
       checkboxes: '<checkboxes-item item="FormItem.item"></checkboxes-item>',
-      textarea: '<textarea-item item="FormItem.item"></textarea-item>'
+      textarea: '<textarea-item item="FormItem.item"></textarea-item>',
+      submit: '<submit-item item="FormItem.item"></submit-item>'
     };
   }
 
@@ -77,6 +78,10 @@
             '<i class="material-icons small">arrow_drop_down</i>' +
           '</md-button>' +
         '</div>' +
+        '<md-input-container>' +
+          '<label>Field name(not to display)</label>' +
+          '<input required ng-model="FormItem.item.props.name"/>' +
+        '</md-input-container>' +
         '<md-input-container>' +
           '<label>Field Title</label>' +
           '<input ng-model="FormItem.item.props.title"/>' +

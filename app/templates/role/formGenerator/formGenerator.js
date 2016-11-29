@@ -3,15 +3,16 @@
 
   angular
     .module('eventManager')
-    .controller('formGenerator', ['roleModel', '$scope', MainController]);
+    .controller('formGenerator', ['roleModel', '$scope', '$mdSidenav', MainController]);
 
   var vm;
   /** @ngInject */
-  function MainController(roleModel, $scope) {
+  function MainController(roleModel, $scope, $mdSidenav) {
     vm = this;
     vm.form = {
       items: []
     };
+    vm.sidenav = $mdSidenav;
     vm.roleModel = roleModel;
     vm.stateParams = $scope.stateParams;
   }
@@ -21,6 +22,10 @@
       type: type
     });
   };
+
+  MainController.prototype.toggleSidenav = function() {
+    vm.sidenav('right').toggle();
+  }
 
   MainController.prototype.getJson = function () {
       this.roleModel.getRole({id: this.stateParams.roleId}, function(data) {

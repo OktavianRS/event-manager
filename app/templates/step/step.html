@@ -1,0 +1,56 @@
+<div class="mailer container">
+  <div class="md-whiteframe-3dp">
+    <md-content>
+
+        <md-toolbar class="md-table-toolbar alternate" style="background-color: rgb(56, 109, 104);" ng-show="selected.length">
+          <div class="md-toolbar-tools">
+            <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+          <span flex></span>
+            <md-button class="md-icon-button" ng-click="deleteSelected()">
+              <md-icon class="search-icon" md-svg-icon="delete"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+
+        <md-toolbar class="md-table-toolbar alternate tollbar-item-selected" ng-hide="selected.length">
+          <div class="md-toolbar-tools">
+            <span>Steps</span>
+          <span flex></span>
+            <md-button class="md-icon-button md-primary"
+                       aria-label="ok"
+                       ng-click="addRole($event)">
+              <md-icon md-svg-src="add"></md-icon>
+              <md-tooltip md-direction="bottom">
+                Add role
+              </md-tooltip>
+            </md-button>
+            <md-button class="md-button" ui-sref="eventTable({eventId: stateParams.eventId})">
+              Back
+            </md-button>
+          </div>
+        </md-toolbar>
+
+<md-table-container>
+  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+      <tr md-row>
+        <th md-column><span>Name</span></th>
+        <th md-column><span>Actions</span></th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="role.id" md-select-id="name" ng-repeat="role in Index.model">
+        <td md-cell ng-click="editField($event, $index)">{{role.name}}</td>
+        <td md-cell>
+              <md-button ui-sref="formGenerator({eventId: stateParams.eventId, roleId: role.id})">
+                <md-icon md-svg-src="menu"></md-icon>
+              </md-button>
+            </td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+  <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{Index.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+    </md-content>
+  </div>
+</div>

@@ -8,13 +8,19 @@
       <div class="md-toolbar-tools">
         <span>Form builder</span>
       <span flex></span>
+        <md-button class="md-button" ng-click="main.toggleSidenav()">
+          Components
+        </md-button>
+        <md-button class="md-button" ui-sref='roleStep'>
+          Cancel
+        </md-button>
         <md-button class="md-button" ng-click="main.done()">
           Done
         </md-button>
       </div>
     </md-toolbar>
     <div class="content" layout="row" layout-padding layout-margin layout-fill>
-      <div flex layout="column" class="builder">
+      <div flex="30" layout="column" class="builder">
         <h2>Form Builder</h2>
         <div layout="column">
         <form-item ng-repeat="item in main.form.items track by $index"
@@ -43,35 +49,44 @@
       </div>
     </div>
 
-    <md-fab-speed-dial md-open="main.isOpen" md-direction="up" class="md-fab-bottom-right md-scale">
-      <md-fab-trigger>
-        <md-button aria-label="..." class="md-fab md-warn">
-          <i class="material-icons medium">add</i>
+    <md-sidenav class="md-sidenav-right" md-component-id="right"
+                md-disable-backdrop md-whiteframe="4">
+
+      <md-toolbar class="md-theme-indigo" layout="row">
+        <h1 class="md-toolbar-tools">Components list</h1>
+        <span flex></span>
+        <md-button class="md-button" ng-click="main.toggleSidenav()">
+          Close
         </md-button>
-      </md-fab-trigger>
-      <md-fab-actions>
-<!--         <md-button aria-label="..." class="md-fab md-raised md-mini" ng-click="main.addItem('matrix')">
-          <i class="material-icons">grid_on</i>
-          <md-tooltip md-direction="left" md-autohide>Matrix</md-tooltip>
-        </md-button> -->
-        <md-button aria-label="..." class="md-fab md-raised md-mini" ng-click="main.addItem('textarea')">
-          <i class="material-icons">keyboard</i>
-          <md-tooltip md-direction="left" md-autohide>Text-Area</md-tooltip>
-        </md-button>
-        <md-button aria-label="..." class="md-fab md-raised md-mini" ng-click="main.addItem('input')">
-          <i class="material-icons">text_format</i>
-          <md-tooltip md-direction="left" md-autohide>Text-Input</md-tooltip>
-        </md-button>
-        <md-button aria-label="..." class="md-fab md-raised md-mini" ng-click="main.addItem('multipleChoices')">
-          <i class="material-icons">radio_button_checked</i>
-          <md-tooltip md-direction="left" md-autohide>Radio-Buttons</md-tooltip>
-        </md-button>
-        <md-button aria-label="..." class="md-fab md-raised md-mini" ng-click="main.addItem('checkboxes')">
-          <i class="material-icons">check_box</i>
-          <md-tooltip md-direction="left" md-autohide>Checkboxes</md-tooltip>
-        </md-button>
-      </md-fab-actions>
-    </md-fab-speed-dial>
+      </md-toolbar>
+
+      <md-content>
+      <md-list flex>
+        <md-list-item ng-click="main.addItem('textarea')">
+          <span>Text-Area</span>
+          <md-divider></md-divider>
+        </md-list-item>
+        <md-list-item ng-click="main.addItem('input')">
+          <span>Text-Input</span>
+          <md-divider></md-divider>
+        </md-list-item>
+        <md-list-item ng-click="main.addItem('multipleChoices')">
+          <span>Radio-Buttons</span>
+          <md-divider></md-divider>
+        </md-list-item>
+        <md-list-item ng-click="main.addItem('checkboxes')">
+          <span>Checkbox</span>
+          <md-divider></md-divider>
+        </md-list-item>
+        <md-list-item ng-click="main.addItem('submit')">
+          <span>Button</span>
+          <md-divider></md-divider>
+        </md-list-item>
+      </md-list>
+      </md-content>
+
+    </md-sidenav>
+
 
 
     <!-- build:js(src) scripts/vendor.js -->
